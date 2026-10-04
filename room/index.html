@@ -145,8 +145,11 @@ function fadeStep(t, dt) {
   else if (t.fade === 'in' && (t.show += FADE * dt) >= 1) { t.show = 1; t.fade = 'idle'; }
   t.mesh.material.uniforms.uShow.value = t.show;
 }
+// Slideshows cut hard, without the white fade.
 function slide(t) {
-  change(t, () => { t.at = (t.at + 1) % t.list.length; show(t, t.list[t.at]); });
+  if (t.fade !== 'idle') return;
+  t.at = (t.at + 1) % t.list.length;
+  show(t, t.list[t.at]);
 }
 function replace(t) {
   // A fresh work that isn't on this tile's list; the slideshow continues from it.
