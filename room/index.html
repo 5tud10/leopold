@@ -6,15 +6,18 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Leopold Room</title>
 <style>
-  :root { --white: #f9f9f9; --black: #171717; --margin: 24px; --font: ui-monospace, "SF Mono", Menlo, monospace; }
+  :root { --white: #f9f9f9; --clear: rgb(249 249 249 / 0); --black: #171717; --margin: 24px;
+    --font: ui-monospace, "SF Mono", Menlo, monospace; }
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; overflow: hidden; background: var(--white); color: var(--black);
     font: 9px/180% var(--font); letter-spacing: -0.02em; text-transform: uppercase; }
   canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
   body.over canvas { cursor: pointer; }
-  /* The gradient: the room dissolves into white towards the window edges. */
+  /* The gradient: white fading in over the outer 20% of each window edge. */
   .fade { position: fixed; inset: 0; pointer-events: none;
-    box-shadow: inset 0 0 18vmin 9vmin var(--white); }
+    background: linear-gradient(90deg, var(--white), var(--clear) 20%),
+                linear-gradient(270deg, var(--white), var(--clear) 20%),
+                linear-gradient(var(--white), var(--clear) 20%, var(--clear) 80%, var(--white)); }
   nav { position: fixed; top: 0; left: 0; padding: 13px var(--margin); z-index: 1; }
   a { color: inherit; text-decoration: none; }
   a:hover { opacity: .6; }
@@ -40,6 +43,10 @@ const W = COLS * CELL, H = ROWS * CELL, D = DEPTH * CELL;
 const FILL = 0.5;                    // share of cells covered by a picture
 const SLIDES = 0.22;                 // share of pictures that run a slideshow
 const SIZES = [[2, 2], [2, 1], [1, 2], [1, 1], [1, 1], [1, 1]];
+const DIST = H * 1.45;               // camera to back wall
+const LOOK = 0.1;                    // look-around: max camera turn in radians
+const DOLLY = 0.5 / 18.5 * DIST;     // look-around: camera moves back when looking up
+const SCATTER = CELL / 2.9;          // intro offsets
 
 const works = await (await fetch('works.json')).json();
 const canvas = document.querySelector('canvas');
@@ -47,15 +54,14 @@ const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
 renderer.setClearColor(0xf9f9f9);
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
-const EYE = new THREE.Vector3(0, 0, H * 1.45 - D);  // distance from the back wall, measured from the reference
+const BASE_Z = DIST - D;
 
 const loader = new THREE.TextureLoader();
-const textures = works.map(w => {
-  const t = loader.load(w.src);
+const textures = await Promise.all(works.map(w => loader.loadAsync(w.src).then(t => {
   t.colorSpace = THREE.SRGBColorSpace;
   t.anisotropy = renderer.capabilities.getMaxAnisotropy();
   return t;
-});
+})));
 
 // Cover-crop: scale/offset the uv so the work fills the tile without stretching.
 function crop(work, aspect) {
@@ -63,66 +69,118 @@ function crop(work, aspect) {
   return a > aspect ? new THREE.Vector4(aspect / a, 1, (1 - aspect / a) / 2, 0)
                     : new THREE.Vector4(1, a / aspect, 0, (1 - a / aspect) / 2);
 }
+// uShow: 0 = white, 1 = the work — every appearance and change passes through white.
 const material = (i, aspect) => new THREE.ShaderMaterial({
-  uniforms: { uMap: { value: textures[i] }, uCrop: { value: crop(works[i], aspect) } },
+  uniforms: { uMap: { value: textures[i] }, uCrop: { value: crop(works[i], aspect) }, uShow: { value: 0 } },
   vertexShader: `varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
-  fragmentShader: `uniform sampler2D uMap; uniform vec4 uCrop; varying vec2 vUv;
+  fragmentShader: `uniform sampler2D uMap; uniform vec4 uCrop; uniform float uShow; varying vec2 vUv;
     void main() {
       gl_FragColor = texture2D(uMap, vUv * uCrop.xy + uCrop.zw);
       #include <colorspace_fragment>
+      gl_FragColor.rgb = mix(vec3(0.976), gl_FragColor.rgb, uShow);
     }`,
 });
 
-// Each face: origin, the world direction of its columns and rows, its size in cells.
-const faces = [
-  { o: [-W / 2, -H / 2, -D], u: [1, 0, 0], v: [0, 1, 0], cols: COLS, rows: ROWS },   // back
-  { o: [-W / 2, -H / 2, 0], u: [0, 0, -1], v: [0, 1, 0], cols: DEPTH, rows: ROWS },  // left
-  { o: [W / 2, -H / 2, -D], u: [0, 0, 1], v: [0, 1, 0], cols: DEPTH, rows: ROWS },   // right
-  { o: [-W / 2, -H / 2, 0], u: [1, 0, 0], v: [0, 0, -1], cols: COLS, rows: DEPTH },  // floor
-  { o: [-W / 2, H / 2, -D], u: [1, 0, 0], v: [0, 0, 1], cols: COLS, rows: DEPTH },   // ceiling
+// Walls hinge on the back wall's edges: built flat (open), then folded shut.
+// x0/y0: where the wall's grid starts in its own plane, relative to the hinge.
+const walls = [
+  { pivot: [0, 0, -D], fold: [0, 0, 0], x0: -W / 2, y0: -H / 2, cols: COLS, rows: ROWS },           // back
+  { pivot: [-W / 2, 0, -D], fold: [0, Math.PI / 2, 0], x0: -D, y0: -H / 2, cols: DEPTH, rows: ROWS }, // left
+  { pivot: [W / 2, 0, -D], fold: [0, -Math.PI / 2, 0], x0: 0, y0: -H / 2, cols: DEPTH, rows: ROWS },  // right
+  { pivot: [0, H / 2, -D], fold: [Math.PI / 2, 0, 0], x0: -W / 2, y0: 0, cols: COLS, rows: DEPTH },   // ceiling
+  { pivot: [0, -H / 2, -D], fold: [-Math.PI / 2, 0, 0], x0: -W / 2, y0: -D, cols: COLS, rows: DEPTH }, // floor
 ];
 
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
 let deck = [];
 const draw = () => (deck.length ? deck : (deck = shuffle(works.map((_, i) => i)))).pop();
 
+const plane = new THREE.PlaneGeometry(1, 1);
 const tiles = [];
-for (const f of faces) {
+for (const wall of walls) {
+  wall.group = new THREE.Group();
+  wall.group.position.set(...wall.pivot);
+  scene.add(wall.group);
   const used = new Set(), key = (c, r) => c + ',' + r;
   let covered = 0;
-  const cells = shuffle([...Array(f.cols * f.rows)].map((_, i) => [i % f.cols, i / f.cols | 0]));
+  const cells = shuffle([...Array(wall.cols * wall.rows)].map((_, i) => [i % wall.cols, i / wall.cols | 0]));
   for (const [c, r] of cells) {
-    if (covered >= FILL * f.cols * f.rows) break;
+    if (covered >= FILL * wall.cols * wall.rows) break;
     const [sc, sr] = SIZES[Math.random() * SIZES.length | 0];
     const span = [];
     for (let dc = 0; dc < sc; dc++) for (let dr = 0; dr < sr; dr++) span.push([c + dc, r + dr]);
-    if (span.some(([x, y]) => x >= f.cols || y >= f.rows || used.has(key(x, y)))) continue;
+    if (span.some(([x, y]) => x >= wall.cols || y >= wall.rows || used.has(key(x, y)))) continue;
     span.forEach(([x, y]) => used.add(key(x, y)));
     covered += sc * sr;
 
-    const u = new THREE.Vector3(...f.u), v = new THREE.Vector3(...f.v);
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(sc * CELL, sr * CELL));
-    mesh.position.set(...f.o).addScaledVector(u, (c + sc / 2) * CELL).addScaledVector(v, (r + sr / 2) * CELL);
-    mesh.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(u, v, new THREE.Vector3().crossVectors(u, v)));
+    const mesh = new THREE.Mesh(plane);
+    const home = new THREE.Vector3(wall.x0 + (c + sc / 2) * CELL, wall.y0 + (r + sr / 2) * CELL, 0);
+    const size = new THREE.Vector3(sc * CELL, sr * CELL, 1);
+    mesh.position.copy(home);
+    mesh.scale.copy(size);
     const n = Math.random() < SLIDES ? 4 : 1;
-    const tile = { mesh, aspect: sc / sr, list: [...Array(n)].map(draw), at: 0,
-      period: 1.4 + Math.random() * 1.6, next: 0 };
-    tile.next = Math.random() * tile.period;
+    const tile = { mesh, home, size, aspect: sc / sr, list: [...Array(n)].map(draw), at: 0,
+      period: 1.4 + Math.random() * 1.6, next: 0, fade: 'idle', show: 0 };
     mesh.material = material(tile.list[0], tile.aspect);
     mesh.userData.tile = tile;
-    scene.add(mesh);
+    wall.group.add(mesh);
     tiles.push(tile);
   }
 }
-const slideshows = tiles.filter(t => t.list.length > 1);
 
-// Hard cuts, like a slideshow — each on its own clock.
-function advance(t, time) {
-  t.at = (t.at + 1) % t.list.length;
-  t.next = time + t.period;
-  const m = t.mesh.material.uniforms, i = t.list[t.at];
+// A change fades the picture out to white, swaps it, fades it back in.
+const FADE = 3;
+function change(t, i) {
+  if (t.fade !== 'idle') return;
+  t.fade = 'out';
+  t.swap = i;
+}
+function show(t, i) {
+  const m = t.mesh.material.uniforms;
   m.uMap.value = textures[i];
   m.uCrop.value = crop(works[i], t.aspect);
+}
+function fadeStep(t, dt) {
+  if (t.fade === 'out' && (t.show -= FADE * dt) <= 0) { t.show = 0; t.swap(); t.fade = 'in'; }
+  else if (t.fade === 'in' && (t.show += FADE * dt) >= 1) { t.show = 1; t.fade = 'idle'; }
+  t.mesh.material.uniforms.uShow.value = t.show;
+}
+function slide(t) {
+  change(t, () => { t.at = (t.at + 1) % t.list.length; show(t, t.list[t.at]); });
+}
+function replace(t) {
+  // A fresh work that isn't on this tile's list; the slideshow continues from it.
+  change(t, () => {
+    let i; do i = draw(); while (t.list.includes(i) && works.length > t.list.length);
+    t.list[t.at] = i;
+    show(t, i);
+  });
+}
+
+// Intro: walls start unfolded, pictures pop out of white from scattered spots,
+// the walls fold shut and the camera pulls back. Times in seconds.
+const ease = {
+  p2out: x => 1 - (1 - x) ** 3, p3out: x => 1 - (1 - x) ** 4, sineInOut: x => (1 - Math.cos(Math.PI * x)) / 2,
+  p2inOut: x => x < 0.5 ? 4 * x ** 3 : 1 - (-2 * x + 2) ** 3 / 2,
+};
+const tween = (time, start, dur, e) => e(Math.min(Math.max((time - start) / dur, 0), 1));
+for (const t of tiles) {
+  t.delay = Math.random() * 2;
+  t.from = t.home.clone().add(new THREE.Vector3((Math.random() - .5) * 4, (Math.random() - .5) * 4, (Math.random() - .5) * 5).multiplyScalar(SCATTER));
+}
+const INTRO = 4.5, START_Z = -D + DIST * 13 / 18.5;
+function intro(time) {
+  for (const t of tiles) {
+    const s = time < t.delay + 0.8 ? 1.2 * tween(time, t.delay, 0.8, ease.p2out)
+                                   : 1.2 - 0.2 * tween(time, t.delay + 0.8, 1, ease.sineInOut);
+    t.mesh.scale.set(t.size.x * s, t.size.y * s, 1);
+    t.mesh.position.lerpVectors(t.from, t.home, tween(time, t.delay, 2, ease.p3out));
+    t.show = tween(time, t.delay + 0.2, 1, ease.p2out);
+    t.mesh.material.uniforms.uShow.value = t.show;
+  }
+  const k = tween(time, 2, 2.5, ease.p2out);
+  for (const w of walls) w.group.rotation.set(w.fold[0] * k, w.fold[1] * k, w.fold[2] * k);
+  camera.position.z = START_Z + (BASE_Z - START_Z) * tween(time, 1, 3, ease.p2inOut);
 }
 
 function resize() {
@@ -135,29 +193,40 @@ function resize() {
 addEventListener('resize', resize);
 resize();
 
-// The camera leans towards the cursor; the room swings around it.
-const mouse = new THREE.Vector2(), look = new THREE.Vector2();
-const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
-let over = null;
+const mouse = new THREE.Vector2(), ray = new THREE.Raycaster();
+let moved = false, over = null;
 addEventListener('pointermove', e => {
+  moved = true;
   mouse.set(e.clientX / innerWidth * 2 - 1, 1 - e.clientY / innerHeight * 2);
-  ndc.copy(mouse);
 });
 canvas.addEventListener('click', () => over && open(works[over.list[over.at]].url, '_blank'));
 const cap = ['t', 'a', 'd'].map(c => document.querySelector('.caption .' + c));
+const meshes = tiles.map(t => t.mesh);
 
 const clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
-  const time = clock.getElapsedTime();
-  for (const t of slideshows) if (time >= t.next) advance(t, time);
+  const dt = Math.min(clock.getDelta(), 0.1), time = clock.elapsedTime;
+  if (time < INTRO) { intro(time); renderer.render(scene, camera); return; }
 
-  look.lerp(mouse, 0.05);
-  camera.position.set(EYE.x + look.x * CELL * 1.6, EYE.y + look.y * CELL, EYE.z);
-  camera.lookAt(look.x * CELL * 1.2, look.y * CELL * 0.8, -D);
+  // Look around: the camera turns towards the cursor and moves back as it looks up.
+  const k = 1 - 0.95 ** (dt * 60);
+  camera.rotation.y += (-mouse.x * LOOK - camera.rotation.y) * k;
+  camera.rotation.x += (mouse.y * LOOK - camera.rotation.x) * k;
+  camera.position.z += (BASE_Z + DOLLY * mouse.y - camera.position.z) * k;
 
-  ray.setFromCamera(ndc, camera);
-  const hit = ray.intersectObjects(scene.children)[0];
-  over = hit ? hit.object.userData.tile : null;
+  for (const t of tiles) {
+    if (t.list.length > 1 && time >= t.next) { slide(t); t.next = time + t.period; }
+    fadeStep(t, dt);
+  }
+
+  // Moving onto a picture swaps it for another work.
+  let hit = null;
+  if (moved) {
+    ray.setFromCamera(mouse, camera);
+    hit = ray.intersectObjects(meshes)[0]?.object.userData.tile ?? null;
+    if (hit && hit !== over) replace(hit);
+  }
+  over = hit;
   document.body.classList.toggle('over', !!over);
   if (over) {
     const w = works[over.list[over.at]];
