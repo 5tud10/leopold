@@ -22,7 +22,7 @@ SKIP = {"ausstellungen", "ausstellungen/aktuell", "ausstellungen/vorschau", "bes
 # Titles too long or clumsy for a card, by page path.
 TITLES = {"barrierefreiheit": "Barrierefreiheit im Leopold Museum"}
 NAMES = {"besuch": "Besuch", "sammlung": "Sammlung", "ausstellungen": "Ausstellungen", "museum": "Museum",
-         "forschung": "Forschung", "engagement": "Engagement", "vermietung": "Vermietung", "presse": "Presse"}
+         "forschung": "Forschung", "engagement": "Engagement", "vermietung": "Vermietung", "presse": "Info"}
 
 def short(t, n=170):
     t = re.sub(r"\s+", " ", t).strip()

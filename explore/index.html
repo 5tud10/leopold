@@ -6,7 +6,9 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Leopold Explore</title>
 <style>
-  :root { --white: #f9f9f9; --black: #171717; --font: ui-monospace, "SF Mono", Menlo, monospace; }
+  :root { --white: #f9f9f9; --black: #171717; --yellow: #fbf1b0;
+    /* section colours: pastels at one chroma (OKLCH .06), hues 40° apart, lightest tone the screen can show */
+    --peach: #ffd7b9; --rose: #ffcac9; --sky: #b7edfe; --blue: #c0d8ff; --pink: #fed3ef; --mint: #c3fcf0; --lilac: #e2d4ff; --font: ui-monospace, "SF Mono", Menlo, monospace; }
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; overflow: hidden; overscroll-behavior: none; background: var(--white); color: var(--black);
     font: 9px/1.4 var(--font); letter-spacing: -0.02em; text-transform: uppercase; }
@@ -34,26 +36,66 @@
   body[data-step="2"] .item h2 { font-size: calc(9px / .23); line-height: 1.15; margin: calc(1px / .23) 0 0;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .item { cursor: pointer; }
+  /* Coloured cards: a panel behind image and caption, drawn as spread shadows so the layout stays put */
+  .item[data-cat] { --pad: 12px; }
+  .item[data-cat="Ausstellungen"] { --bg: var(--yellow); }  .item[data-cat="Programm"] { --bg: var(--peach); }
+  .item[data-cat="Sammlung"] { --bg: var(--rose); } /* Besuch: no colour */
+  .item[data-cat="Museum"] { --bg: var(--sky); }            .item[data-cat="Forschung"] { --bg: var(--blue); }
+  .item[data-cat="Engagement"] { --bg: var(--pink); }       .item[data-cat="Vermietung"] { --bg: var(--mint); }
+  .item[data-cat="Info"] { --bg: var(--lilac); }
+  .item[data-cat] .tilt, .item[data-cat] .txt { background: var(--bg); box-shadow: 0 0 0 var(--pad) var(--bg); }
+  .item[data-cat] .txt { padding-left: 0; padding-right: 0; }
+  .item.complete[data-cat] .tilt, .item.complete[data-cat] .txt { background: var(--white); box-shadow: none; } /* framed cards stay uncoloured */
+  .item.complete[data-cat] .txt { padding: 10px 12px 12px; }
+  /* Zoomed out (provisional): colour behind the image only, captions on the page */
+  body[data-step="2"] .item[data-cat] { --pad: calc(3px / .23); }
+  body[data-step="2"] .item[data-cat]:not(.complete) .txt { background: none; box-shadow: none; }
+  /* Cards that open: a + after the title */
+  .item:not(.complete) h2 { position: relative; padding-right: 1.2em; }
+  .item:not(.complete) h2::after { content: '+'; position: absolute; right: 0; top: 0; }
+  /* Complete cards: framed like the navigation, image on top, the content itself below */
+  .item.complete { cursor: default; }
+  .item.complete .tilt { height: auto; border: 1px solid var(--black); border-radius: 4px; background: var(--white); overflow: hidden; }
+  .item.complete .txt { position: static; width: 100%; padding: 10px 12px 12px; border-top: 1px solid var(--black); }
+  .item .social { display: none; }
+  .item.complete:has(.social) .txt { border-top: 0; }
+  .item .facts.links a { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--black); cursor: pointer; }
+  .item .facts.links a:last-child { border-bottom: 1px solid var(--black); }
+  .item .facts.links a:hover { opacity: .5; }
+  .item .facts.links img { width: 16px; height: 16px; object-fit: contain; background: none; }
+  .item .facts { margin-top: 8px; font-size: 12px; line-height: 1.4; }
+  .item .facts div { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; border-top: 1px solid var(--black); }
+  .item .facts div:last-child { border-bottom: 1px solid var(--black); }
+  .item .cta { display: block; width: 100%; height: 40px; border: 0; border-top: 1px solid var(--black); background: none; color: inherit;
+    font: 12px/1 var(--font); letter-spacing: inherit; text-transform: inherit; cursor: pointer; }
+  .item .cta:hover { background: var(--black); color: var(--white); }
+  body[data-step="2"] .item .facts, body[data-step="2"] .item .cta { display: none; }
+  body[data-step="2"] .item.complete .txt { width: 100%; }
+  body[data-step="2"] .item h2::after { display: none; } /* the frame carries the difference when zoomed out */
 
   /* Overlaid navigation, top left: logo row over the search bar, panels open below */
   .nav { position: fixed; top: 29px; left: 27px; z-index: 2; width: 428px; max-width: calc(100% - 32px);
     background: var(--white); border: 1px solid var(--black); border-radius: 4px; overflow: hidden;
     font: 20px/28px "Helvetica Neue", Helvetica, Arial, sans-serif; letter-spacing: 0; }
-  .logo { display: grid; place-items: center; width: 100%; height: 61px; padding: 0; border: 0; border-bottom: 1px solid var(--black);
+  .logo { display: grid; justify-items: center; align-items: start; width: 100%; height: 128px; padding: 38px 0 0; border: 0; border-bottom: 1px solid var(--black);
     background: none; cursor: pointer; }
   .logo img { display: block; }
   .bar { display: flex; height: 48px; }
   .bar > * { border: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; }
   .bar input { flex: 1; min-width: 0; padding: 0 0 0 21px; outline: none; }
-  .bar input::placeholder { color: var(--black); opacity: 1; }
   .bar input::-webkit-search-cancel-button { display: none; }
+  /* Clear: a × from the typeface, only while there is text */
+  .bar .clear { width: auto; padding: 0 21px 0 12px; border-left: 0; }
+  .bar .clear:hover:not(:disabled) { background: none; color: inherit; }
+  .bar input:placeholder-shown + .clear { display: none; }
+  .bar input::placeholder { color: var(--black); opacity: .45; }
   .bar button { width: 50px; flex: none; border-left: 1px solid var(--black); cursor: pointer; display: grid; place-items: center; padding: 0; }
   .bar button:hover:not(:disabled), .panel a:hover, .panel button:hover { background: var(--black); color: var(--white); }
   .bar button:hover:not(:disabled) img { filter: invert(1); }
   .bar button:disabled { cursor: default; }
   .bar button:disabled img { opacity: .25; }
   .bar img { display: block; }
-  .panel { border-top: 1px solid var(--black); max-height: calc(100vh - 29px - 111px - 27px); overflow-y: auto; }
+  .panel { border-top: 1px solid var(--black); max-height: calc(100vh - 29px - 178px - 27px); overflow-y: auto; }
   .panel[hidden] { display: none; }
   .panel a, .panel button { display: flex; justify-content: space-between; align-items: center; width: 100%; height: 49px; padding: 0 21px;
     border: 0; border-bottom: 1px solid var(--black); background: none; color: inherit; font: inherit; letter-spacing: inherit;
@@ -62,12 +104,13 @@
   .panel .on { background: var(--black); color: var(--white); }
   .panel span { opacity: .45; }
   /* Language row: DE / EN, active one black, the other faded (visual only for now) */
+  .panel .head { display: flex; align-items: center; height: 49px; padding: 0 21px; border-bottom: 1px solid var(--black); opacity: .45; }
+  .panel .sections > :last-child { border-bottom-width: 2px; } /* 2px line sets the language row apart */
   .panel .lang { display: flex; justify-content: space-between; align-items: center; height: 49px; padding: 0 21px; }
   .panel .lang i { display: flex; gap: 0 .3em; font-style: normal; }
   .panel .lang button { width: auto; height: auto; padding: 0; border: 0; opacity: .45; }
   .panel .lang button:hover { background: none; color: inherit; opacity: 1; }
   .panel .lang button.on { background: none; color: inherit; opacity: 1; cursor: default; }
-  .panel .head { display: flex; align-items: center; height: 49px; padding: 0 21px; border-bottom: 1px solid var(--black); opacity: .45; }
   @media (max-width: 460px) { .nav { top: 16px; left: 16px; } }
   .count { position: fixed; left: 10px; bottom: 10px; padding: 2px 4px; background: var(--white); color: rgba(23, 23, 23, .5); pointer-events: none; }
 </style>
@@ -75,24 +118,18 @@
 <body data-step="0">
 <div class="view"><div class="field"></div></div>
 <div class="nav">
-  <button class="logo" aria-label="Zur Startansicht"><img src="nav/logo.svg" width="137" height="36.6385" alt="Leopold Museum"></button>
+  <button class="logo" aria-label="Zur Startansicht"><img src="nav/logo.svg" width="206" height="55.1" alt="Leopold Museum"></button>
   <div class="bar">
     <input type="search" placeholder="Suchen" aria-label="Suchen">
+    <button class="clear" aria-label="Suche löschen">×</button>
     <button class="zout" aria-label="Zoom out"><img src="nav/minus.svg" width="20" height="1" alt=""></button>
     <button class="zin" aria-label="Zoom in"><img src="nav/plus.svg" width="20" height="20" alt=""></button>
-    <button class="tfilter" aria-label="Filter"><img src="nav/filter.svg" width="28" height="20" alt=""></button>
     <button class="tmenu" aria-label="Menu"><img src="nav/menu.svg" width="24" height="8" alt=""></button>
   </div>
   <div class="panel suggest" hidden></div>
-  <div class="panel filter" hidden></div>
   <div class="panel menu" hidden>
-    <a href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/online-ticket" target="_blank">Tickets <span>↗</span></a>
-    <a href="https://www.leopoldmuseum.org/de/besuch/oeffnungszeiten" target="_blank">Öffnungszeiten <span>↗</span></a>
-    <a href="https://www.leopoldmuseum.org/de/besuch/anreise" target="_blank">Anreise <span>↗</span></a>
-    <a href="https://www.leopoldmuseum.org/de/newsletter" target="_blank">Newsletter <span>↗</span></a>
-    <a href="https://www.leopoldmuseum.org/de/kontakt" target="_blank">Kontakt <span>↗</span></a>
-    <a href="../">Leopold <span>Explorations</span></a>
-    <div class="lang">Language <i><button class="on" aria-pressed="true">DE</button><span>/</span><button aria-pressed="false">EN</button></i></div>
+    <div class="sections"></div>
+    <div class="lang">Sprache <i><button class="on" aria-pressed="true">DE</button><span>/</span><button aria-pressed="false">EN</button></i></div>
   </div>
 </div>
 <div class="count"></div>
@@ -101,8 +138,12 @@ const CELL = 480, STEPS = [1.4, 1, 0.23]; // cell pitch at scale 1 (css px), sca
 const view = document.querySelector('.view'), field = document.querySelector('.field');
 const zin = document.querySelector('.zin'), zout = document.querySelector('.zout');
 // Site content, current exhibitions and programme first so they take the centre.
-const CATS = ['Ausstellungen', 'Programm', 'Besuch', 'Sammlung', 'Museum', 'Forschung', 'Engagement', 'Vermietung', 'Presse', 'Info'];
-const works = (await (await fetch('items.json')).json()).sort((a, b) => CATS.indexOf(a.cat) - CATS.indexOf(b.cat));
+const CATS = ['Ausstellungen', 'Programm', 'Besuch', 'Sammlung', 'Museum', 'Forschung', 'Engagement', 'Vermietung', 'Info'];
+// Not from the scrape: the museum's social channels (links from the site's footer, 2026-10-05).
+const SOCIAL = { cat: 'Info', kicker: '', title: 'Social Media', when: '', r: 1.5, social: [
+  ['instagram', 'Instagram', 'https://www.instagram.com/leopold_museum'], ['facebook', 'Facebook', 'https://www.facebook.com/LeopoldMuseum'],
+  ['youtube', 'YouTube', 'https://www.youtube.com/user/LeopoldMuseumWien'], ['pinterest', 'Pinterest', 'https://www.pinterest.com/leopoldmuseum/']] };
+const works = [...await (await fetch('items.json')).json(), SOCIAL].sort((a, b) => CATS.indexOf(a.cat) - CATS.indexOf(b.cat));
 
 // Field: a square of cells, odd columns dropped half a cell, small fixed jitter per cell.
 const COLS = Math.ceil(Math.sqrt(works.length)), ROWS = Math.ceil(works.length / COLS) + 1;
@@ -115,24 +156,48 @@ const FW = COLS * CELL, FH = ROWS * CELL + CELL / 2;
 const order = cells.map((c, i) => i).sort((a, b) =>
   Math.hypot(cells[a].x + CELL / 2 - FW / 2, cells[a].y + CELL / 2 - FH / 2) - Math.hypot(cells[b].x + CELL / 2 - FW / 2, cells[b].y + CELL / 2 - FH / 2));
 
+// Complete cards: shown in full on the canvas, nothing to open. Sample content typed in from the museum's
+// pages (2026-10-05) until the scrape carries it; cta = a button that will open an overlay.
+const FRAME = CELL * .8; // max height of a complete card's frame
+const COMPLETE = {
+  'AKTUELLE ÖFFNUNGSZEITEN': { rows: [['Mittwoch – Montag', '10–18 Uhr'], ['Dienstag', 'geschlossen'], ['Feiertage', 'geöffnet'], ['Letzter Einlass', '17:30 Uhr']] },
+  'Social Media': {},
+  'TICKETS': { rows: [['Regulär', 'EUR 19,00'], ['Ermäßigt', 'EUR 16,00'], ['Unter 19 Jahren', 'EUR 2,50'], ['Unter 7 Jahren', 'EUR 0,00']], cta: 'Tickets kaufen' },
+};
 const esc = t => t.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const items = works.map(w => {
   // Equal area per item, uncropped; room left below for the text.
   const s = CELL * .6, k = Math.min(1, CELL * .66 / (s * Math.max(Math.sqrt(w.r), 1 / Math.sqrt(w.r))));
-  const wd = s * Math.sqrt(w.r) * k, ht = wd / w.r;
+  let wd = s * Math.sqrt(w.r) * k, ht = wd / w.r;
   const el = document.createElement('div'); el.className = 'item';
+  el.dataset.cat = w.cat; // section colour
   el.style.width = wd + 'px'; el.style.height = ht + 'px';
   const img = document.createElement(w.img ? 'img' : 'div');
   if (w.img) { img.alt = w.title; img.decoding = 'async'; img.draggable = false; }
+  else if (w.social) { img.className = 'social'; ht = 0; el.style.height = '0px'; } // no picture: caption and one row per channel
   else { img.className = 'card'; img.textContent = w.title; }
   const when = w.when + (w.more ? ` (+${w.more} Termine)` : '');
   const txt = document.createElement('div'); txt.className = 'txt';
   const rest = [w.kicker, when].filter(Boolean).join(' · ');
+  const full = COMPLETE[w.title];
   txt.innerHTML = `<div class="k"><span class="c">${esc(w.cat)}</span><span class="r">${rest ? ' · ' + esc(rest) : ''}</span></div><h2>${esc(w.title)}</h2>` +
-    `<div class="x">${esc(w.sub || w.text)}</div>`;
+    (w.social ? `<div class="facts links">${w.social.map(([k, name, url]) => `<a href="${url}" target="_blank"><img src="social/${k}.svg" alt="" draggable="false">${esc(name)}</a>`).join('')}</div>`
+     : full ? `<div class="facts">${(full.rows ?? []).map(([a, b]) => `<div><span>${esc(a)}</span><span>${esc(b)}</span></div>`).join('')}</div>`
+          : `<div class="x">${esc(w.sub || w.text)}</div>`);
   const tilt = document.createElement('div'); tilt.className = 'tilt';
   tilt.append(img, txt); el.append(tilt); field.append(el);
-  return { w, el, img, wd, ht, x: 0, y: 0, res: 0 };
+  if (full) {
+    el.classList.add('complete'); img.style.height = ht + 'px';
+    if (full.cta) tilt.insertAdjacentHTML('beforeend', `<button class="cta">${esc(full.cta)}</button>`);
+    // The whole frame (image + content + button) fits the height a picture card and its caption use,
+    // so it clears the card below: the image shrinks to make room (twice, as the text may rewrap).
+    for (let i = 0; i < 2; i++) {
+      const extra = tilt.offsetHeight - ht; if (ht + extra <= FRAME) break;
+      ht = FRAME - extra; wd = ht * w.r;
+      el.style.width = wd + 'px'; el.style.height = ht + 'px'; img.style.height = ht + 'px';
+    }
+  }
+  return { w, el, img, wd, ht, fh: full ? el.firstChild.offsetHeight : 0, x: 0, y: 0, res: 0 };
 });
 
 let step = 0, scale = STEPS[0], px = 0, py = 0;
@@ -171,7 +236,8 @@ function layout() {
     const on = (!artist || it.w.cat === artist) && (!q || [it.w.cat, it.w.kicker, it.w.title, it.w.sub, it.w.text, it.w.when].join(' ').toLowerCase().includes(q));
     it.el.hidden = !on; if (!on) continue;
     const c = cells[order[n++]];
-    it.x = c.x + (CELL - it.wd) / 2; it.y = c.y + (CELL * .72 - it.ht) / 2;
+    // Picture cards centre their image in the top 72% of the cell (caption below); frames sit near the top.
+    it.x = c.x + (CELL - it.wd) / 2; it.y = c.y + (it.fh ? (CELL * .86 - it.fh) / 2 : (CELL * .72 - it.ht) / 2);
     it.el.style.transform = `translate(${it.x}px, ${it.y}px)`;
   }
   document.querySelector('.count').textContent = n + ' / ' + works.length;
@@ -181,11 +247,15 @@ function layout() {
     x0 = Math.min(x0, it.x); y0 = Math.min(y0, it.y);
     x1 = Math.max(x1, it.x + it.wd); y1 = Math.max(y1, it.y + it.ht + (txtOf(it)?.offsetHeight ?? 0));
   }
-  if (n) centreOn((x0 + x1) / 2, (y0 + y1) / 2); else centreOn(FW / 2, FH / 2);
+  // Nothing searched or filtered: back to the opening view (closest step, PREMIERE! centred).
+  if (!q && !artist && home) { step = 0; scale = STEPS[0]; centreOn(home.x + home.wd / 2, home.y + (home.ht + txtOf(home).offsetHeight) / 2); }
+  else if (n) centreOn((x0 + x1) / 2, (y0 + y1) / 2); else centreOn(FW / 2, FH / 2);
   apply(true);
 }
 
 const txtOf = it => it.el.querySelector('.txt');
+// The opening view centres on the current exhibition PREMIERE!, image and text.
+const home = items.find(it => it.w.cat === 'Ausstellungen' && it.w.title === 'PREMIERE!');
 // Hover: the card (image + text) tips subtly toward the cursor in 3D.
 const SKEW = 6; // max degrees
 let tipped = null;
@@ -214,8 +284,10 @@ view.addEventListener('pointerup', e => {
   if (!d || d.moved >= 4) return;
   view.releasePointerCapture(e.pointerId);
   const at = document.elementsFromPoint(e.clientX, e.clientY);
-  const hit = at.find(el => el.classList?.contains('item'));
-  const it = hit && items.find(i => i.el === hit); if (!it) return;
+  if (at.some(el => el.matches?.('.cta'))) return; // the overlay comes later
+  const link = at.find(el => el.matches?.('.links a')); if (link) { open(link.href, '_blank'); return; }
+  const hit = at.map(el => el.closest?.('.item')).find(Boolean);
+  const it = hit && items.find(i => i.el === hit); if (!it || hit.classList.contains('complete')) return;
   open(it.w.url, '_blank');
 });
 // Wheel / trackpad: one zoom step per gesture, anchored at the cursor.
@@ -229,29 +301,30 @@ zin.onclick = () => zoomTo(step - 1);
 zout.onclick = () => zoomTo(step + 1);
 
 // Navigation panels
-const pf = document.querySelector('.panel.filter'), pm = document.querySelector('.panel.menu');
+const pm = document.querySelector('.panel.menu'), sections = pm.querySelector('.sections');
 const counts = {}; works.forEach(w => { counts[w.cat] = (counts[w.cat] || 0) + 1; });
-const top = CATS.filter(c => counts[c]).map(c => [c, counts[c]]);
-pf.innerHTML = [['', works.length], ...top].map(([a, n]) => `<button data-a="${a}">${a || 'Alle'} <span>(${n})</span></button>`).join('');
-pf.onclick = e => {
+sections.innerHTML = CATS.filter(c => counts[c]).map(c => `<button data-a="${c}">${c} <span>(${counts[c]})</span></button>`).join('');
+// Menu sections show their cards; clicking the active one again shows everything (and returns to PREMIERE!).
+sections.onclick = e => {
   const b = e.target.closest('button'); if (!b) return;
-  // Picking a category clears the search, so the two never combine into an empty field.
-  query = ''; document.querySelector('.bar input').value = '';
-  artist = b.dataset.a; pf.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); layout();
+  // Picking a section clears the search, so the two never combine into an empty field.
+  // The section's name shows in the field (as a label: it filters by section, not by text).
+  query = ''; setFilter(b.dataset.a === artist ? '' : b.dataset.a); document.querySelector('.bar input').value = artist;
+  pm.hidden = true; // close, so the panel doesn't cover the result
+  layout();
 };
-pf.firstChild.classList.add('on');
 const ps = document.querySelector('.panel.suggest'), input = document.querySelector('.bar input');
-const setFilter = a => { artist = a; pf.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.a === a)); };
-document.querySelector('.tfilter').onclick = () => { pf.hidden = !pf.hidden; pm.hidden = ps.hidden = true; };
+const setFilter = a => { artist = a; sections.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.a === a)); };
 // Language: switches the highlight only; the content is German either way for now.
 const lang = document.querySelector('.lang');
 lang.onclick = e => { const b = e.target.closest('button'); if (!b) return;
   lang.querySelectorAll('button').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); }); };
-document.querySelector('.tmenu').onclick = () => { pm.hidden = !pm.hidden; pf.hidden = ps.hidden = true; };
+document.querySelector('.tmenu').onclick = () => { pm.hidden = !pm.hidden; ps.hidden = true; };
 // Search always covers everything: typing resets the filter to all.
 input.addEventListener('input', e => {
   query = e.target.value.trim(); ps.hidden = !!query;
-  if (query && artist) setFilter('');
+  // Typing over a section's name, or clearing it, drops the section too.
+  if (artist) setFilter('');
   layout();
 });
 // Suggestions on focus: what most visitors look for. q = search term, cat = optional filter with it.
@@ -267,20 +340,18 @@ ps.onclick = e => {
   const [, q, cat = ''] = SUGGEST[b.dataset.i];
   input.value = query = q; setFilter(cat); ps.hidden = true; input.blur(); layout();
 };
-input.addEventListener('focus', () => { if (!input.value) { ps.hidden = false; pf.hidden = pm.hidden = true; } });
+const clear = document.querySelector('.clear');
+clear.addEventListener('pointerdown', e => e.preventDefault()); // keep focus in the field
+clear.onclick = () => { input.value = ''; input.dispatchEvent(new Event('input')); input.focus(); };
+input.addEventListener('focus', () => { if (!input.value) { ps.hidden = false; pm.hidden = true; } else if (artist && !query) input.select(); }); // a section name is replaced by typing
 input.addEventListener('blur', () => { ps.hidden = true; });
-addEventListener('keydown', e => { if (e.key === 'Escape') { pf.hidden = pm.hidden = ps.hidden = true; } });
+addEventListener('keydown', e => { if (e.key === 'Escape') { pm.hidden = ps.hidden = true; } });
 addEventListener('resize', () => { clamp(); apply(false); });
 
-layout();
-// Open on the current exhibition PREMIERE!, image and text centred in the window.
-const home = items.find(it => it.w.cat === 'Ausstellungen' && it.w.title === 'PREMIERE!');
-const goHome = ease => { if (home) { centreOn(home.x + home.wd / 2, home.y + (home.ht + txtOf(home).offsetHeight) / 2); apply(ease); } };
-goHome(false);
-// Logo: back to the opening view — search and filter cleared, panels shut, closest step, PREMIERE! centred.
+layout(); apply(false); // open on the opening view without easing in
+// Logo: back to the opening view — search and filter cleared, panels shut.
 document.querySelector('.logo').onclick = () => {
-  query = ''; input.value = ''; setFilter(''); pf.hidden = pm.hidden = ps.hidden = true;
-  step = 0; scale = STEPS[0]; layout(); goHome(true);
+  query = ''; input.value = ''; setFilter(''); pm.hidden = ps.hidden = true; layout();
 };
 </script>
 </body>
