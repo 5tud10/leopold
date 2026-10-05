@@ -19,14 +19,6 @@
   .item { position: absolute; left: 0; top: 0; transition: transform .5s cubic-bezier(.6, 0, .2, 1), opacity .3s; }
   .item[hidden] { display: none; }
   .item img { display: block; width: 100%; height: 100%; object-fit: cover; background: #ececea; -webkit-user-drag: none; user-select: none; }
-  .three { width: 100%; height: 100%; position: relative; }
-  .three canvas { display: block; width: 100%; height: 100%; }
-  .proj { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); display: flex; align-items: center;
-    border: 1px solid var(--black); background: var(--white); white-space: nowrap; }
-  .proj span { padding: 0 10px; }
-  .proj button { width: 24px; height: 24px; border: 0; border-left: 1px solid var(--black); background: none; color: inherit; font: inherit; cursor: pointer; padding: 0; }
-  .proj button:hover { background: var(--black); color: var(--white); }
-  body[data-step="2"] .proj { display: none; }
   .tilt { position: relative; width: 100%; height: 100%; transition: transform .35s ease-out; }
   .item .txt { position: absolute; top: 100%; left: 0; width: 100%; padding-top: 6px; transition: opacity .3s; }
   .item .k { opacity: .5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -79,12 +71,6 @@
   @media (max-width: 460px) { .nav { top: 16px; left: 16px; } }
   .count { position: fixed; left: 10px; bottom: 10px; padding: 2px 4px; background: var(--white); color: rgba(23, 23, 23, .5); pointer-events: none; }
 </style>
-<script type="importmap">
-{ "imports": {
-  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
-  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
-} }
-</script>
 </head>
 <body data-step="0">
 <div class="view"><div class="field"></div></div>
@@ -111,26 +97,15 @@
 </div>
 <div class="count"></div>
 <script type="module">
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 const CELL = 480, STEPS = [1.4, 1, 0.23]; // cell pitch at scale 1 (css px), scale per zoom step
 const view = document.querySelector('.view'), field = document.querySelector('.field');
 const zin = document.querySelector('.zin'), zout = document.querySelector('.zout');
 // Site content, current exhibitions and programme first so they take the centre.
 const CATS = ['Ausstellungen', 'Programm', 'Besuch', 'Sammlung', 'Museum', 'Forschung', 'Engagement', 'Vermietung', 'Presse', 'Info'];
-// The two 3D models from the figure and museum explorations, mixed in with the posts.
-const OBJECTS = [
-  // Not posts: big interactive visuals (size in cells), no text, placed in the first ring around the centre.
-  // at: preferred spot in the default view, in cells from the field's centre (apart, either side of it).
-  { three: 'figure', cat: 'Sammlung', title: 'Figur', w: 1.15, h: 1.65, at: [-1.6, 0] },
-  { three: 'museum', cat: 'Museum', title: 'Das Leopold Museum', w: 1.75, h: 1.15, at: [1.8, .2] },
-];
-const works = [...OBJECTS, ...await (await fetch('items.json')).json()].sort((a, b) => CATS.indexOf(a.cat) - CATS.indexOf(b.cat));
+const works = (await (await fetch('items.json')).json()).sort((a, b) => CATS.indexOf(a.cat) - CATS.indexOf(b.cat));
 
 // Field: a square of cells, odd columns dropped half a cell, small fixed jitter per cell.
-const COLS = Math.ceil(Math.sqrt(works.length)), ROWS = Math.ceil(works.length / COLS) + 2; // +1 row of room for the visuals
+const COLS = Math.ceil(Math.sqrt(works.length)), ROWS = Math.ceil(works.length / COLS) + 1;
 let seed = 1918; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
 const cells = [];
 for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++)
@@ -143,15 +118,6 @@ const order = cells.map((c, i) => i).sort((a, b) =>
 const esc = t => t.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const items = works.map(w => {
   // Equal area per item, uncropped; room left below for the text.
-  if (w.three) {
-    const el = document.createElement('div'); el.className = 'item big';
-    const wd = w.w * CELL, ht = w.h * CELL;
-    el.style.width = wd + 'px'; el.style.height = ht + 'px';
-    const img = document.createElement('div'); img.className = 'three'; img.append(document.createElement('canvas'));
-    if (w.three === 'figure') img.insertAdjacentHTML('beforeend', '<div class="proj"><span></span><button data-d="-1" aria-label="Vorheriges Werk">‹</button><button data-d="1" aria-label="Nächstes Werk">›</button></div>');
-    el.append(img); field.append(el);
-    return { w, el, img, wd, ht, x: 0, y: 0, res: 1 };
-  }
   const s = CELL * .6, k = Math.min(1, CELL * .66 / (s * Math.max(Math.sqrt(w.r), 1 / Math.sqrt(w.r))));
   const wd = s * Math.sqrt(w.r) * k, ht = wd / w.r;
   const el = document.createElement('div'); el.className = 'item';
@@ -176,7 +142,6 @@ function apply(ease) {
   document.body.dataset.step = step;
   zin.disabled = step === 0; zout.disabled = step === STEPS.length - 1;
   clearTimeout(apply.t); apply.t = setTimeout(load, ease ? 650 : 120);
-  sharpen3D();
 }
 // Load only what is on screen: museum preview when small, the larger file at the closest step.
 function load() {
@@ -199,38 +164,17 @@ function clamp() {
 
 // Search + filter: matching works take the cells nearest the centre.
 let query = '', artist = '';
-const overlap = (c, x, y, w, h) => { const cw = c.w ?? CELL, ch = c.h ?? CELL;
-  return Math.max(0, Math.min(c.x + cw, x + w) - Math.max(c.x, x)) * Math.max(0, Math.min(c.y + ch, y + h) - Math.max(c.y, y)); };
 function layout() {
   const q = query.toLowerCase();
-  // Visuals first (only with no search, and in "Alle" or their own category); every cell
-  // they cover by more than a quarter is taken, so posts flow around them.
-  const taken = new Set();
-  for (const it of items) if (it.w.three) {
-    const on = !q && (!artist || artist === it.w.cat);
-    it.el.hidden = !on; if (!on) continue;
-    const fits = i => { const c = cells[i]; const x = c.x + CELL / 2 - it.wd / 2, y = c.y + CELL / 2 - it.ht / 2;
-      return x >= 0 && y >= 0 && x + it.wd <= FW && y + it.ht <= FH && ![...taken].some(t => overlap(cells[t], x, y, it.wd, it.ht) > 0) ? { x, y } : null; };
-    const tx = FW / 2 + it.w.at[0] * CELL, ty = FH / 2 + it.w.at[1] * CELL;
-    const near = artist ? order : [...order].sort((a, b) => Math.hypot(cells[a].x + CELL / 2 - tx, cells[a].y + CELL / 2 - ty) - Math.hypot(cells[b].x + CELL / 2 - tx, cells[b].y + CELL / 2 - ty));
-    const k = near.find(fits);
-    if (k === undefined) { it.el.hidden = true; continue; }
-    const { x, y } = fits(k); it.x = x; it.y = y;
-    // A post sits in the middle two thirds of its cell's width, image plus text down to ~95% of its height.
-    cells.forEach((c, i) => { if (overlap({ x: c.x + CELL * .17, y: c.y + CELL * .02, w: CELL * .66, h: CELL * .93 }, x, y, it.wd, it.ht) > 0) taken.add(i); });
-    it.el.style.transform = `translate(${x}px, ${y}px)`;
-  }
-  const free = order.filter(i => !taken.has(i));
   let n = 0;
   for (const it of items) {
-    if (it.w.three) continue;
     const on = (!artist || it.w.cat === artist) && (!q || [it.w.cat, it.w.kicker, it.w.title, it.w.sub, it.w.text, it.w.when].join(' ').toLowerCase().includes(q));
     it.el.hidden = !on; if (!on) continue;
-    const c = cells[free[n++]];
+    const c = cells[order[n++]];
     it.x = c.x + (CELL - it.wd) / 2; it.y = c.y + (CELL * .72 - it.ht) / 2;
     it.el.style.transform = `translate(${it.x}px, ${it.y}px)`;
   }
-  document.querySelector('.count').textContent = n + ' / ' + (works.length - OBJECTS.length);
+  document.querySelector('.count').textContent = n + ' / ' + works.length;
   // Centre the view on what is showing (captions included), not on the field.
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
   for (const it of items) if (!it.el.hidden) {
@@ -246,7 +190,7 @@ const txtOf = it => it.el.querySelector('.txt');
 const SKEW = 6; // max degrees
 let tipped = null;
 view.addEventListener('pointermove', e => {
-  const el = !drag && e.pointerType === 'mouse' ? e.target.closest?.('.item:not(.big)') : null;
+  const el = !drag && e.pointerType === 'mouse' ? e.target.closest?.('.item') : null;
   if (tipped && tipped !== el) { tipped.firstChild.style.transform = ''; tipped = null; }
   if (!el) return;
   const r = el.firstChild.getBoundingClientRect(), u = (e.clientX - r.left) / r.width - .5, v = (e.clientY - r.top) / r.height - .5;
@@ -270,11 +214,9 @@ view.addEventListener('pointerup', e => {
   if (!d || d.moved >= 4) return;
   view.releasePointerCapture(e.pointerId);
   const at = document.elementsFromPoint(e.clientX, e.clientY);
-  const btn = at.find(el => el.matches?.('.proj button'));
-  if (btn) { cycleProjection(+btn.dataset.d); return; }
   const hit = at.find(el => el.classList?.contains('item'));
   const it = hit && items.find(i => i.el === hit); if (!it) return;
-  if (!it.w.three) open(it.w.url, '_blank');
+  open(it.w.url, '_blank');
 });
 // Wheel / trackpad: one zoom step per gesture, anchored at the cursor.
 let acc = 0, lock = 0;
@@ -288,9 +230,9 @@ zout.onclick = () => zoomTo(step + 1);
 
 // Navigation panels
 const pf = document.querySelector('.panel.filter'), pm = document.querySelector('.panel.menu');
-const counts = {}; works.forEach(w => { if (!w.three) counts[w.cat] = (counts[w.cat] || 0) + 1; });
+const counts = {}; works.forEach(w => { counts[w.cat] = (counts[w.cat] || 0) + 1; });
 const top = CATS.filter(c => counts[c]).map(c => [c, counts[c]]);
-pf.innerHTML = [['', works.length - OBJECTS.length], ...top].map(([a, n]) => `<button data-a="${a}">${a || 'Alle'} <span>(${n})</span></button>`).join('');
+pf.innerHTML = [['', works.length], ...top].map(([a, n]) => `<button data-a="${a}">${a || 'Alle'} <span>(${n})</span></button>`).join('');
 pf.onclick = e => {
   const b = e.target.closest('button'); if (!b) return;
   // Picking a category clears the search, so the two never combine into an empty field.
@@ -329,122 +271,6 @@ input.addEventListener('focus', () => { if (!input.value) { ps.hidden = false; p
 input.addEventListener('blur', () => { ps.hidden = true; });
 addEventListener('keydown', e => { if (e.key === 'Escape') { pf.hidden = pm.hidden = ps.hidden = true; } });
 addEventListener('resize', () => { clamp(); apply(false); });
-
-// ---- 3D cards: figure (artwork projections) and museum (plain) ----
-// Each renders into its own canvas, sharp at every zoom step, only while on screen.
-// Hovering a model skews it slightly toward the cursor (camera moves, so the projection stays put).
-let hover = null; // { canvas, u, v } — pointer position over a model canvas, -1…1
-view.addEventListener('pointermove', e => {
-  const c = !drag && e.pointerType === 'mouse' && e.target.matches?.('.three canvas') ? e.target : null;
-  if (!c) { hover = null; return; }
-  const r = c.getBoundingClientRect();
-  hover = { canvas: c, u: (e.clientX - r.left) / r.width * 2 - 1, v: (e.clientY - r.top) / r.height * 2 - 1 };
-});
-view.addEventListener('pointerleave', () => { hover = null; });
-
-// Figure material: the artwork cast along x, y and z and blended by surface direction (as in ../figure/).
-const tri = { triMap: { value: null }, triScale: { value: 1 }, triAspect: { value: 1 } };
-const figureMaterial = new THREE.MeshStandardMaterial({ roughness: 0.78, metalness: 0 });
-figureMaterial.onBeforeCompile = shader => {
-  Object.assign(shader.uniforms, tri);
-  shader.vertexShader = shader.vertexShader
-    .replace('#include <common>', '#include <common>\nvarying vec3 vTriPos;\nvarying vec3 vTriNormal;')
-    .replace('#include <begin_vertex>', `#include <begin_vertex>
-      vTriPos = (modelMatrix * vec4(transformed, 1.0)).xyz;
-      vTriNormal = normalize(mat3(modelMatrix) * objectNormal);`);
-  shader.fragmentShader = shader.fragmentShader
-    .replace('#include <common>', `#include <common>
-      uniform sampler2D triMap; uniform float triScale; uniform float triAspect;
-      varying vec3 vTriPos; varying vec3 vTriNormal;
-      vec4 triSample(vec2 p) { return texture2D(triMap, p * triScale * vec2(1.0 / triAspect, 1.0) + 0.5); }`)
-    .replace('#include <map_fragment>', `
-      vec3 tw = pow(abs(normalize(vTriNormal)), vec3(4.0));
-      tw /= tw.x + tw.y + tw.z;
-      diffuseColor *= triSample(vTriPos.zy) * tw.x + triSample(vTriPos.xz) * tw.y + triSample(vTriPos.xy) * tw.z;`);
-};
-
-const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-const views = items.filter(it => it.w.three).map(it => {
-  const fig = it.w.three === 'figure';
-  const renderer = new THREE.WebGLRenderer({ canvas: it.img.querySelector('canvas'), antialias: true, alpha: true });
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  const scene = new THREE.Scene();
-  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
-  scene.environmentIntensity = fig ? 0.6 : 0.15;
-  const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-2, 3, 4);
-  const rim = new THREE.DirectionalLight(0xffffff, 1.2); rim.position.set(3, 1, -3);
-  scene.add(key, rim, new THREE.HemisphereLight(0xffffff, 0xdddddd, 0.6));
-  // Museum: the lighting of ../museum/ (strong key, little fill) so the white faces separate.
-  if (!fig) { key.intensity = 2.6; key.position.set(-4, 3, 2); rim.intensity = 0.5; scene.children.at(-1).intensity = 0.25;
-    // ...and its soft shadows from the key light (balcony, entrance, roof edges).
-    renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    key.castShadow = true; key.shadow.mapSize.set(2048, 2048); }
-  const camera = new THREE.PerspectiveCamera(30, it.wd / it.ht, 0.01, 100);
-  const v = { it, renderer, scene, camera, size: null, base: null, yaw: 0, pitch: 0 };
-  loader.load(fig ? '../figure/figure.glb' : '../museum/museum.glb', gltf => {
-    const model = gltf.scene;
-    const mat = fig ? figureMaterial : new THREE.MeshStandardMaterial({ color: 0xf2f2f0, roughness: 0.9 });
-    model.traverse(o => { if (o.isMesh) { o.material = mat; o.castShadow = o.receiveShadow = !fig; if (fig || !o.geometry.attributes.normal) o.geometry.computeVertexNormals(); } });
-    const box = new THREE.Box3().setFromObject(model), size = box.getSize(new THREE.Vector3());
-    // The model stays put (the projection is in world space, as in ../figure/); the camera orbits it.
-    model.position.sub(box.getCenter(new THREE.Vector3())); scene.add(model); v.size = size;
-    if (fig) tri.triScale.value = 1 / size.y;
-    // Tight framing that still fits while orbiting: height ~92%, the footprint's diagonal ~95% of the width.
-    const t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)), diag = Math.hypot(size.x, size.z);
-    const dist = Math.max(size.y / 2 / .92, diag / 2 / .95 / camera.aspect) / t + diag / 2;
-    v.base = { dist, az: fig ? 0 : THREE.MathUtils.degToRad(-38), el: fig ? 0 : THREE.MathUtils.degToRad(6) };
-    if (!fig) { // shadow frustum fitted around the model, as in ../museum/
-      const r = size.length() / 2, key = scene.children.find(o => o.castShadow);
-      key.position.normalize().multiplyScalar(r * 2);
-      Object.assign(key.shadow.camera, { left: -r, right: r, top: r, bottom: -r, near: r * .5, far: r * 3.5 });
-      key.shadow.camera.updateProjectionMatrix(); key.shadow.bias = -0.0002; key.shadow.normalBias = r * 0.002;
-    }
-    camera.near = dist / 100; camera.far = dist * 10; camera.updateProjectionMatrix();
-  });
-  return v;
-});
-function sharpen3D() {
-  for (const v of views ?? []) { v.renderer.setPixelRatio(Math.min(devicePixelRatio, 2) * scale); v.renderer.setSize(v.it.wd, v.it.ht, false); }
-}
-sharpen3D();
-
-const projections = await (await fetch('../figure/textures/works.json')).json();
-const texCache = new Map();
-// -1 = no projection: a black figure (the default).
-const black = new THREE.DataTexture(new Uint8Array([0, 0, 0, 255]), 1, 1); black.needsUpdate = true;
-let proj = -1;
-async function cycleProjection(d) {
-  proj = (proj + 1 + d + projections.length + 1) % (projections.length + 1) - 1;
-  const label = items.find(it => it.w.three === 'figure').el.querySelector('.proj span');
-  if (proj < 0) { tri.triMap.value = black; tri.triAspect.value = 1; label.textContent = 'Keine Projektion'; return; }
-  const w = projections[proj], src = '../figure/' + w.src;
-  if (!texCache.has(src)) texCache.set(src, new THREE.TextureLoader().loadAsync(src).then(t => {
-    t.colorSpace = THREE.SRGBColorSpace; t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping; t.anisotropy = 8; return t;
-  }));
-  const t = await texCache.get(src);
-  if (projections[proj] !== w) return; // a later click won
-  tri.triMap.value = t; tri.triAspect.value = t.image.width / t.image.height;
-  label.textContent = `${w.title} · ${w.artist}`;
-}
-cycleProjection(0);
-
-(function frame() {
-  for (const v of views) {
-    const { it } = v;
-    if (!v.size || it.el.hidden) continue;
-    const sx = px + it.x * scale, sy = py + it.y * scale;
-    if (sx > innerWidth || sy > innerHeight || sx + it.wd * scale < 0 || sy + it.ht * scale < 0) continue;
-    const on = hover && hover.canvas === v.renderer.domElement;
-    v.yaw += ((on ? hover.u * .26 : 0) - v.yaw) * .08;      // up to ~15° sideways
-    v.pitch += ((on ? hover.v * .1 : 0) - v.pitch) * .08;   // ~6° up/down
-    if (!on && Math.abs(v.yaw) + Math.abs(v.pitch) < 1e-4) v.yaw = v.pitch = 0; // settle exactly at rest
-    const { dist, az, el } = v.base, a = az - v.yaw, e = el + v.pitch;
-    v.camera.position.set(Math.sin(a) * Math.cos(e), Math.sin(e), Math.cos(a) * Math.cos(e)).multiplyScalar(dist);
-    v.camera.lookAt(0, 0, 0);
-    v.renderer.render(v.scene, v.camera);
-  }
-  requestAnimationFrame(frame);
-})();
 
 layout();
 // Open on the current exhibition PREMIERE!, image and text centred in the window.
