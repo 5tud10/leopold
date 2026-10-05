@@ -27,6 +27,8 @@ external museum link. Open questions for the start of that session — see Open 
 - Repo stays public and low-profile: pages get `noindex`, docs describe the work only.
 
 ## Postponed
+- **3D visuals in Explore** (figure + museum models) — removed 2026-10-05 ("we will find a better way to
+  implement them later"). Restore: `git revert 26aa7fb`.
 - **Logo overview for Explore** — built and removed 2026-10-02, kept as an option. The overview step
   becomes the logo from `grid/shape.svg` tiled (32 columns) with the posts' images; the page loads on it,
   then zooms into PREMIERE!. Restore: `git revert 54c7c0d` (re-applies commit 3ab0e05; resolve
