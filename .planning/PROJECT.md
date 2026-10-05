@@ -27,4 +27,8 @@ judges every exploration by eye; kept ones stay online, dropped ones are removed
 
 ## Decisions (stable)
 - Pages stay plain HTML/JS, no framework, no build step for the page itself.
-- Shared look: page white `#f9f9f9`, black `#171717`, 9px uppercase monospace; top-left `Leopold` link.
+- Shared look: page white `#f9f9f9`, black `#171717`, 9px uppercase monospace; top-left `Leopold` link
+  (Explore is the exception for now — its logo resets the view; see STATE Open Issues).
+- Islands/Ring/Particles use the 11 hand-picked works (`islands/build.py`); the random sample was rejected.
+- Ring: clicked work flies out of the ring to the centre, ring stops and fades; Escape/click returns.
+- Hosting: GitHub Pages from `5tud10/leopold` (`main`), pushed via the `github-5tud10` SSH alias.

@@ -12,7 +12,10 @@ Try many key-visual and browsing ideas quickly; keep what works.
 The museum's site content (exhibitions, programme, visit, collection…) as one explorable field,
 mixed with interactive 3D visuals.
 - [x] Content crawl + cards, categories, search, 3 zoom steps, opens on PREMIERE!
-- [x] Figure (switchable projections) and museum model as big interactive visuals (hover skew)
+- [x] Figure (switchable projections) and museum model as big interactive visuals (hover skew) — removed 2026-10-05, postponed
 - [x] Search suggestions ("Häufig gesucht"); category and search reset each other
-- [ ] Content opens as an overlay above the canvas, not as an external link (next session)
+- [x] Navigation from Figma: logo row, search with ×, zoom, menu with sections + Sprache (2026-10-05)
+- [x] Cards that open vs. complete cards: "+" marker, framed cards (hours, tickets, social), section colours (2026-10-05)
+- [ ] Content opens as an overlay above the canvas (cards that open + "Tickets kaufen"), not as an external link
+- [ ] Deeper scrape: body text, images, hours/prices for complete cards and overlays
 - [ ] Further steps — to be decided (logo overview parked as an option)

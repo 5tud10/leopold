@@ -27,7 +27,17 @@ Hard-won, project-specific. Kept here instead of the vault (self-contained proje
 - Centring a filtered set: sort cells by their centre (not top-left corner — that biased the set
   down-right), then centre the view on the bounding box of what is visible. `[tested 2026-10-02]`
 
+## Colour
+- **Pastel palette for many categories**: at a fixed high lightness, pinks/blues/purples run out of
+  gamut long before yellow/green, so equal-L palettes come out faint and near-identical (pairs ~1–2 ΔE).
+  Fix the chroma instead (OKLCH .06), space hues 40° apart, and per hue take the lightest L that is
+  still in sRGB gamut → every pair ≥ 4.2 ΔE (×100, OKLab), ≥ 6.8 from the page white, black text
+  ≥ 12.4:1. `[tested 2026-10-05]`
+
 ## Process
+- **GitHub keeps rewritten commits reachable by SHA**: after `git filter-repo` + force-push, the old
+  commit still answered `gh api repos/<o>/<r>/commits/<old-sha>`. Only deleting and recreating the repo
+  removed it ("No commit found for SHA"). `[tested 2026-10-05]`
 - Keep a rejected-but-liked feature as an option with `git revert` instead of deleting it by hand: the
   revert commit is the restore handle (`git revert <revert-sha>`), and a `git revert --no-commit … &&
   git revert --abort` dry run proves it still applies. Record it under Postponed. `[tested 2026-10-02]`
@@ -40,3 +50,10 @@ Hard-won, project-specific. Kept here instead of the vault (self-contained proje
 - Prefer measured checks over eyeballing for checkable claims (offset from centre in px, overlap of
   boxes, canvas sizes, fps over rAF) — and run each new check once against a known-bad version first
   (the overlap and text-selection checks both caught the bug before passing the fix). `[tested 2026-10-02]`
+- **Touching reads as clear**: an overlap check with a ">1px" threshold passed a frame whose bottom
+  sat exactly on the next card (0px gap). Check for a minimum *gap*, not for overlap. And a control
+  must reproduce the old layout exactly — the first control kept the new positioning and also passed.
+  `[tested 2026-10-05]`
+- **Playwright ignores unknown `newPage` options**: `viewportSize:` is silently dropped (the option is
+  `viewport:`), so every run used the default 1280×720. Assert `innerWidth`/`innerHeight` in the
+  script. `[tested 2026-10-05]`

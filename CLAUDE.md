@@ -19,14 +19,16 @@ vault entry; state, decisions and learnings all live in `.planning/`.
 - **The museum's servers send no CORS headers**: `<img>` may hotlink, WebGL may not — anything
   sampled in a shader needs a local copy (see `islands/images/`, `ring/images/`).
 - Each exploration = one folder with its own `index.html`; plain JS, no build step; three.js only via
-  importmap (jsdelivr `three@0.170.0`). Top-left `Leopold` link to `../` on every page; add the
+  importmap (jsdelivr `three@0.170.0`). Top-left `Leopold` link to `../` on every page (exception:
+  `explore/`, whose logo resets the view — back link still to be decided); add the
   folder to the root `index.html` list; remove it from that list when an exploration is dropped.
 - Shared look: `--white #f9f9f9`, `--black #171717`, 9px uppercase monospace (`ui-monospace`).
 - Verify visually before pushing: headless screenshots + measured checks (see LEARNINGS).
 
 ## Build order
-UI-first, one exploration at a time. Verify headless, then push — the owner reviews on the live Pages
-site — and iterate on what comes back.
+UI-first, one exploration at a time. Verify headless, then hand over the localhost link — the owner
+reviews on `http://localhost:8808/<folder>/` — and iterate on what comes back. Push to Pages only when
+the owner says so (since 2026-10-05).
 
 ## Session start
 Read `.planning/STATE.md`. Before touching an area, check `.planning/LEARNINGS.md`.

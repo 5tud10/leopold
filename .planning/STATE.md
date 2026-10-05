@@ -4,27 +4,38 @@
 Phase 2 — Explore (zoomable grid as site navigation).
 
 ## Current Focus
-Explore is live: 52 content cards, figure + museum visuals (hover skew), search with "Häufig gesucht"
-suggestions, category/search resetting each other, overview with category + title, opens on PREMIERE!.
-Latest round reviewed as "ok for a first version" for the (now removed) logo view; no open requests.
-Next session (owner, 2026-10-02): open content as an **overlay above the canvas** instead of the
-external museum link. Open questions for the start of that session — see Open Issues.
+Explore, round 2 (2026-10-05, pushed as `fbc4de3`, live at 5tud10.github.io/leopold/explore/). Navigation
+rebuilt from Figma (`Leopold Museum (Copy)` node 4139:75): logo row over SUCHEN − + ☰; the menu holds
+the 9 sections (filter gone) plus a Sprache DE/EN row (highlight only). Cards: pastel colour per section
+(none for Besuch), "+" on cards that open, framed "complete" cards for Öffnungszeiten, Tickets (with a
+"Tickets kaufen" button, no action yet) and Social Media (icon + name rows). 3D visuals removed (Postponed).
+Working mode now: **iterate on localhost:8808, push only when the owner says** (auto-memory).
+Next up: answer the Open Issues below, then the content overlay (Tickets kaufen + cards that open).
 
 ## Decided
-- Islands/Ring/Particles use the 11 hand-picked works (`islands/build.py`) — the random collection
-  sample was rejected ("not happy with the artwork selection").
-- Explore: click opens the item at every zoom step (no click-to-zoom); search resets the category to
-  Alle and picking a category clears the search (Explore + Browse); filtered sets centre in the window;
-  zoom steps 1.4 / 1 / 0.23; overview shows category + title; zoom buttons grey out at the limits; no
-  text selection while dragging.
-- Explore visuals: no post text, bigger, placed apart (figure left, museum right of centre); figure
-  starts black ("Keine Projektion"); museum plain with shadows; slight skew toward the cursor only while
-  hovered (camera moves, projection stays put). No drag-rotate — it fought the page's drag-to-pan;
-  no mouse-follow when not hovered.
-- Explore search: on focus, "Häufig gesucht" suggestions (tickets, hours, current/upcoming exhibitions,
-  tours, kids, directions, café, shop, accessibility, contact).
-- Ring: clicked work flies out of the ring to the centre, ring stops and fades; Escape/click returns.
-- Repo stays public and low-profile: pages get `noindex`, docs describe the work only.
+- Explore field: zoom steps 1.4 / 1 / 0.23; zoom buttons grey out at the limits; overview shows
+  category + title; no text selection while dragging; a search resets the section and picking a
+  section clears the search.
+- Explore click: cards that open open at every zoom step (still the external museum link until the
+  overlay exists); complete (framed) cards and the Tickets button open nothing; social rows link out.
+- Explore navigation (Figma 4139:75): logo row 127px with the logo at 1.5× the Figma size (206px), centred
+  where Figma has it; bar SUCHEN − + ☰ (Helvetica 20px, not ABC Areal — "Helvetica for everyone");
+  logo click = back to the opening view. SUCHEN placeholder grey (45%), typed text black; × from the
+  typeface clears. Panels match the bar (49px rows, 20px), scroll when taller than the window.
+- Menu = the 9 sections (no ↗ links, no "Leopold Explorations"), then a 2px line, then "Sprache DE / EN".
+  Picking a section closes the menu, shows its name in the search field (a label: it filters by
+  section); clicking it again, ×, or emptying the field returns to the opening view on PREMIERE!.
+- Search suggestions stay as visitor tasks under "Häufig gesucht"; Presse merged into Info.
+- Filters/searches centre the middle of their results (one-card centring was tried and undone).
+- Card kinds: picture cards that open (image + caption + "+"; "+" hidden when zoomed out) and framed
+  complete cards (black frame like the nav, image on top, content rows below, page white — no section
+  colour). Info cards are never text-only ("info cant be text only"). Frames shrink their image to fit
+  `FRAME = CELL * .8` and sit near the top of their cell so they clear the card below.
+- Section colours (OKLCH chroma .06, hues 40° apart, lightest tone in gamut; yellow given): Ausstellungen
+  #fbf1b0, Programm #ffd7b9, Sammlung #ffcac9, Museum #b7edfe, Forschung #c0d8ff, Engagement #fed3ef,
+  Vermietung #c3fcf0, Info #e2d4ff; Besuch none. A 12px panel behind image + caption (spread shadows).
+- Repo stays public and low-profile: pages get `noindex`, docs describe the work only. Repo moved to
+  `5tud10/leopold` (history rewritten without reference-site names; old copy in gitignored `old-history.git/`).
 
 ## Postponed
 - **3D visuals in Explore** (figure + museum models) — removed 2026-10-05 ("we will find a better way to
@@ -35,9 +46,12 @@ external museum link. Open questions for the start of that session — see Open 
   conflicts in `explore/index.html` if Explore changed since) — revisit when asked for "the logo view".
 - Building pale on white — shadows added; darker material if it still reads too faint.
 - Overview captions (2 lines) touch the card below in a few places — 1-line titles if it shows.
+- Info/action cards for the other Besuch pages (Anreise, Café, Shop…) — after the owner judges the three samples.
 - Same zoom steps / 3D on Browse — only if asked.
 
 ## Rejected
+- Explore: filters/searches land on one card centred — "undo" — 2026-10-05
+- Explore: info cards as text only (no image) — "info cant be text only" — 2026-10-05
 - Fluid paint, pixel sort — "remove fluid and sort" — 2026-10-02
 - Hoffmann squares, flip tiles, louvres — "i dont like them" — 2026-10-02
 - Coral growth (reaction-diffusion) — removed — 2026-10-02
@@ -48,6 +62,12 @@ external museum link. Open questions for the start of that session — see Open 
   zoom-through — "dont like any of those" — 2026-10-02
 
 ## Open Issues
+- **Colour when zoomed out** — provisional: colour only as a band around the image, captions on white
+  (a panel around image + caption collides there). Owner to judge.
+- **Row padding** — social rows got 10px; should the Tickets/Öffnungszeiten rows match?
+- **No back link on Explore** — the logo now resets the view; CLAUDE.md still requires a top-left
+  link to `../` on every page. Make Explore an exception, or add a link elsewhere?
+- Hours and prices on the framed cards are typed in by hand (2026-10-05) — must come from the scrape.
 - Overlay content: `items.json` only holds title, subtitle, date and one short excerpt per page — a real
   article overlay needs a fuller scrape (body text, more images, event times/prices) in `scrape.mjs` /
   `build.py`. Decide with the owner first: how much of each page, overlay layout (full-screen sheet vs.
@@ -56,6 +76,10 @@ external museum link. Open questions for the start of that session — see Open 
 - `figure/figure.glb` is output of a generator whose licence excludes the EU.
 
 ## Session Log
+### 2026-10-05
+Repo moved to `5tud10/leopold`, reference-site names scrubbed from code and history. Explore: Figma
+navigation, sections in the menu, search ×/label/reset behaviour, 3D removed, section colours, framed
+complete cards (hours, tickets, social), "+" on cards that open. Pushed `fbc4de3`; now localhost-first.
 ### 2026-10-02
 Built islands, particles, ring, browse, explore (+ removed fluid, sort, hoffmann, tiles, louvres,
 coral, colour). Project files created; Blender sources moved in from the Desktop. Explore iterated:
