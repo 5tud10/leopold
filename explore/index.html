@@ -70,7 +70,8 @@
   .panel .on { background: var(--black); color: var(--white); }
   .panel span { opacity: .45; }
   /* Language row: DE / EN, active one black, the other faded (visual only for now) */
-  .panel .lang { display: flex; align-items: center; gap: 0 .3em; height: 49px; padding: 0 21px; }
+  .panel .lang { display: flex; justify-content: space-between; align-items: center; height: 49px; padding: 0 21px; }
+  .panel .lang i { display: flex; gap: 0 .3em; font-style: normal; }
   .panel .lang button { width: auto; height: auto; padding: 0; border: 0; opacity: .45; }
   .panel .lang button:hover { background: none; color: inherit; opacity: 1; }
   .panel .lang button.on { background: none; color: inherit; opacity: 1; cursor: default; }
@@ -105,7 +106,7 @@
     <a href="https://www.leopoldmuseum.org/de/newsletter" target="_blank">Newsletter <span>↗</span></a>
     <a href="https://www.leopoldmuseum.org/de/kontakt" target="_blank">Kontakt <span>↗</span></a>
     <a href="../">Leopold <span>Explorations</span></a>
-    <div class="lang"><button class="on" aria-pressed="true">DE</button><span>/</span><button aria-pressed="false">EN</button></div>
+    <div class="lang">Language <i><button class="on" aria-pressed="true">DE</button><span>/</span><button aria-pressed="false">EN</button></i></div>
   </div>
 </div>
 <div class="count"></div>
