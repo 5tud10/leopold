@@ -6,8 +6,8 @@ vault entry; state, decisions and learnings all live in `.planning/`.
 
 ## Build & Run
 - Serve locally: `python3 -m http.server 8808` in the repo root → `http://localhost:8808/<folder>/`
-- Deploy: push `main` → GitHub Pages (`https://async-index.github.io/leopold/`). Wait for
-  `gh api repos/async-index/leopold/pages/builds/latest --jq '.status+" "+.commit'` = `built <sha>`,
+- Deploy: push `main` → GitHub Pages (`https://5tud10.github.io/leopold/`). Wait for
+  `gh api repos/5tud10/leopold/pages/builds/latest --jq '.status+" "+.commit'` = `built <sha>`,
   then curl the live page.
 - Data builders (run inside the folder): `grid/build.py`, `islands/build.py`, `ring/build.py`,
   `browse/build.py`, `explore/build.py` (+ `explore/scrape.mjs`, needs `playwright`).
