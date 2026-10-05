@@ -69,6 +69,11 @@
   .panel > :last-child { border-bottom: 0; }
   .panel .on { background: var(--black); color: var(--white); }
   .panel span { opacity: .45; }
+  /* Language row: DE / EN, active one black, the other faded (visual only for now) */
+  .panel .lang { display: flex; align-items: center; gap: 0 .3em; height: 49px; padding: 0 21px; }
+  .panel .lang button { width: auto; height: auto; padding: 0; border: 0; opacity: .45; }
+  .panel .lang button:hover { background: none; color: inherit; opacity: 1; }
+  .panel .lang button.on { background: none; color: inherit; opacity: 1; cursor: default; }
   .panel .head { display: flex; align-items: center; height: 49px; padding: 0 21px; border-bottom: 1px solid var(--black); opacity: .45; }
   @media (max-width: 460px) { .nav { top: 16px; left: 16px; } }
   .count { position: fixed; left: 10px; bottom: 10px; padding: 2px 4px; background: var(--white); color: rgba(23, 23, 23, .5); pointer-events: none; }
@@ -100,6 +105,7 @@
     <a href="https://www.leopoldmuseum.org/de/newsletter" target="_blank">Newsletter <span>↗</span></a>
     <a href="https://www.leopoldmuseum.org/de/kontakt" target="_blank">Kontakt <span>↗</span></a>
     <a href="../">Leopold <span>Explorations</span></a>
+    <div class="lang"><button class="on" aria-pressed="true">DE</button><span>/</span><button aria-pressed="false">EN</button></div>
   </div>
 </div>
 <div class="count"></div>
@@ -294,6 +300,10 @@ pf.firstChild.classList.add('on');
 const ps = document.querySelector('.panel.suggest'), input = document.querySelector('.bar input');
 const setFilter = a => { artist = a; pf.querySelectorAll('button').forEach(x => x.classList.toggle('on', x.dataset.a === a)); };
 document.querySelector('.tfilter').onclick = () => { pf.hidden = !pf.hidden; pm.hidden = ps.hidden = true; };
+// Language: switches the highlight only; the content is German either way for now.
+const lang = document.querySelector('.lang');
+lang.onclick = e => { const b = e.target.closest('button'); if (!b) return;
+  lang.querySelectorAll('button').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); }); };
 document.querySelector('.tmenu').onclick = () => { pm.hidden = !pm.hidden; pf.hidden = ps.hidden = true; };
 // Search always covers everything: typing resets the filter to all.
 input.addEventListener('input', e => {
