@@ -25,6 +25,10 @@ vault entry; state, decisions and learnings all live in `.planning/`.
 - Shared look: `--white #f9f9f9`, `--black #171717`, 9px uppercase monospace (`ui-monospace`).
 - Verify visually before pushing: headless screenshots + measured checks (see LEARNINGS).
 
+## Modern layout (local only)
+- `modern/` is excluded from git via `.git/info/exclude` — never commit, push or link it from the root
+  `index.html` until the owner says so. Same page rules otherwise (noindex, plain JS, no build step).
+
 ## Build order
 UI-first, one exploration at a time. Verify headless, then hand over the localhost link — the owner
 reviews on `http://localhost:8808/<folder>/` — and iterate on what comes back. Push to Pages only when

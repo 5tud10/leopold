@@ -3,7 +3,9 @@
 ## Overview
 Visual explorations around the Leopold Museum: its online collection (onlinecollection.leopoldmuseum.org)
 and its website content (leopoldmuseum.org/de). Each idea is a separate page — key visuals for a home
-page, ways to browse the collection, and a zoomable grid as an alternative site navigation. The owner
+page, ways to browse the collection, and a zoomable grid as an alternative site navigation. Since
+2026-10-08 also a less experimental direction, "modern layout" (working title): a full site prototype
+with a classic layout and modern UI/UX elements, built locally in `modern/` and not published yet. The owner
 judges every exploration by eye; kept ones stay online, dropped ones are removed from the index.
 
 ## Architecture

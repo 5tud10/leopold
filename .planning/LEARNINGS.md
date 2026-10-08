@@ -57,3 +57,7 @@ Hard-won, project-specific. Kept here instead of the vault (self-contained proje
 - **Playwright ignores unknown `newPage` options**: `viewportSize:` is silently dropped (the option is
   `viewport:`), so every run used the default 1280×720. Assert `innerWidth`/`innerHeight` in the
   script. `[tested 2026-10-05]`
+- **Playwright MCP writes only inside the repo**, to the gitignored `.playwright-mcp/`; it refuses the
+  scratchpad. That folder also holds earlier sessions' screenshots, so never `rm` it whole: list it,
+  then delete only this session's files. Reference screenshots that name sites go in `modern/`
+  (local only). `[2026-10-08: about 100 older captures lost]`

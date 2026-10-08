@@ -1,9 +1,19 @@
 # State
 
 ## Current Phase
-Phase 2 — Explore (zoomable grid as site navigation).
+Phase 3 — Modern layout (working title), started 2026-10-08. Phase 2 (Explore) paused, open issues kept below.
 
-## Current Focus
+## Modern layout — Current Focus
+Initialised 2026-10-08: `modern/` (stub page, `localhost:8808/modern/`), excluded from git locally via
+`.git/info/exclude` — not on GitHub, not in the root index. Full site prototype: classic layout + modern
+website UI/UX elements. Content = the Explore crawl (52 items, 9 sections, 2026-10-02 snapshot).
+Look, type and navigation are decided from the owner's references, not carried over from Explore.
+References part 1 noted 2026-10-08 in `modern/REFERENCES.md` (local only, with the client brief).
+Next: references part 2 from the owner → agree page types → build home UI-first.
+
+## Explore
+
+### Focus (paused)
 Explore, round 2 (2026-10-05, pushed as `fbc4de3`, live at 5tud10.github.io/leopold/explore/). Navigation
 rebuilt from Figma (`Leopold Museum (Copy)` node 4139:75): logo row over SUCHEN − + ☰; the menu holds
 the 9 sections (filter gone) plus a Sprache DE/EN row (highlight only). Cards: pastel colour per section
@@ -13,6 +23,8 @@ Working mode now: **iterate on localhost:8808, push only when the owner says** (
 Next up: answer the Open Issues below, then the content overlay (Tickets kaufen + cards that open).
 
 ## Decided
+- Modern layout: folder in leopold, local only (`.git/info/exclude`, not `.gitignore` — that would
+  name it on GitHub); full site prototype; reuses the Explore crawl; look decided from references — 2026-10-08
 - Explore field: zoom steps 1.4 / 1 / 0.23; zoom buttons grey out at the limits; overview shows
   category + title; no text selection while dragging; a search resets the section and picking a
   section clears the search.
@@ -76,6 +88,9 @@ Next up: answer the Open Issues below, then the content overlay (Tickets kaufen 
 - `figure/figure.glb` is output of a generator whose licence excludes the EU.
 
 ## Session Log
+### 2026-10-08
+Modern layout initialised (`modern/`, local only). References part 1 (three sites + the client brief) looked at
+headless and noted in `modern/REFERENCES.md` with screenshots. Next: references part 2.
 ### 2026-10-05
 Repo moved to `5tud10/leopold`, reference-site names scrubbed from code and history. Explore: Figma
 navigation, sections in the menu, search ×/label/reset behaviour, 3D removed, section colours, framed
