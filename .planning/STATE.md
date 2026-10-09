@@ -4,12 +4,19 @@
 Phase 3 — Modern layout (working title), started 2026-10-08. Phase 2 (Explore) paused, open issues kept below.
 
 ## Modern layout — Current Focus
-Initialised 2026-10-08: `modern/` (stub page, `localhost:8808/modern/`), excluded from git locally via
-`.git/info/exclude` — not on GitHub, not in the root index. Full site prototype: classic layout + modern
-website UI/UX elements. Content = the Explore crawl (52 items, 9 sections, 2026-10-02 snapshot).
-Look, type and navigation are decided from the owner's references, not carried over from Explore.
-References part 1 noted 2026-10-08 in `modern/REFERENCES.md` (local only, with the client brief).
-Next: references part 2 from the owner → agree page types → build home UI-first.
+Home page, first draft (2026-10-09) at `localhost:8808/modern/` — local only, as before. Built straight
+from the owner's spec (references part 2 didn't come; not needed so far). Done:
+- **Hero** (Städel): full-bleed current exhibition (Premiere!, original image in `modern/images/`), 90px of
+  page always visible below, title Sabon 48px, subline/dates Areal, centred Tickets kaufen + Mehr erfahren.
+- **Type**: Sabon (titles) + ABC Areal (text), copied from the RightFont library into `modern/fonts/`.
+- **Sidebar** (parker.studio): Menü pill top right (two lines → × transition), opens a 480px column; the page
+  narrows instead of moving. Cards top to bottom: exhibition slideshow (8:9, 3 current shows, 4s crossfade)
+  · opening hours (live Vienna time) + Tickets kaufen expanding into a −/+ selector with total · Programm,
+  Ihr Besuch, Sammlung (link out) · Informationen (5 links) · framed tertiary (links, address, DE/EN pills,
+  Google Maps) · Online Collection ↗ (half height). Column scrolls when longer than the window.
+- Overlay variant (royalsites) kept in the code: `?nav=overlay`. Expanding-cards sidebar saved as
+  `modern/drafts/2026-10-09-expanding-cards.html`.
+Next: owner's review of the sidebar, then the content below the hero.
 
 ## Explore
 
@@ -23,6 +30,11 @@ Working mode now: **iterate on localhost:8808, push only when the owner says** (
 Next up: answer the Open Issues below, then the content overlay (Tickets kaufen + cards that open).
 
 ## Decided
+- Modern home (2026-10-09): sidebar over overlay ("i like the sidebar more"); header narrows when it opens,
+  logo stays; hero ends 90px above the window bottom; logo links to the modern home; Sabon titles + Areal
+  text; title "Premiere!" not in capitals; card titles Sabon; slideshow titles not in capitals; card gap
+  4px, more room inside cards; card colours stay at Explore chroma (halving tried, "undo"); hero keeps Premiere! after it closes
+  11.10 (prototype, date doesn't matter).
 - Modern layout: folder in leopold, local only (`.git/info/exclude`, not `.gitignore` — that would
   name it on GitHub); full site prototype; reuses the Explore crawl; look decided from references — 2026-10-08
 - Explore field: zoom steps 1.4 / 1 / 0.23; zoom buttons grey out at the limits; overview shows
@@ -74,11 +86,13 @@ Next up: answer the Open Issues below, then the content overlay (Tickets kaufen 
   zoom-through — "dont like any of those" — 2026-10-02
 
 ## Open Issues
+- Modern: ticket prices typed in by hand; the selection isn't passed to the museum's ticket page.
+- Modern: Menü pill is white — it will sit on white once the page scrolls past the hero.
+- Modern: slideshow titles are capitalised word by word — breaks on titles with "der", "und"…
 - **Colour when zoomed out** — provisional: colour only as a band around the image, captions on white
   (a panel around image + caption collides there). Owner to judge.
 - **Row padding** — social rows got 10px; should the Tickets/Öffnungszeiten rows match?
-- **No back link on Explore** — the logo now resets the view; CLAUDE.md still requires a top-left
-  link to `../` on every page. Make Explore an exception, or add a link elsewhere?
+- **Explore back link** — CLAUDE.md already makes Explore the exception; where a back link goes is still open.
 - Hours and prices on the framed cards are typed in by hand (2026-10-05) — must come from the scrape.
 - Overlay content: `items.json` only holds title, subtitle, date and one short excerpt per page — a real
   article overlay needs a fuller scrape (body text, more images, event times/prices) in `scrape.mjs` /
@@ -88,6 +102,9 @@ Next up: answer the Open Issues below, then the content overlay (Tickets kaufen 
 - `figure/figure.glb` is output of a generator whose licence excludes the EU.
 
 ## Session Log
+### 2026-10-09
+Modern home, first draft: Städel-style hero, parker-style sidebar of cards (slideshow, hours + ticket
+selector, primary links, Informationen, tertiary, Online Collection), Sabon + Areal. Local only, nothing pushed.
 ### 2026-10-08
 Modern layout initialised (`modern/`, local only). References part 1 (three sites + the client brief) looked at
 headless and noted in `modern/REFERENCES.md` with screenshots. Next: references part 2.

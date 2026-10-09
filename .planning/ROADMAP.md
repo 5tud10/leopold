@@ -25,9 +25,12 @@ A full site prototype that mixes a classic website layout with modern UI/UX elem
 counterpart to the experimental phases. Lives in `modern/`, kept off GitHub (`.git/info/exclude`)
 until the owner says otherwise. Content: the Explore crawl (`explore/items.json` + `images/`).
 - [x] Init: folder, local exclude, stub page, planning (2026-10-08)
-- [ ] References from the owner → what is taken from each (design system notes) — part 1 noted
-  2026-10-08 in `modern/REFERENCES.md`; part 2 next session
+- [x] References from the owner — part 1 noted 2026-10-08 in `modern/REFERENCES.md`; build started from
+  the owner's spec 2026-10-09 (part 2 only if needed)
 - [ ] Page types and navigation agreed (home + which detail/listing pages)
 - [ ] Page shape decided (one page with routing vs. one HTML per page type)
 - [ ] Home page, one component at a time
+  - [x] Hero (full-bleed exhibition, ticket + more buttons) — 2026-10-09
+  - [x] Sidebar navigation of cards — 2026-10-09
+  - [ ] Content below the hero
 - [ ] Further page types
