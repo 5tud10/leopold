@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Leopold — Modern</title>
+<style>
+  /* Sabon for titles, ABC Areal for text */
+  @font-face { font-family: "Sabon"; src: url(fonts/Sabon-Roman.otf) format("opentype"); font-weight: 400; font-display: block; }
+  @font-face { font-family: "ABC Areal"; src: url(fonts/ABCAreal-Regular.woff2) format("woff2"); font-weight: 400; font-display: block; }
+  @font-face { font-family: "ABC Areal"; src: url(fonts/ABCAreal-Medium.woff2) format("woff2"); font-weight: 500; font-display: block; }
+  :root { --white: #f9f9f9; --black: #171717; --grey: #9a9a9a; --side: 480px;
+    --serif: "Sabon", Georgia, serif; --sans: "ABC Areal", Helvetica, Arial, sans-serif; }
+  [hidden] { display: none !important; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--white); color: var(--black); overflow-x: hidden; }
+  body { font: 16px/1.3 var(--sans); }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  @media (pointer: coarse) {
+    input, textarea, select { font-size: max(16px, 1em) !important; }
+  }
+
+  /* Page: everything that the sidebar pushes aside */
+  .page { position: relative; width: 100%; transition: width .5s cubic-bezier(.6, 0, .2, 1); }
+
+  /* Full-bleed hero with the current exhibition */
+  .hero { position: relative; height: calc(100vh - 90px); height: calc(100svh - 90px); min-height: 520px; overflow: hidden; color: var(--white); } /* the page below always shows */
+  .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; }
+  .hero::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(to bottom, rgb(0 0 0 / .35), transparent 22%, transparent 45%, rgb(0 0 0 / .6)); }
+  /* Title bottom left, large (royalsites); description and buttons bottom right */
+  .hero .copy { position: absolute; z-index: 1; left: 24px; right: 24px; bottom: 24px;
+    display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px; }
+  .hero h1 { font: 400 clamp(56px, 6.5vw, 120px)/.95 var(--serif); letter-spacing: -0.02em; margin-bottom: -.12em; /* the descender gap, so the baseline meets the buttons */ }
+  .hero .side { font-size: 16px; /* as the buttons */ }
+  .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .hero .side .btn { flex: 1; justify-content: center; } /* the two buttons together span the description */
+  .btn { display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 4px;
+    border: 1px solid var(--white); font-size: 16px; }
+  .btn.solid { background: var(--white); color: var(--black); }
+  .btn:hover { background: var(--black); border-color: var(--black); color: var(--white); }
+
+  /* Header: logo top left, menu button top right */
+  .logo { position: absolute; z-index: 2; top: 28px; left: 24px; }
+  .logo img { display: block; width: 160px; height: auto; filter: invert(1); }
+  .head-btns { position: fixed; z-index: 30; top: 24px; right: 24px; display: flex; gap: 8px;
+    transition: right .5s cubic-bezier(.6, 0, .2, 1); }
+  .menu-btn, .tix-btn { height: 40px; padding: 0 18px; border-radius: 20px;
+    background: var(--white); color: var(--black); font-size: 16px; display: flex; align-items: center; gap: 10px; }
+  .tix-btn { background: var(--black); color: var(--white); }
+  .tix-btn[aria-expanded="false"] .lines { display: none; } /* the × only while its sidebar is open */
+  /* Two lines that cross into an X (royalsites) */
+  .head-btns .lines { position: relative; width: 16px; height: 10px; }
+  .head-btns .lines span { position: absolute; left: 0; width: 100%; height: 1.5px; background: currentColor;
+    transition: top .35s cubic-bezier(.6, 0, .2, 1), transform .35s cubic-bezier(.6, 0, .2, 1); }
+  .head-btns .lines span:first-child { top: 1px; }
+  .head-btns .lines span:last-child { top: 7.5px; }
+  .head-btns [aria-expanded="true"] > .lines span { top: 4.25px; }
+  .head-btns [aria-expanded="true"] > .lines span:first-child { transform: rotate(45deg); }
+  .head-btns [aria-expanded="true"] > .lines span:last-child { transform: rotate(-45deg); }
+
+  /* The menu: a column of cards (parker.studio) — primary links, Informationen, hours, then tertiary links (Städel) */
+  .menu { position: fixed; z-index: 20; background: var(--white); color: var(--black); padding: 8px;
+    display: flex; flex-direction: column; gap: 4px; overflow-y: auto; overscroll-behavior: contain; }
+  .card, .tertiary { border-radius: 0; transition: border-radius .3s ease; }
+  .card:hover, .tertiary:hover { border-radius: 8px; } /* square at rest, rounds on hover */
+  .card { flex: none; background: var(--bg, var(--white)); }
+  .card[data-cat="Programm"] { --bg: #e2d4ff; }      .card[data-cat="Besuch"] { --bg: #b7edfe; }
+  .card[data-cat="Sammlung"] { --bg: #ffcac9; }
+  .card[data-cat="Online"] { --bg: #e9e9e9; height: 68px; font-size: 24px; } /* half a primary card */        .card[data-cat="Info"] { --bg: #ffd7b9; }
+  a.card { display: grid; place-items: center; height: 136px; font: 400 34px/1 var(--serif); letter-spacing: -0.01em; position: relative; }
+  a.card[target="_blank"]::after { content: "↗"; position: absolute; top: 50%; right: 24px; transform: translateY(-50%); font: 22px/1 var(--sans); } /* opens in a new window */
+  /* Informationen: a big card with a list of links */
+  .card.info { padding: 24px 24px 12px; }
+  .card.info h2 { font: 400 34px/1.1 var(--serif); letter-spacing: -0.01em; margin-bottom: 32px; }
+  .card.info a { display: flex; justify-content: space-between; padding: 16px 0; border-top: 1px solid rgb(23 23 23 / .2); font-size: 20px; }
+  .card.info a::after { content: "→"; transition: transform .3s cubic-bezier(.6, 0, .2, 1); }
+  .card.info a:hover::after { transform: translateX(6px); } /* arrow nudges right */
+  /* Header card: slideshow of the current exhibitions (parker.studio's showreel tile), until there is video */
+  a.card.reel { position: relative; display: block; height: auto; aspect-ratio: 8 / 9; /* double a 16:9 tile */ font: 15px/1.3 var(--sans); overflow: hidden; color: var(--white); background: var(--black); }
+  .reel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 18%; opacity: 0; transition: opacity 1.2s ease; }
+  .reel img.on { opacity: 1; }
+  .reel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgb(0 0 0 / .3), transparent 30%, transparent 55%, rgb(0 0 0 / .55)); }
+  .reel .label, .reel .count, .reel .cap { position: absolute; z-index: 1; }
+  .reel .label { top: 16px; left: 24px; font-size: 15px; }
+  .reel .count { top: 16px; right: 24px; font-size: 15px; font-variant-numeric: tabular-nums; }
+  .reel .cap { left: 24px; right: 24px; bottom: 16px; }
+  .reel .cap b { display: block; font: 400 24px/1.1 var(--serif); }
+  .reel .cap small { font-size: 13px; opacity: .85; }
+  /* Opening hours: content right away, framed like the complete cards in Explore */
+  .card.hours { border: 1px solid var(--black); padding: 23px; /* + 1px frame = 24px, aligns with the other cards */ font-size: 15px; }
+  .hours h2 { font: 400 34px/1.1 var(--serif); letter-spacing: -0.01em; margin-bottom: 32px; } /* ticket sidebar */
+  .hours .now { font-size: 22px; letter-spacing: -0.01em; margin-bottom: 12px; }
+  /* Ticket CTA: in the menu it opens the ticket sidebar; in the ticket sidebar it is the checkout */
+  .hours .cta { position: relative; display: flex; justify-content: center; align-items: center; width: 100%; height: 44px; margin-top: 16px;
+    border-radius: 4px; background: var(--black); color: var(--white); font-size: 16px; }
+  .hours > .cta::after { content: "→"; position: absolute; right: 16px; font-size: 20px; transition: transform .3s cubic-bezier(.6, 0, .2, 1); }
+  .hours > .cta:hover::after { transform: translateX(6px); }
+  .hours .body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .5s cubic-bezier(.6, 0, .2, 1); }
+  .hours.open .body { grid-template-rows: 1fr; }
+  .hours .body > div { overflow: hidden; }
+  .hours .inner { padding-top: 8px; }
+  .tix > div, .total { display: grid; grid-template-columns: 1fr auto 104px; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid rgb(23 23 23 / .15); }
+  .tix small { opacity: .65; }
+  .tix .note { display: block; margin-top: 2px; font-size: 13px; } /* a line under the name */
+  .tip { position: relative; display: inline-grid; place-items: center; width: 16px; height: 16px; margin-left: 6px; vertical-align: 1px;
+    border: 1px solid currentColor; border-radius: 50%; font: 11px/1 var(--sans); cursor: help; }
+  .tip::after { content: attr(data-tip); position: absolute; z-index: 2; top: calc(100% + 8px); left: -8px; width: max-content; max-width: 240px;
+    padding: 8px 12px; border-radius: 4px; background: var(--black); color: var(--white); font: 13px/1.4 var(--sans);
+    opacity: 0; pointer-events: none; transition: opacity .2s; } /* below the icon: the card body clips above */
+  .tip:hover::after, .tip:focus-visible::after { opacity: 1; }
+  .tix h3 { margin-top: 20px; padding-bottom: 4px; font: 400 15px/1.3 var(--sans); opacity: .65; }
+  .step { display: flex; align-items: center; justify-content: space-between; }
+  .step button { width: 32px; height: 32px; border: 1px solid var(--black); border-radius: 16px; font-size: 18px; line-height: 1; }
+  .step button:disabled { opacity: .25; cursor: default; }
+  .total { grid-template-columns: 1fr auto; border-bottom: 0; font-size: 18px; }
+  .hours .checkout[aria-disabled="true"] { opacity: .25; pointer-events: none; }
+  /* Ticket sidebar: offers below the selector, as coloured cards with priced rows */
+  a.card.offer { display: block; place-items: normal; letter-spacing: normal; height: auto; padding: 24px 24px 12px; font: 15px/1.3 var(--sans); } /* not the centred 136px link card */
+  .offer h2 { display: flex; justify-content: space-between; font: 400 34px/1.1 var(--serif); letter-spacing: -0.01em; margin-bottom: 24px; }
+  .offer h2::after { content: "→"; font: 22px/1.5 var(--sans); transition: transform .3s cubic-bezier(.6, 0, .2, 1); }
+  .offer:hover h2::after { transform: translateX(6px); }
+  .offer p { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid rgb(23 23 23 / .2); font-size: 15px; }
+  .offer p small { display: block; font-size: 13px; opacity: .65; }
+  .offer p > span:last-child { flex: none; }
+  .tertiary h3 { font: 400 15px/1.8 var(--sans); }
+  /* Tertiary: small links beside the address, as in the Städel menu — framed like the hours card */
+  .tertiary { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: 24px 16px; padding: 23px; border: 1px solid var(--black); font-size: 15px; line-height: 1.8; } /* links | address, then language | maps on one row */
+  .tertiary a:hover { text-decoration: underline; }
+  .tertiary .addr { opacity: .65; } /* muted, like the ticket subtitles */
+  .tertiary .maps { display: inline-block; padding: 4px 12px; border: 1px solid var(--black); border-radius: 14px; }
+  .tertiary .maps:hover { text-decoration: none; background: var(--black); color: var(--white); }
+  /* Language: pills like the Google Maps button, the current one filled (no action yet) */
+  .lang { display: flex; gap: 6px; }
+  .lang button { padding: 4px 12px; border: 1px solid var(--black); border-radius: 14px; }
+  .lang button[aria-pressed="true"] { background: var(--black); color: var(--white); }
+
+  /* A — overlay (royalsites): a floating panel over the blurred page */
+  .scrim { position: fixed; inset: 0; z-index: 10; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    background: rgb(0 0 0 / .15); opacity: 0; pointer-events: none; transition: opacity .35s; }
+  body[data-nav="overlay"] .menu { top: 10px; right: 10px; bottom: 10px; width: min(560px, calc(100% - 20px)); border-radius: 12px;
+    opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity .3s, transform .3s; }
+  body[data-nav="overlay"].open .scrim { opacity: 1; pointer-events: auto; }
+  body[data-nav="overlay"] .menu.on { opacity: 1; transform: none; pointer-events: auto; }
+
+  /* B — sidebar (parker.studio): a column that pushes the page aside */
+  body[data-nav="side"] .menu { top: 0; right: 0; bottom: 0; width: min(var(--side), 100%);
+    transform: translateX(100%); transition: transform .5s cubic-bezier(.6, 0, .2, 1); }
+  body[data-nav="side"] .menu.on { transform: none; }
+  body[data-nav="side"].open .page { width: calc(100% - min(var(--side), 100%)); } /* the header narrows, it does not move */
+  body[data-nav="side"].open .head-btns { right: calc(var(--side) + 24px); } /* beside the column, like parker's × */
+  @media (max-width: 600px) {
+    body[data-nav="side"].open .head-btns { right: 24px; }
+    body[data-nav="side"].open .menu-btn { box-shadow: 0 0 0 1px var(--black); }
+    body[data-nav="side"] .menu { padding-top: 76px; }
+  }
+</style>
+</head>
+<body data-nav="side">
+<div class="page">
+  <header class="hero">
+    <img src="images/7374.jpg" alt="">
+    <a class="logo" href="./" aria-label="Startseite"><img src="../explore/nav/logo.svg" alt="Leopold Museum"></a>
+    <div class="copy">
+      <h1>Premiere!</h1>
+      <div class="side">
+        <p class="sub">Die Sammlung der Oesterreichischen Nationalbank</p>
+        <p class="when">24.04.–11.10.2026</p>
+        <div class="buttons">
+          <a class="btn solid" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise" data-open="tickets">Tickets kaufen</a>
+          <a class="btn" href="https://www.leopoldmuseum.org/de/ausstellungen/152/premiere">Mehr erfahren</a>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<div class="scrim"></div>
+<div class="head-btns">
+  <button class="tix-btn" aria-expanded="false" aria-controls="tickets-panel"><span class="lines" aria-hidden="true"><span></span><span></span></span><span class="label">Tickets</span></button>
+  <button class="menu-btn" aria-expanded="false" aria-controls="menu"><span class="lines" aria-hidden="true"><span></span><span></span></span><span class="label">Menü</span></button>
+</div>
+<aside class="menu" id="tickets-panel" aria-label="Tickets">
+  <section class="card hours open">
+    <h2>Tickets</h2>
+    <p class="now"></p>
+    <div class="body"><div><div class="inner">
+      <div class="tix"></div>
+      <div class="total"><span>Gesamt</span><span>EUR 0,00</span></div>
+      <a class="cta checkout" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise" aria-disabled="true">Weiter zur Kasse</a>
+    </div></div></div>
+  </section>
+  <a class="card offer" data-cat="Programm" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/jahreskarten">
+    <h2>Jahreskarte</h2>
+    <p><span>Jahreskarte<small>Ein Jahr freier Eintritt</small></span><span>EUR 49,00</span></p>
+    <p><span>Ermäßigt<small>Unter 30 · ab 65 · mit Behinderung</small></span><span>EUR 36,00</span></p>
+  </a>
+  <a class="card offer" data-cat="Besuch" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise#l131">
+    <h2>Kombitickets</h2>
+    <p><span>+ Kunsthistorisches Museum</span><span>EUR 37,00</span></p>
+    <p><span>+ mumok</span><span>EUR 33,00</span></p>
+    <p><span>+ MAK</span><span>EUR 34,00</span></p>
+    <p><span>+ Sigmund Freud Museum</span><span>EUR 30,00</span></p>
+  </a>
+  <a class="card offer" data-cat="Sammlung" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/packages">
+    <h2>Packages</h2>
+    <p><span>Kunst zum Frühstück<small>Frühstück, Ticket, Audioguide</small></span><span>EUR 30,00</span></p>
+    <p><span>Schiele Rooftop<small>Ticket, Audioguide, Drink</small></span><span>EUR 24,00</span></p>
+  </a>
+  <div class="tertiary">
+    <div><h3>Freier Eintritt</h3>
+      <p class="addr">Mit Jahreskarte<br>Kinder unter 7 Jahren<br>Kulturpass<br>ICOM-Card<br>Fremdenführer</p></div>
+    <div><h3>Besucherservice</h3>
+      <p><a href="tel:+431525701555">+43 1 525 70 1555</a><br><span class="addr">Werktags</span><br><a href="https://www.leopoldmuseum.org/de/kontakt">Kontakt</a></p></div>
+  </div>
+</aside>
+<nav class="menu" id="menu" aria-label="Hauptmenü">
+  <a class="card reel" href="#"><span class="label">Aktuelle Ausstellungen</span><span class="count"></span><span class="cap"><b></b><small></small></span></a>
+  <section class="card hours">
+    <p class="now"></p>
+    <p>Täglich außer Dienstag geöffnet:<br>10 bis 18 Uhr<br>Feiertags geöffnet.<br>Dienstags geschlossen.</p>
+    <button class="cta" data-open="tickets" aria-controls="tickets-panel">Tickets kaufen</button>
+  </section>
+  <a class="card" data-cat="Programm" href="https://www.leopoldmuseum.org/de/besuch/programm">Programm</a>
+  <a class="card" data-cat="Besuch" href="https://www.leopoldmuseum.org/de/besuch">Ihr Besuch</a>
+  <a class="card" data-cat="Sammlung" href="https://www.leopoldmuseum.org/de/sammlung">Sammlung</a>
+  <section class="card info" data-cat="Info">
+    <h2>Informationen</h2>
+    <a href="https://www.leopoldmuseum.org/de/museum/geschichte">Museum</a>
+    <a href="https://www.leopoldmuseum.org/de/forschung">Forschung</a>
+    <a href="https://www.leopoldmuseum.org/de/presse">Presse</a>
+    <a href="https://www.leopoldmuseum.org/de/vermietung">Vermietung</a>
+    <a href="https://www.leopoldmuseum.org/de/engagement">Engagement</a>
+  </section>
+  <div class="tertiary">
+    <p><a href="https://www.leopoldmuseum.org/de/besuch/fragen-und-antworten">Fragen und Antworten</a><br><a href="https://www.leopoldmuseum.org/de/barrierefreiheit">Barrierefreiheit</a><br>
+      <a href="https://www.leopoldmuseum.org/de/newsletter">Newsletter</a><br><a href="https://www.leopoldmuseum.org/de/kontakt">Kontakt</a></p>
+    <p class="addr">Leopold Museum<br>MuseumsQuartier<br>Museumsplatz 1<br>1070 Wien</p>
+    <div class="lang" aria-label="Sprache"><button aria-pressed="true">Deutsch</button><button aria-pressed="false">English</button></div>
+    <p><a class="maps" href="https://www.google.com/maps/search/?api=1&amp;query=Leopold+Museum+Museumsplatz+1+1070+Wien" target="_blank" rel="noopener">Google Maps ↗</a></p>
+  </div>
+  <a class="card" data-cat="Online" href="https://onlinecollection.leopoldmuseum.org/" target="_blank" rel="noopener">Online Collection</a>
+</nav>
+
+
+<script>
+// Sidebar is the current direction; the overlay version stays reachable via ?nav=overlay
+const nav = new URLSearchParams(location.search).get('nav') === 'overlay' ? 'overlay' : 'side';
+document.body.dataset.nav = nav;
+
+// Two sidebars, one open at a time: the menu and the ticket sidebar
+const panels = { menu: document.getElementById('menu'), tickets: document.getElementById('tickets-panel') };
+const btns = { menu: document.querySelector('.menu-btn'), tickets: document.querySelector('.tix-btn') };
+const names = { menu: 'Menü', tickets: 'Tickets' };
+let current = null;
+const setOpen = which => {
+  current = which || null;
+  document.body.classList.toggle('open', !!current);
+  for (const k in panels) {
+    panels[k].classList.toggle('on', k === current);
+    btns[k].setAttribute('aria-expanded', k === current);
+    btns[k].querySelector('.label').textContent = k === current ? 'Schließen' : names[k];
+  }
+};
+for (const k in btns) btns[k].onclick = () => setOpen(current === k ? null : k);
+document.querySelector('.scrim').onclick = () => setOpen(false);
+document.querySelector('.page').addEventListener('click', e => {
+  if (nav === 'side' && document.body.classList.contains('open')) { e.preventDefault(); e.stopPropagation(); setOpen(false); }
+}, true);
+// Every Tickets kaufen opens the ticket sidebar — one basket
+document.querySelectorAll('[data-open]').forEach(el => el.onclick = e => { e.preventDefault(); setOpen(el.dataset.open); });
+addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+
+// Opening hours, live in Vienna time: 10–18 Uhr, closed on Tuesdays
+const hoursNow = () => {
+  const t = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Vienna', weekday: 'short',
+    hour: 'numeric', minute: 'numeric', hourCycle: 'h23' }).formatToParts(new Date()).map(p => [p.type, p.value]));
+  const m = +t.hour * 60 + +t.minute, next = t.weekday === 'Mon' ? 'Mittwoch ab 10 Uhr' : 'Morgen ab 10 Uhr';
+  let text;
+  if (t.weekday === 'Tue') text = 'Heute geschlossen. Morgen ab 10 Uhr.';
+  else if (m < 600) text = 'Öffnet heute um 10 Uhr.';
+  else if (m < 1080) { const left = 1080 - m, h = Math.floor(left / 60);
+    text = h ? `Noch ${h} ${h === 1 ? 'Stunde' : 'Stunden'} geöffnet.` : `Noch ${left} Minuten geöffnet.`; }
+  else text = `Heute geschlossen. ${next}.`;
+  document.querySelectorAll('.hours .now').forEach(n => n.textContent = text);
+};
+hoursNow(); setInterval(hoursNow, 30000);
+
+// The crawl has titles in capitals ("WIEN 1900"); each word capitalised reads right for these three
+const titleCase = t => t.toLowerCase().replace(/(^|[\s–-])(\p{L})/gu, (m, sp, c) => sp + c.toUpperCase());
+
+// Header slideshow: one image per current exhibition from the Explore crawl, crossfading every 4 s
+const reel = document.querySelector('.reel');
+fetch('../explore/items.json').then(r => r.json()).then(items => {
+  const shows = items.filter(i => i.cat === 'Ausstellungen' && i.kicker === 'Aktuell' && i.img);
+  reel.insertAdjacentHTML('afterbegin', shows.map(i => `<img src="../explore/${i.img}" alt="">`).join(''));
+  const imgs = reel.querySelectorAll('img');
+  let k = -1;
+  const show = () => {
+    k = (k + 1) % shows.length;
+    imgs.forEach((im, j) => im.classList.toggle('on', j === k));
+    reel.href = shows[k].url;
+    reel.querySelector('.cap b').textContent = titleCase(shows[k].title);
+    reel.querySelector('.cap small').textContent = shows[k].when;
+    reel.querySelector('.count').textContent = `${k + 1} / ${shows.length}`;
+  };
+  show();
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(show, 4000);
+});
+
+// Ticket selector in the ticket sidebar: − count + per ticket type and extra, running total
+// (prices from the live Tickets/Preise page, typed in by hand)
+const prices = [['Regulär', 19], ['Ermäßigt', 16, '', 'Unter 26 · ab 65 · mit Behinderung · beschäftigungslos'], ['Unter 19 Jahren', 2.5], ['Unter 7 Jahren', 0]];
+const extras = [['Audioguide', 5, '6 Sprachen'], ['Smartphone-Guide', 3], ['Öffentliche Führung', 5, 'Sa, So und feiertags']];
+const eur = v => 'EUR ' + v.toFixed(2).replace('.', ',');
+const items = [...prices, ...extras], count = items.map(() => 0);
+const box = document.querySelector('#tickets-panel .hours'), tix = box.querySelector('.tix');
+const row = ([k, v, note, tip], i) => `<div><span>${k}${tip ? `<span class="tip" tabindex="0" data-tip="${tip}" aria-label="${tip}">i</span>` : ''}${note ? `<small class="note">${note}</small>` : ''}</span><small>${eur(v)}</small>
+  <span class="step"><button data-i="${i}" data-d="-1" aria-label="${k} weniger" disabled>−</button><span class="n">0</span><button data-i="${i}" data-d="1" aria-label="${k} mehr">+</button></span></div>`;
+tix.innerHTML = prices.map(row).join('') + '<h3>Extras</h3>' + extras.map((x, j) => row(x, prices.length + j)).join('');
+tix.onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  const i = +b.dataset.i; count[i] = Math.max(0, count[i] + +b.dataset.d);
+  const row = b.closest('div'); row.querySelector('.n').textContent = count[i]; row.querySelector('button').disabled = !count[i];
+  box.querySelector('.total span:last-child').textContent = eur(count.reduce((t, n, j) => t + n * items[j][1], 0));
+  box.querySelector('.checkout').setAttribute('aria-disabled', !count.some(Boolean));
+};
+
+</script>
+</body>
+</html>
