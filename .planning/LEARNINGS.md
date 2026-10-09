@@ -42,6 +42,15 @@ Hard-won, project-specific. Kept here instead of the vault (self-contained proje
   revert commit is the restore handle (`git revert <revert-sha>`), and a `git revert --no-commit … &&
   git revert --abort` dry run proves it still applies. Record it under Postponed. `[tested 2026-10-02]`
 
+## CSS
+- **`place-items: center` also centres block children** in current Chrome (CSS alignment in block layout):
+  overriding an inherited `display: grid` with `display: block` left the rows centred and shrink-wrapped.
+  Reset `place-items: normal` as well. `[modern ticket cards, tested 2026-10-09]`
+- **A generalised selector can lose to the rule it should override**: `[aria-expanded="true"] > .lines span`
+  (0,2,1) lost to `.head-btns .lines span:first-child` (0,3,1), so the two lines rotated at their resting
+  heights and the × drew as ">". Measure both lines' `top`, not just the transform. And grep a new class
+  name first: `.info` for a tooltip icon also hit the existing `.card.info`. `[modern header, 2026-10-09]`
+
 ## Verification
 - **Headless WebGL**: the shared Playwright MCP browser collides with parallel agents, and
   `chrome --headless --screenshot` hangs on always-animating pages. A standalone Playwright works:
@@ -61,3 +70,8 @@ Hard-won, project-specific. Kept here instead of the vault (self-contained proje
   scratchpad. That folder also holds earlier sessions' screenshots, so never `rm` it whole: list it,
   then delete only this session's files. Reference screenshots that name sites go in `modern/`
   (local only). `[2026-10-08: about 100 older captures lost]`
+- **A horizontal-overflow check doesn't catch vertical spill**: fixed-height cards whose content ran into the
+  next card passed "no overflow". Check each block's content bounds against its own box (control: the
+  broken style showed 55–109px of spill). **Playwright leaves the pointer where it clicked**: once the page
+  narrowed, it rested on a sidebar card and screenshots showed the hover state; move the mouse away before
+  measuring or capturing. `[modern, tested 2026-10-09]`

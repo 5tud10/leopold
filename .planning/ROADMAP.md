@@ -20,10 +20,10 @@ mixed with interactive 3D visuals.
 - [ ] Deeper scrape: body text, images, hours/prices for complete cards and overlays
 - [ ] Further steps — to be decided (logo overview parked as an option)
 
-## Phase 3 — Modern layout (working title; local only)
+## Phase 3 — Modern layout (working title)
 A full site prototype that mixes a classic website layout with modern UI/UX elements — a calmer
-counterpart to the experimental phases. Lives in `modern/`, kept off GitHub (`.git/info/exclude`)
-until the owner says otherwise. Content: the Explore crawl (`explore/items.json` + `images/`).
+counterpart to the experimental phases. Lives in `modern/`; on Pages since 2026-10-09 by direct link
+only (references and drafts stay local via `.git/info/exclude`). Content: the Explore crawl (`explore/items.json` + `images/`).
 - [x] Init: folder, local exclude, stub page, planning (2026-10-08)
 - [x] References from the owner — part 1 noted 2026-10-08 in `modern/REFERENCES.md`; build started from
   the owner's spec 2026-10-09 (part 2 only if needed)
@@ -32,5 +32,6 @@ until the owner says otherwise. Content: the Explore crawl (`explore/items.json`
 - [ ] Home page, one component at a time
   - [x] Hero (full-bleed exhibition, ticket + more buttons) — 2026-10-09
   - [x] Sidebar navigation of cards — 2026-10-09
+  - [x] Ticket sidebar (one basket, offers) + Tickets pill; phone toggle — 2026-10-09
   - [ ] Content below the hero
 - [ ] Further page types

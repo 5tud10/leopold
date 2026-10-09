@@ -4,19 +4,23 @@
 Phase 3 — Modern layout (working title), started 2026-10-08. Phase 2 (Explore) paused, open issues kept below.
 
 ## Modern layout — Current Focus
-Home page, first draft (2026-10-09) at `localhost:8808/modern/` — local only, as before. Built straight
-from the owner's spec (references part 2 didn't come; not needed so far). Done:
-- **Hero** (Städel): full-bleed current exhibition (Premiere!, original image in `modern/images/`), 90px of
-  page always visible below, title Sabon 48px, subline/dates Areal, centred Tickets kaufen + Mehr erfahren.
-- **Type**: Sabon (titles) + ABC Areal (text), copied from the RightFont library into `modern/fonts/`.
-- **Sidebar** (parker.studio): Menü pill top right (two lines → × transition), opens a 480px column; the page
-  narrows instead of moving. Cards top to bottom: exhibition slideshow (8:9, 3 current shows, 4s crossfade)
-  · opening hours (live Vienna time) + Tickets kaufen expanding into a −/+ selector with total · Programm,
-  Ihr Besuch, Sammlung (link out) · Informationen (5 links) · framed tertiary (links, address, DE/EN pills,
-  Google Maps) · Online Collection ↗ (half height). Column scrolls when longer than the window.
-- Overlay variant (royalsites) kept in the code: `?nav=overlay`. Expanding-cards sidebar saved as
-  `modern/drafts/2026-10-09-expanding-cards.html`.
-Next: owner's review of the sidebar, then the content below the hero.
+Home page, second round (2026-10-09). **Online since today by direct link only**:
+https://5tud10.github.io/leopold/modern/ (not in the root list; `REFERENCES.md`, `references/`, `drafts/`
+stay local). Last push `68fda0a` = everything below. State of the page:
+- **Hero**: title "Premiere!" bottom left, Sabon 6.5vw (~94px at 1440; royalsites is 61px); bottom right the
+  description + dates (16px, white) over Tickets kaufen + Mehr erfahren, the two buttons sharing the
+  description's width. Phones: everything stacks bottom left.
+- **Header**: black Tickets pill left of the white Menü pill. Each opens its own sidebar (480px, page
+  narrows); the open one reads × Schließen. Phones, sidebar open: the pills become a full-width toggle
+  Tickets | Menü with a round × to its right, on the cards' edges.
+- **Menu sidebar** as before, plus: cards square at rest, 8px corners on hover; tertiary address muted
+  (.65); Informationen now peach #ffd7b9, Programm lavender #e2d4ff (swapped); Informationen arrows nudge
+  on hover. The hours card keeps the hours; its Tickets kaufen (→) switches to the ticket sidebar.
+- **Ticket sidebar** — the one basket; every Tickets kaufen opens it: framed card (live hours line, 4 ticket
+  types, Ermäßigt explained in an ⓘ tooltip, Extras: Audioguide / Smartphone-Guide / Öffentliche Führung,
+  total, Weiter zur Kasse) · Jahreskarte · Kombitickets · Packages as coloured cards linking out · framed
+  Freier Eintritt + Besucherservice. Prices from the live Tickets/Preise page (read 2026-10-09).
+Next: owner's review of the shared link; the phone logo overlap (Open Issues); then the content below the hero.
 
 ## Explore
 
@@ -35,8 +39,13 @@ Next up: answer the Open Issues below, then the content overlay (Tickets kaufen 
   text; title "Premiere!" not in capitals; card titles Sabon; slideshow titles not in capitals; card gap
   4px, more room inside cards; card colours stay at Explore chroma (halving tried, "undo"); hero keeps Premiere! after it closes
   11.10 (prototype, date doesn't matter).
-- Modern layout: folder in leopold, local only (`.git/info/exclude`, not `.gitignore` — that would
-  name it on GitHub); full site prototype; reuses the Explore crawl; look decided from references — 2026-10-08
+- Modern home, round 2 (2026-10-09): one ticket basket — every Tickets kaufen opens the ticket sidebar,
+  the hours card lost its own selector; ticket sidebar content = the most important from the live page
+  (types, Ermäßigt tooltip, extras, Jahreskarte, Kombitickets, Packages, Freier Eintritt); phone toggle +
+  × only while a sidebar is open, full width; font files pushed as they are (owner's choice).
+- Modern layout: folder in leopold; full site prototype; reuses the Explore crawl; look decided from
+  references — 2026-10-08. On Pages since 2026-10-09 by direct link only; `REFERENCES.md`,
+  `references/`, `drafts/` stay local (`.git/info/exclude`, not `.gitignore` — that would name them).
 - Explore field: zoom steps 1.4 / 1 / 0.23; zoom buttons grey out at the limits; overview shows
   category + title; no text selection while dragging; a search resets the section and picking a
   section clears the search.
@@ -74,6 +83,7 @@ Next up: answer the Open Issues below, then the content overlay (Tickets kaufen 
 - Same zoom steps / 3D on Browse — only if asked.
 
 ## Rejected
+- Modern: frosted glass on Menü + hero Tickets kaufen — "undo" — 2026-10-09
 - Explore: filters/searches land on one card centred — "undo" — 2026-10-05
 - Explore: info cards as text only (no image) — "info cant be text only" — 2026-10-05
 - Fluid paint, pixel sort — "remove fluid and sort" — 2026-10-02
@@ -88,6 +98,11 @@ Next up: answer the Open Issues below, then the content overlay (Tickets kaufen 
 ## Open Issues
 - Modern: ticket prices typed in by hand; the selection isn't passed to the museum's ticket page.
 - Modern: Menü pill is white — it will sit on white once the page scrolls past the hero.
+- Modern, phones: closed state, the Tickets pill overlaps the logo end by ~16px (live). Options offered:
+  smaller pills, smaller logo on phones, shorter label.
+- Modern: with the menu open, the hero's Tickets kaufen only closes the menu (any page click does);
+  a second click opens tickets — owner to say if it should switch directly.
+- Modern: hero title baseline sits near, not exactly on, the buttons' bottom — owner to judge.
 - Modern: slideshow titles are capitalised word by word — breaks on titles with "der", "und"…
 - **Colour when zoomed out** — provisional: colour only as a band around the image, captions on white
   (a panel around image + caption collides there). Owner to judge.
@@ -102,6 +117,10 @@ Next up: answer the Open Issues below, then the content overlay (Tickets kaufen 
 - `figure/figure.glb` is output of a generator whose licence excludes the EU.
 
 ## Session Log
+### 2026-10-09 (2)
+Modern home round 2: square cards round on hover, hero rebuilt (title bottom left, block bottom right),
+Tickets pill + ticket sidebar (one basket, live-site prices, offers), phone toggle. First push of
+`modern/` (direct link only): `ad05ce6`, `68fda0a`.
 ### 2026-10-09
 Modern home, first draft: Städel-style hero, parker-style sidebar of cards (slideshow, hours + ticket
 selector, primary links, Informationen, tertiary, Online Collection), Sabon + Areal. Local only, nothing pushed.
