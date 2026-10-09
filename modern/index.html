@@ -50,6 +50,8 @@
   .menu-btn, .tix-btn { height: 40px; padding: 0 18px; border-radius: 20px;
     background: var(--white); color: var(--black); font-size: 16px; display: flex; align-items: center; gap: 10px; }
   .tix-btn { background: var(--black); color: var(--white); }
+  .seg { display: flex; gap: 8px; }
+  .close-btn { display: none; width: 40px; height: 40px; border-radius: 20px; place-items: center; border: 1px solid var(--black); background: var(--white); } /* phones, sidebar open */
   .tix-btn[aria-expanded="false"] .lines { display: none; } /* the × only while its sidebar is open */
   /* Two lines that cross into an X (royalsites) */
   .head-btns .lines { position: relative; width: 16px; height: 10px; }
@@ -60,6 +62,9 @@
   .head-btns [aria-expanded="true"] > .lines span { top: 4.25px; }
   .head-btns [aria-expanded="true"] > .lines span:first-child { transform: rotate(45deg); }
   .head-btns [aria-expanded="true"] > .lines span:last-child { transform: rotate(-45deg); }
+  .head-btns .close-btn .lines span { top: 4.25px; }
+  .head-btns .close-btn .lines span:first-child { transform: rotate(45deg); }
+  .head-btns .close-btn .lines span:last-child { transform: rotate(-45deg); }
 
   /* The menu: a column of cards (parker.studio) — primary links, Informationen, hours, then tertiary links (Städel) */
   .menu { position: fixed; z-index: 20; background: var(--white); color: var(--black); padding: 8px;
@@ -152,9 +157,14 @@
   body[data-nav="side"].open .page { width: calc(100% - min(var(--side), 100%)); } /* the header narrows, it does not move */
   body[data-nav="side"].open .head-btns { right: calc(var(--side) + 24px); } /* beside the column, like parker's × */
   @media (max-width: 600px) {
-    body[data-nav="side"].open .head-btns { right: 24px; }
-    body[data-nav="side"].open .menu-btn { box-shadow: 0 0 0 1px var(--black); }
-    body[data-nav="side"] .menu { padding-top: 76px; }
+    body[data-nav="side"].open .head-btns { top: 8px; left: max(8px, calc(100% - var(--side) + 8px)); right: 8px; } /* full width of the column, on the cards' edges */
+    /* Sidebar open: the two pills become a toggle between the sidebars, with × beside it */
+    body.open .seg { flex: 1; gap: 0; border: 1px solid var(--black); border-radius: 20px; background: var(--white); }
+    body.open .seg button { flex: 1; justify-content: center; height: 38px; background: none; color: var(--black); }
+    body.open .seg [aria-expanded="true"] { background: var(--black); color: var(--white); }
+    body.open .seg .lines { display: none; }
+    body.open .close-btn { display: grid; }
+    body[data-nav="side"] .menu { padding-top: 56px; }
   }
 </style>
 </head>
@@ -179,8 +189,11 @@
 
 <div class="scrim"></div>
 <div class="head-btns">
-  <button class="tix-btn" aria-expanded="false" aria-controls="tickets-panel"><span class="lines" aria-hidden="true"><span></span><span></span></span><span class="label">Tickets</span></button>
-  <button class="menu-btn" aria-expanded="false" aria-controls="menu"><span class="lines" aria-hidden="true"><span></span><span></span></span><span class="label">Menü</span></button>
+  <div class="seg">
+    <button class="tix-btn" aria-expanded="false" aria-controls="tickets-panel"><span class="lines" aria-hidden="true"><span></span><span></span></span><span class="label">Tickets</span></button>
+    <button class="menu-btn" aria-expanded="false" aria-controls="menu"><span class="lines" aria-hidden="true"><span></span><span></span></span><span class="label">Menü</span></button>
+  </div>
+  <button class="close-btn" aria-label="Schließen"><span class="lines" aria-hidden="true"><span></span><span></span></span></button>
 </div>
 <aside class="menu" id="tickets-panel" aria-label="Tickets">
   <section class="card hours open">
@@ -261,10 +274,14 @@ const setOpen = which => {
   for (const k in panels) {
     panels[k].classList.toggle('on', k === current);
     btns[k].setAttribute('aria-expanded', k === current);
-    btns[k].querySelector('.label').textContent = k === current ? 'Schließen' : names[k];
+    btns[k].querySelector('.label').textContent = k === current && !phone.matches ? 'Schließen' : names[k];
   }
 };
-for (const k in btns) btns[k].onclick = () => setOpen(current === k ? null : k);
+// On phones an open sidebar turns the pills into a toggle: tapping the active half keeps it, × closes
+const phone = matchMedia('(max-width: 600px)');
+phone.addEventListener('change', () => setOpen(current));
+for (const k in btns) btns[k].onclick = () => setOpen(current === k && !phone.matches ? null : k);
+document.querySelector('.close-btn').onclick = () => setOpen(null);
 document.querySelector('.scrim').onclick = () => setOpen(false);
 document.querySelector('.page').addEventListener('click', e => {
   if (nav === 'side' && document.body.classList.contains('open')) { e.preventDefault(); e.stopPropagation(); setOpen(false); }
