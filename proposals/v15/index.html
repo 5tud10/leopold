@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Leopold Museum</title>
+<meta name="description" content="Leopold Museum im MuseumsQuartier Wien: Besuch, Ausstellungen, Programm und Sammlung.">
+<link rel="preload" href="fonts/TheSans-B5Plain.otf" as="font" type="font/otf" crossorigin>
+<link rel="stylesheet" href="style.css?v=1">
+<script>/* immer am Anfang öffnen: der Browser soll keine alte Scrollposition wiederherstellen */ if ("scrollRestoration" in history) history.scrollRestoration = "manual"; if (!location.hash) addEventListener("pageshow", function () { scrollTo(0, 0); });</script>
+</head>
+<body>
+<a class="skip" href="#besuch">Zum Inhalt</a>
+
+<!-- Kopf als Bühne mit mehreren Schwerpunkten. Wird in app.js aus STAGE gebaut -->
+<header class="head" id="kopf"></header>
+
+<main id="inhalt">
+  <section class="blk" id="besuch" data-name="Besuch"></section>
+  <section class="blk" id="wissen" data-name="Gut zu wissen"></section>
+  <section class="blk" id="haus" data-name="Im Haus"></section>
+  <section class="blk" id="ausstellungen" data-name="Ausstellungen"></section>
+  <section class="blk" id="kapitel" data-name="Sammlung in Kapiteln"></section>
+  <section class="blk" id="programm" data-name="Programm"></section>
+  <section class="blk" id="sammlung" data-name="Sammlung"></section>
+</main>
+
+<footer class="foot" id="fuss" data-name="Kontakt">
+  <p class="lab">Leopold Museum <span>Museumsplatz 1, 1070 Wien</span></p>
+  <div class="foot__grid">
+    <div class="foot__c"><p class="lab">Besuch</p><ul><li><a href="#besuch">Öffnungszeiten</a></li><li><a href="https://www.leopoldmuseum.org/de/besuch/tickets-preise" target="_blank" rel="noopener">Tickets und Preise</a></li><li><a href="https://www.leopoldmuseum.org/de/besuch/anreise" target="_blank" rel="noopener">Anreise</a></li><li><a href="https://www.leopoldmuseum.org/de/besuch/gruppen-und-reiseveranstalter" target="_blank" rel="noopener">Gruppen</a></li><li><a href="https://www.leopoldmuseum.org/de/barrierefreiheit" target="_blank" rel="noopener">Barrierefreiheit</a></li></ul></div>
+    <div class="foot__c"><p class="lab">Sehen</p><ul><li><a href="#ausstellungen">Ausstellungen</a></li><li><a href="#programm">Programm</a></li><li><a href="https://www.leopoldmuseum.org/de/besuch/vermittlung" target="_blank" rel="noopener">Kunstvermittlung</a></li><li><a href="https://onlinecollection.leopoldmuseum.org/" target="_blank" rel="noopener">Online-Sammlung</a></li></ul></div>
+    <div class="foot__c"><p class="lab">Museum</p><ul><li><a href="https://www.leopoldmuseum.org/de/museum" target="_blank" rel="noopener">Über das Museum</a></li><li><a href="https://www.leopoldmuseum.org/de/forschung" target="_blank" rel="noopener">Forschung</a></li><li><a href="https://www.leopoldmuseum.org/de/presse" target="_blank" rel="noopener">Presse</a></li><li><a href="https://www.leopoldmuseum.org/de/vermietung" target="_blank" rel="noopener">Vermietung</a></li><li><a href="https://www.leopoldmuseum.org/de/engagement" target="_blank" rel="noopener">Engagement</a></li></ul></div>
+    <div class="foot__c"><p class="lab">Kontakt</p><ul><li><a href="tel:+431525701555">+43 1 525 70 1555</a></li><li><a href="mailto:besucherservice@leopoldmuseum.org">E-Mail schreiben</a></li><li><a href="https://www.leopoldmuseum.org/de/newsletter" target="_blank" rel="noopener">Newsletter</a></li></ul></div>
+  </div>
+  <div class="foot__soc">
+    <p class="lab">Folgen <span>@leopold_museum</span></p>
+    <a href="https://instagram.com/leopold_museum" target="_blank" rel="noopener">Instagram <b aria-hidden="true">↗</b></a>
+    <a href="https://www.facebook.com/LeopoldMuseum" target="_blank" rel="noopener">Facebook <b aria-hidden="true">↗</b></a>
+    <a href="https://www.youtube.com/user/LeopoldMuseumWien" target="_blank" rel="noopener">YouTube <b aria-hidden="true">↗</b></a>
+  </div>
+  <div class="foot__end">
+    <p class="foot__legal"><a href="https://www.leopoldmuseum.org/de/impressum">Impressum</a><a href="https://www.leopoldmuseum.org/de/datenschutz">Datenschutz</a><a href="https://www.leopoldmuseum.org/de/hausordnung">Hausordnung</a><a href="https://www.leopoldmuseum.org/de/kontakt">Kontakt</a><a href="?lang=de" data-lang="de" lang="de">Deutsch</a><a href="?lang=en" data-lang="en" lang="en">English</a><span>© Leopold Museum, Wien</span></p>
+    <a class="foot__logo" href="#kopf" aria-label="Leopold Museum, zum Anfang"><img src="../v1/assets/logo.svg" alt="Leopold Museum" width="285" height="76"></a>
+  </div>
+</footer>
+
+<!-- Karte unten links: Logo, Stand von heute, Tickets, Menü -->
+<aside class="card" id="card">
+  <nav class="card__menu" id="menu" aria-label="Menü" hidden></nav>
+  <a class="card__logo" href="#kopf" aria-label="Leopold Museum, zum Anfang"><img src="../v1/assets/logo.svg" alt="Leopold Museum" width="285" height="76"></a>
+  <p class="card__meta"><span id="openState"></span><span class="lang"><a href="?lang=de" data-lang="de" lang="de">DE</a> / <a href="?lang=en" data-lang="en" lang="en">EN</a></span></p>
+  <div class="card__go">
+    <a class="card__tix" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/online-ticket" target="_blank" rel="noopener">Tickets</a>
+    <button class="card__btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">Menü</button>
+  </div>
+</aside>
+
+<!-- Rand rechts: die Seite als Strichleiste -->
+<nav class="map" id="map" aria-label="Seitenübersicht"></nav>
+
+<script src="../v1/assets/i18n.js?v=1"></script>
+<script src="../v1/assets/events.js?v=1"></script>
+<script src="../v1/assets/works.js?v=1"></script>
+<script src="en.js?v=3"></script>
+<script src="tints.js"></script>
+<script src="app.js?v=50"></script>
+</body>
+</html>

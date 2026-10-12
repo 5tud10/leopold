@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Leopold Museum · V2</title>
+<meta name="theme-color" content="#D99256">
+<meta name="description" content="Leopold Museum Wien – zweiter Designvorschlag: reduziert und redaktionell, aufgebaut aus dem, was ein Museum ausmacht: heute im Haus, Tickets, Wegweiser, Programmheft, Werkbeschriftung.">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script>try { if (localStorage.getItem("v2bw") === "1") document.documentElement.classList.add("bw"); } catch (e) {}</script>
+<link rel="stylesheet" href="style.css?v=80">
+<script>/* immer am Anfang öffnen: der Browser soll keine alte Scrollposition wiederherstellen */ if ("scrollRestoration" in history) history.scrollRestoration = "manual"; if (!location.hash) addEventListener("pageshow", function () { scrollTo(0, 0); });</script>
+</head>
+<body>
+<a class="skip" href="#inhalt" data-en="Skip to content">Zum Inhalt springen</a>
+
+<!-- Kopf: Navigation über die Breite, Tickets immer sichtbar und klar hervorgehoben -->
+<header class="top">
+  <a class="logo" href="#" aria-label="Leopold Museum, nach oben"><img src="../v1/assets/logo.svg" alt="Leopold Museum" width="285" height="76"></a>
+  <nav class="nav" aria-label="Hauptnavigation">
+    <a href="#heute" data-nav="heute" data-en="Today">Heute</a>
+    <a href="#haus" data-nav="haus" data-en="In the building">Im Haus</a>
+    <a href="#programm" data-nav="programm" data-en="Programme">Programm</a>
+    <a href="#sammlung" data-nav="sammlung" data-en="Collection">Sammlung</a>
+    <a href="#besuch" data-nav="besuch" data-en="Visit">Besuch</a>
+  </nav>
+  <div class="lang" role="group" aria-label="Sprache / Language"><button type="button" data-lang="de">DE</button><button type="button" data-lang="en">EN</button></div>
+  <button class="a11y" type="button" data-bw aria-pressed="false" aria-label="Kontrastansicht: Seite in Schwarz und Weiß" data-en-label="Contrast view: page in black and white" title="Schwarz/Weiß"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="6.6" r="1.7" fill="currentColor"/><path d="M6.4 9.6c3.6 1 7.6 1 11.2 0M12 10.4v4.2M12 14.6l-2.6 4.8M12 14.6l2.6 4.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  <a class="buy" href="#tickets"><span>Tickets</span><span data-from>ab € 2,50</span><i aria-hidden="true">→</i></a>
+</header>
+
+<main id="inhalt">
+
+  <!-- 1 · Heute im Haus: ein Satz, der sich aus den echten Daten bildet (Status, Ausstellungen, nächster Termin) -->
+  <section class="today" id="heute">
+    <p class="say" data-say></p>
+  </section>
+
+  <!-- 2 · Tickets: der einzige dunkle Block der Seite. Art und Anzahl wählen, Summe rechnet mit, weiter zum Ticketshop -->
+  <section class="tix" id="tickets" aria-labelledby="tix-h">
+    <div class="tix__head">
+      <h2 class="tix__h" id="tix-h">Tickets</h2>
+      <p class="tix__note" data-tix-note>Gültig am Tag des Besuchs für alle Ausstellungen und die Sammlung.</p>
+    </div>
+    <div class="tix__body">
+      <ul class="tix__rows" data-tix-rows></ul>
+      <div class="tix__sum">
+        <p class="tix__total"><span data-en="Total">Summe</span><b data-tix-total>€ 19</b></p>
+        <a class="tix__go" data-tix-go href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/online-ticket" target="_blank" rel="noopener"><span data-tix-label>1 Ticket kaufen</span><i aria-hidden="true">→</i></a>
+        <p class="tix__fine" data-en="Continue in the museum’s ticket shop. Annual pass: 12 months of free admission, <a href='https://www.leopoldmuseum.org/en/visit/tickets-prices/annual-tickets' target='_blank' rel='noopener'>find out more</a>.">Weiter im Ticketshop des Museums. Jahreskarte: 12 Monate freier Eintritt, <a href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/jahreskarten" target="_blank" rel="noopener">mehr dazu</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · Im Haus: Wegweiser nach Ebenen, wie die Orientierungstafel im Foyer -->
+  <section class="sec" id="haus">
+    <h2 class="h" data-en="In the building">Im Haus</h2>
+    <ol class="lv" data-levels></ol>
+  </section>
+
+  <!-- Laufband: das Zitat von Rudolf Leopold, groß und serifenlos -->
+  <div class="run" data-run aria-label="Was mich nicht erregt, interessiert mich nicht. Rudolf Leopold">
+    <div class="run__track" aria-hidden="true"><span><span data-en="What does not excite me does not interest me.">Was mich nicht erregt, interessiert mich nicht.</span><small>Rudolf Leopold</small></span><span><span data-en="What does not excite me does not interest me.">Was mich nicht erregt, interessiert mich nicht.</span><small>Rudolf Leopold</small></span><span><span data-en="What does not excite me does not interest me.">Was mich nicht erregt, interessiert mich nicht.</span><small>Rudolf Leopold</small></span><span><span data-en="What does not excite me does not interest me.">Was mich nicht erregt, interessiert mich nicht.</span><small>Rudolf Leopold</small></span><span><span data-en="What does not excite me does not interest me.">Was mich nicht erregt, interessiert mich nicht.</span><small>Rudolf Leopold</small></span><span><span data-en="What does not excite me does not interest me.">Was mich nicht erregt, interessiert mich nicht.</span><small>Rudolf Leopold</small></span></div>
+  </div>
+  <p class="run__cta"><a class="buy buy--s" href="#tickets"><span data-en="Buy tickets">Tickets kaufen</span><i aria-hidden="true">→</i></a><button class="run__pause" type="button" data-run-pause aria-pressed="false">Laufband anhalten</button></p>
+
+  <!-- 4 · Programm: gesetzt wie ein Programmheft -->
+  <section class="sec" id="programm">
+    <h2 class="h" data-en="Programme">Programm</h2>
+    <ol class="pg" data-program></ol>
+    <p class="more"><a href="https://www.leopoldmuseum.org/de/besuch/programm" target="_blank" rel="noopener" data-en="Full programme">Gesamtes Programm</a></p>
+  </section>
+
+  <!-- 5 · Sammlung: Werke mit ihrer Beschriftung, wie das Schild neben dem Bild -->
+  <section class="sec" id="sammlung">
+    <h2 class="h h--big" data-en="From the collection">Aus der Sammlung</h2>
+    <!-- Filter klein in einer Zeile. Darunter ein Strom von Werken, der im Raum durchs Bild zieht: 1300 Werke, eines nach dem anderen -->
+    <div class="wbar">
+      <div class="wf" data-wfilter role="group" aria-label="Sammlung filtern" data-en-label="Filter the collection"></div>
+      <label class="wf__q"><span class="sr" data-en="Search the collection">Sammlung durchsuchen</span><input type="search" data-wq placeholder="Suchen" data-en-ph="Search" autocomplete="off" spellcheck="false"></label>
+    </div>
+    <div class="stream" data-stream tabindex="0" role="group" aria-label="Werke der Sammlung, mit den Pfeiltasten blättern" data-en-label="Works from the collection, browse with the arrow keys"><div class="stream__space" data-space></div></div>
+    <label class="wscrub"><span class="sr" data-en="Position in the collection">Position in der Sammlung</span><input type="range" data-wscrub min="0" max="0" value="0" step="1"></label>
+    <div class="wfoot">
+      <p class="wcap" data-wcap aria-live="polite"></p>
+      <div class="wnav">
+        <button class="wnav__pause" type="button" data-wpause aria-pressed="false">Anhalten</button>
+        <span data-wpos></span>
+        <button type="button" data-wprev aria-label="Vorheriges Werk" data-en-label="Previous work">←</button>
+        <button type="button" data-wnext aria-label="Nächstes Werk" data-en-label="Next work">→</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 6 · Besuch: sechs Spalten -->
+<footer class="foot" id="besuch">
+  <div class="foot__cols">
+    <div>
+      <h3 class="h" data-en="Opening hours">Öffnungszeiten</h3>
+      <p data-en="Daily except Tuesday<br>10 am to 6 pm.<br>Open on public holidays.">Täglich außer Dienstag<br>10 bis 18 Uhr.<br>Feiertags geöffnet.</p>
+    </div>
+    <div>
+      <h3 class="h" data-en="Address">Adresse</h3>
+      <p data-en="Museumsplatz 1.<br>1070 Vienna. Austria">Museumsplatz 1.<br>1070 Wien. Österreich</p>
+      <p><a class="u" href="https://www.google.com/maps/search/?api=1&amp;query=Leopold+Museum%2C+Museumsplatz+1%2C+1070+Wien" target="_blank" rel="noopener" data-en="Open in Google Maps">Auf Google Maps öffnen</a></p>
+    </div>
+    <div>
+      <h3 class="h" data-en="Getting here">Anreise</h3>
+      <p>U2 Museumsquartier<br>U3 Volkstheater</p>
+    </div>
+    <div>
+      <h3 class="h" data-en="Contact">Kontakt</h3>
+      <p><a href="tel:+431525701555">+43 1 525 70 1555</a><br><a href="mailto:besucherservice@leopoldmuseum.org">besucherservice<wbr>@leopoldmuseum.org</a></p>
+    </div>
+    <div>
+      <h3 class="h" data-en="Offers">Angebote</h3>
+      <p>
+        <a href="https://www.leopoldmuseum.org/de/besuch/gruppen-und-reiseveranstalter" target="_blank" rel="noopener" data-en="Groups">Gruppen</a><br>
+        <a href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/jahreskarten" target="_blank" rel="noopener" data-en="Annual pass">Jahreskarte</a><br>
+        <a href="https://www.leopoldmuseum.org/de/barrierefreiheit" target="_blank" rel="noopener" data-en="Accessibility">Barrierefreiheit</a>
+      </p>
+    </div>
+    <div>
+      <h3 class="h">Newsletter</h3>
+      <form class="news" data-news novalidate>
+        <label class="sr" for="mail" data-en="Email address">E-Mail-Adresse</label>
+        <input id="mail" type="email" placeholder="E-Mail-Adresse" data-en-ph="Email address" autocomplete="email">
+        <button type="submit" data-en="Sign up">Anmelden</button>
+        <p class="news__msg" data-news-msg aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+  <div class="foot__base">
+    <div class="figbox">
+      <a class="mark" href="#" aria-label="Leopold Museum, nach oben"><img src="../v1/assets/logo-figure.svg" alt="Leopold Museum" width="65" height="76"></a>
+      <div class="fig3d" data-fig3d aria-hidden="true"></div>
+    </div>
+    <div class="bigcta"><span class="bigcta__q"><span data-en="And what <em>excites</em> you?">Und was <em>erregt</em> Sie?</span> <span class="ans" data-answer aria-live="polite"></span><small class="ans__star" data-en="* This page registered where your mouse pointer stayed longest. That stays in your browser.">* Diese Seite hat erfasst, wo Ihr Mauszeiger am längsten war. Das bleibt in Ihrem Browser.</small></span></div>
+    <!-- Abschlusszeile auf dem Sechser-Raster -->
+    <nav class="foot__legal" aria-label="Rechtliches und Links">
+      <span>© 2026 Leopold Museum</span>
+      <a href="https://www.instagram.com/leopold_museum/" target="_blank" rel="noopener">Instagram <i aria-hidden="true">↗</i></a>
+      <a href="https://www.leopoldmuseum.org/de/impressum" target="_blank" rel="noopener" data-en="Legal notice">Impressum</a>
+      <a href="https://www.leopoldmuseum.org/de/datenschutz" target="_blank" rel="noopener" data-en="Privacy">Datenschutz</a>
+      <a href="../" data-en="Overview V1 · V2">Übersicht V1 · V2</a>
+      <a class="foot__up" href="#"><span data-en="Back to top">Nach oben</span> <i aria-hidden="true">↑</i></a>
+    </nav>
+  </div>
+</footer>
+
+<!-- Bild, das beim Darüberfahren erscheint und der Maus folgt -->
+<div class="pv" data-pv aria-hidden="true"><img alt=""></div>
+
+<!-- Schmal: Tickets bleiben unten stehen -->
+<a class="buybar" href="#tickets"><span>Tickets</span><span data-from>ab € 2,50</span><i aria-hidden="true">→</i></a>
+
+<script src="../v1/assets/i18n.js"></script>
+<script src="../v1/assets/events.js"></script>
+<script src="../v1/assets/works.js"></script>
+<script src="../v1/assets/figure-grid/data.js"></script>
+<script src="../v1/assets/embed3d.js"></script>
+<script type="module">
+/* V2 · Fuß: die Figur aus dem Logo als 3D-Skulptur (Modell aus V1), flach und einfarbig, ohne Licht und Schatten.
+   Steht ruhig von vorn; dreht sich, solange die Maus darüber ist, und kehrt danach weich in die Frontansicht zurück.
+   Ohne WebGL bleibt die flache Figur stehen. */
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+
+const box = document.querySelector("[data-fig3d]");
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let started = false;
+if (box) new IntersectionObserver((es, obs) => {
+  if (es.some(e => e.isIntersecting) && !started) { started = true; obs.disconnect(); init(); }
+}, { rootMargin: "600px 0px" }).observe(box);
+
+function init() {
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); } catch (e) { return; }
+  const size = () => [box.clientWidth, box.clientHeight];
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(...size());
+  box.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const [w0, h0] = size();
+  const camera = new THREE.PerspectiveCamera(26, w0 / h0, 0.01, 100);
+  const material = new THREE.MeshBasicMaterial({ color: 0xf4eacd });   // reine Fläche in der Schriftfarbe des Fußes
+  const pivot = new THREE.Group(); scene.add(pivot);
+
+  new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(window.EMBED["assets/figure/figure.glb"], gltf => {
+    const model = gltf.scene;
+    model.traverse(o => { if (o.isMesh) { o.material = material; o.geometry.computeVertexNormals(); } });
+    const b = new THREE.Box3().setFromObject(model);
+    const s = b.getSize(new THREE.Vector3()), c = b.getCenter(new THREE.Vector3());
+    model.position.sub(c);
+    pivot.add(model);
+    const r = Math.max(s.x, s.z) / 2;                       // beim Drehen darf nichts aus dem Bild laufen
+    const halfFov = THREE.MathUtils.degToRad(camera.fov / 2);
+    const dist = Math.max(s.y / 2 / 0.92, r / 0.92 / camera.aspect) / Math.tan(halfFov) + r;
+    camera.position.set(0, 0, dist);
+    camera.near = dist / 100; camera.far = dist * 10; camera.updateProjectionMatrix();
+    box.parentElement.classList.add("is-3d");
+  });
+
+  // Drehen bei Mouseover, danach zurück in die Frontansicht
+  let hover = false, vel = 0, prev = performance.now();
+  const SPEED = 1.5;                                        // Radiant pro Sekunde
+  box.addEventListener("pointerenter", () => { hover = !reduced; });
+  box.addEventListener("pointerleave", () => { hover = false; });
+  addEventListener("resize", () => { const [w, h] = size(); camera.aspect = w / h; camera.updateProjectionMatrix(); renderer.setSize(w, h); });
+  let visible = true;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(box);
+  renderer.setAnimationLoop(t => {
+    const dt = Math.min(.05, (t - prev) / 1000); prev = t;
+    if (!visible) return;
+    if (hover) {
+      vel += (SPEED - vel) * Math.min(1, dt * 4);
+      pivot.rotation.y += vel * dt;
+    } else {
+      vel += (0 - vel) * Math.min(1, dt * 4);
+      const TAU = Math.PI * 2, rest = Math.round(pivot.rotation.y / TAU) * TAU;
+      const target = pivot.rotation.y % TAU > Math.PI ? Math.ceil(pivot.rotation.y / TAU) * TAU : rest;   // in Drehrichtung weiter, wenn schon über die Hälfte
+      pivot.rotation.y += vel * dt + (target - pivot.rotation.y) * Math.min(1, dt * 2.4);
+    }
+    renderer.render(scene, camera);
+  });
+}
+
+</script>
+<script src="app.js?v=80"></script>
+</body>
+</html>

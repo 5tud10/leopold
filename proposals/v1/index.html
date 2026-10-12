@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Leopold Museum</title>
+<meta name="description" content="Konzeptentwurf für die Website des Leopold Museum, Wien.">
+<link rel="stylesheet" href="assets/style.css?v=148">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script>/* immer am Anfang öffnen: der Browser soll keine alte Scrollposition wiederherstellen */ if ("scrollRestoration" in history) history.scrollRestoration = "manual"; if (!location.hash) addEventListener("pageshow", function () { scrollTo(0, 0); });</script>
+</head>
+<body class="is-loading">
+
+<!-- Texte: data-i18n setzt den Text, data-i18n-html erlaubt <br>, data-i18n-aria / -ph setzen aria-label und placeholder.
+     Die Übersetzungen stehen in assets/i18n.js -->
+
+<a class="skip" href="#main" data-i18n="skip">Zum Inhalt springen</a>
+
+<!-- ───────── Kopf: Logo, Menü, Fortschritt ───────── -->
+<header class="top" data-top>
+  <a class="top__logo" href="#"><img src="assets/logo.svg" alt="Leopold Museum" width="285" height="76"></a>
+  <div class="pill" data-pill>
+    <a class="pill__fig" href="#" aria-label="Nach oben" data-i18n-aria="toTop" tabindex="-1"><img src="assets/logo-figure.svg" alt="" width="65" height="76"></a>
+    <button class="menu-btn" data-menu-open aria-label="Menü öffnen" data-i18n-aria="menuOpen" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+  <div class="dots" data-dots role="tablist" aria-label="Highlights"></div>
+</header>
+
+<!-- Menü -->
+<div class="menu" data-menu aria-hidden="true">
+  <div class="menu__backdrop" data-menu-close></div>
+  <div class="menu__panel">
+    <div class="menu__head">
+      <a class="menu__logo" href="#" data-menu-link><img src="assets/logo.svg" alt="Leopold Museum" width="285" height="76"></a>
+      <div class="menu__tools">
+        <div class="lang" role="group" aria-label="Sprache" data-i18n-aria="language">
+          <button class="lang__btn is-active" data-lang="de" aria-pressed="true" lang="de">DE</button>
+          <button class="lang__btn" data-lang="en" aria-pressed="false" lang="en">EN</button>
+        </div>
+        <button class="menu__close" data-menu-close aria-label="Menü schließen" data-i18n-aria="menuClose"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+    </div>
+    <nav class="menu__nav">
+      <a href="#ausstellungen" data-menu-link><span data-i18n="navExhibitions">Ausstellungen</span><sup>3</sup></a>
+      <a href="#besuch" data-menu-link><span data-i18n="navVisit">Besuch</span></a>
+      <a href="#kalender" data-menu-link><span data-i18n="navCalendar">Kalender</span></a>
+      <a href="#sammlung" data-menu-link><span data-i18n="navCollection">Sammlung</span><sup data-i18n="objectsCount">3.597</sup></a>
+      <a href="https://onlinecollection.leopoldmuseum.org/" target="_blank" rel="noopener"><span data-i18n="navOnline">Online Sammlung</span><sup>↗</sup></a>
+      <a class="menu__ticket" data-i18n-href="urlTickets" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/online-ticket" target="_blank" rel="noopener"><span data-i18n="buyTicket">Ticket kaufen</span><sup>↗</sup></a>
+    </nav>
+<div class="menu__bottom">
+  <div class="menu__foot">
+    <p data-status-line>Heute geöffnet, 10–18 Uhr</p>
+    <p data-i18n="addressLine">Museumsplatz 1, 1070 Wien</p>
+  </div>
+</div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ───────── Hero: Karten-Karussell ───────── -->
+<section class="hero" aria-roledescription="Karussell" aria-label="Highlights" data-hero>
+  <div class="hero__track" data-track></div>
+</section>
+
+<!-- ───────── Statement ───────── -->
+<section class="intro" id="museum">
+  <h1 class="intro__text" data-intro></h1>
+</section>
+
+<!-- ───────── Ausstellungen: kompakte Reihe wie früher „Aktuell“ ───────── -->
+<section class="updates shows" id="ausstellungen">
+  <h2 class="updates__label" data-i18n="navExhibitions">Ausstellungen</h2>
+  <div class="updates__row" data-drag>
+
+    <a class="u-card" href="#kalender">
+      <div class="u-card__box"><img src="assets/img/ex/7314.jpg" alt="" loading="lazy"></div>
+      <span class="tag" data-i18n="statusNow">Jetzt zu sehen</span>
+      <p class="u-card__cap"><span>Boeckl – Josephsohn</span><br><span data-i18n="subBoeckl">Archetypen des Figuralen</span></p>
+    </a>
+
+    <a class="u-card" href="#kalender">
+      <div class="u-card__box"><img src="assets/img/ex/7374.jpg" alt="" loading="lazy" style="object-position:60% 20%"></div>
+      <span class="tag tag--hot" data-i18n="tagLastDays">Letzte Tage</span>
+      <p class="u-card__cap"><span>Premiere!</span><br><span data-i18n="datePremiere">24.04. – 11.10.2026</span></p>
+    </a>
+
+    <a class="u-card" href="#sammlung">
+      <div class="u-card__box"><img src="assets/img/works/web-lm-00630.jpg" alt="" loading="lazy" style="object-position:75% 30%"></div>
+      <span class="tag" data-i18n="statusPermanent">Dauerhaft</span>
+      <p class="u-card__cap"><span data-i18n="titleVienna">Wien 1900</span><br><span data-i18n="subVienna">Aufbruch in die Moderne</span></p>
+    </a>
+
+    <div class="ex-extra" data-ex-extra></div>
+    <button class="u-card u-card--more ex-more" data-ex-more aria-expanded="false" aria-label="Weitere Ausstellungen" data-i18n-aria="moreExhibitions">
+      <span class="u-card__box"><svg viewBox="0 0 24 24"><path class="v" d="M12 5v14"/><path d="M5 12h14"/></svg></span>
+    </button>
+  </div>
+</section>
+
+<!-- ───────── Besuch planen ───────── -->
+<!-- Zitat Rudolf Leopold: beim Darüberfahren wechselt das Wort „erregt“ (assets/quote.js) -->
+<section class="quote" aria-label="Zitat Rudolf Leopold" data-quote>
+  <blockquote class="quote__text" data-quote-text><span class="quote__l1"><span data-i18n="quoteA">„Was mich nicht</span> <span class="quote__nb"><span class="quote__word" data-quote-word><span class="quote__w is-in">erregt</span></span><span data-i18n="quoteJoin">,</span></span></span><br><span data-i18n="quoteB"> interessiert mich nicht.“</span></blockquote>
+  <p class="quote__by">Rudolf Leopold</p>
+  <div class="quote__more">
+    <p data-i18n="quoteMore1">Kunst wirkt, bevor wir sie verstehen. Sie kann faszinieren, berühren, irritieren oder Fragen auslösen. Was etwas in uns auslöst, kann der Anfang einer tieferen Auseinandersetzung mit Kunst sein.</p>
+    <p data-i18n="quoteMore2">Das Leopold Museum schafft Zugänge zu diesen unterschiedlichen Begegnungen – durch seine Sammlung, wechselnde Ausstellungen, neue kuratorische Perspektiven und Kunstvermittlung.</p>
+  </div>
+</section>
+
+<section class="visit" id="besuch">
+  <h2 class="visit__label" data-i18n="planVisit">Besuch planen</h2>
+  <div class="plan">
+    <div class="plan__head">
+      <p class="plan__status"><i class="plan__dot" data-plan-dot></i><span data-status-big>Heute geöffnet bis 18 Uhr</span></p>
+      <a class="pill-btn plan__cta" data-i18n-href="urlTickets" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/online-ticket" target="_blank" rel="noopener"><span data-i18n="buyTicket">Ticket kaufen</span></a>
+    </div>
+    <figure class="plan__building" data-building>
+      <div class="plan__building-canvas" data-building-canvas role="img" aria-label="Das Gebäude des Leopold Museum, mit der Maus drehbar" data-i18n-aria="buildingLabel"></div>
+      <figcaption class="plan__building-cap"><span data-i18n="addressLine">Museumsplatz 1, 1070 Wien</span><span class="plan__building-hint" data-i18n="figureHint">Ziehen zum Drehen</span></figcaption>
+    </figure>
+    <div class="plan__item">
+      <h3 class="visit__h" data-i18n="hours">Öffnungszeiten</h3>
+        <p class="plan__big" data-i18n="hoursBig"></p>
+      <p data-i18n-html="hoursText">Täglich außer Dienstag<br>10 bis 18 Uhr<br>Feiertags geöffnet</p>
+    </div>
+    <div class="plan__item">
+      <h3 class="visit__h" data-i18n="admission">Eintritt</h3>
+        <p class="plan__big" data-i18n="admissionBig"></p>
+      <p data-i18n-html="admissionText">Regulär € 19<br>Ermäßigt € 16<br>Unter 19 Jahren € 2,50</p>
+      <a class="plan__link" data-i18n-href="urlTickets" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/online-ticket" target="_blank" rel="noopener"><span data-i18n="buyTicket">Ticket kaufen</span> ↗</a>
+    </div>
+    <div class="plan__item">
+      <h3 class="visit__h" data-i18n="gettingHere">Anreise</h3>
+        <p class="plan__big" data-i18n="gettingBig"></p>
+      <p data-i18n-html="gettingHereText">U2 Museumsquartier<br>U3 Volkstheater<br>Museumsplatz 1, 1070 Wien</p>
+    <a class="plan__link" href="https://www.google.com/maps/search/?api=1&amp;query=Leopold+Museum%2C+Museumsplatz+1%2C+1070+Wien" target="_blank" rel="noopener"><span data-i18n="openMaps">Auf Google Maps öffnen</span> ↗</a>
+    </div>
+    <div class="plan__item">
+      <h3 class="visit__h" data-i18n="tours">Führungen</h3>
+        <p class="plan__big" data-i18n="toursBig"></p>
+      <p data-i18n="toursText">Öffentliche Führungen am Wochenende, individuelle Führungen in mehreren Sprachen auf Anfrage.</p>
+      <a class="plan__link" href="#kalender"><span data-i18n="toCalendar">Zum Kalender</span> ↓</a>
+    </div>
+    <div class="plan__item">
+      <h3 class="visit__h" data-i18n="groups">Gruppen</h3>
+        <p class="plan__big" data-i18n="groupsBig"></p>
+      <p data-i18n="groupsText">Ab 10 Personen nur mit bestätigter Anmeldung. Gruppentarif € 16, Jugendliche € 2,50.</p>
+      <a class="plan__link" data-i18n-href="urlGroups" href="https://www.leopoldmuseum.org/de/besuch/gruppen-und-reiseveranstalter" target="_blank" rel="noopener"><span data-i18n="registerGroup">Gruppe anmelden</span> ↗</a>
+    </div>
+    <div class="plan__item">
+      <h3 class="visit__h" data-i18n="access">Barrierefreiheit</h3>
+        <p class="plan__big" data-i18n="accessBig"></p>
+      <p data-i18n="accessText">Lift am Seiteneingang und zu allen Ausstellungen. Rollstuhl und Klapphocker kostenlos an der Garderobe, Assistenzhunde willkommen.</p>
+      <a class="plan__link" data-i18n-href="urlAccess" href="https://www.leopoldmuseum.org/de/barrierefreiheit" target="_blank" rel="noopener"><span data-i18n="moreInfo">Mehr erfahren</span> ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ───────── Kalender (Stimmung aus Figma, an die Seite angepasst) ───────── -->
+<section class="updates cal" id="kalender">
+  <div class="cal__side">
+    <h2 class="updates__label" data-i18n="navCalendar">Kalender</h2>
+    <div class="cal__monthrow">
+      <button class="cal__arrow" data-cal-prev aria-label="Vorheriger Monat" data-i18n-aria="prevMonth"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <span class="cal__month" data-cal-month>Oktober</span>
+      <button class="cal__arrow" data-cal-next aria-label="Nächster Monat" data-i18n-aria="nextMonth"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="cal__filters" role="group" aria-label="Filter" data-cal-filters></div>
+  </div>
+  <div class="cal__grid" data-cal-grid></div>
+  <p class="cal__empty" data-cal-empty hidden></p>
+</section>
+
+<!-- ───────── Sammlung ───────── -->
+<section class="work work--fig" id="sammlung">
+  <div class="work__head">
+    <h2 class="work__title" data-i18n="navCollection">Sammlung</h2>
+    <a class="work__all" href="https://onlinecollection.leopoldmuseum.org/" target="_blank" rel="noopener"><span data-i18n="onlineCollection">Online Sammlung</span></a>
+  </div>
+
+  <!-- Filter wie in Variante A, wirkt hier auf die Figur aus Werken -->
+  <div class="filter is-on" data-filter>
+    <div class="filter__clip">
+      <div class="filter__bar">
+        <button class="filter__toggle" data-filter-toggle aria-expanded="false"><span class="plus"></span><span data-i18n="filter">Filter</span></button>
+        <span class="fgrid__hint" data-i18n="fgridHint">Ziehen bewegt · Hineinklicken, dann zoomt das Mausrad · Herauszoomen zeigt das Ganze</span>
+        <div class="fgrid__tools">
+          <span class="filter__count"><b data-fg-count>1300</b> <span data-i18n="works">Werke</span></span>
+          <div class="fgrid__zoom">
+          <button type="button" data-fg-out aria-label="Verkleinern" data-i18n-aria="zoomOut"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg></button>
+          <button type="button" data-fg-in aria-label="Vergrößern" data-i18n-aria="zoomIn"><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg></button>
+          <button type="button" data-fg-fit class="fgrid__fit" data-i18n="fgridWhole">Ganze Figur</button>
+          <button type="button" data-fg-full class="fgrid__fit">Vollbild</button>
+        </div>
+        </div>
+      </div>
+      <div class="filter__panel" data-filter-panel>
+        <div class="filter__cols">
+          <div class="filter__col">
+            <p class="filter__label" data-i18n="artists">Künstler*innen</p>
+            <div class="filter__list" data-fg-chips="artist"></div>
+          </div>
+          <div class="filter__col">
+            <p class="filter__label" data-i18n="period">Entstehungszeit</p>
+            <div class="filter__list" data-fg-chips="time"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Figur aus Werken: rund 1300 Werke der Online Sammlung in der Form der Leopold-Figur (assets/figure-grid.js) -->
+  <div class="fgrid" data-fgrid>
+    <canvas aria-label="Werke der Sammlung, angeordnet als Leopold-Figur. Ziehen zum Bewegen, Klick öffnet ein Werk." data-i18n-aria="fgridLabel"></canvas>
+    <!-- nur im Vollbild sichtbar: dieselben Knöpfe oben rechts in der Figur -->
+    <div class="fgrid__ui">
+      <div class="fgrid__zoom">
+        <button type="button" data-fg-out aria-label="Verkleinern" data-i18n-aria="zoomOut"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg></button>
+        <button type="button" data-fg-in aria-label="Vergrößern" data-i18n-aria="zoomIn"><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg></button>
+        <button type="button" data-fg-fit class="fgrid__fit" data-i18n="fgridWhole">Ganze Figur</button>
+        <button type="button" data-fg-full class="fgrid__fit">Vollbild</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ───────── Footer ───────── -->
+<footer class="footer footer--b">
+  <div class="footb__top">
+    <p class="footb__say"><span data-i18n="footSay">Bis bald im Museumsquartier.</span></p>
+    <div class="footb__news">
+      <p class="footer__h" data-i18n="newsletter">Newsletter</p>
+      <p class="footb__lead" data-i18n="newsLead">Ausstellungen, Programm und Neuigkeiten aus dem Museum per E-Mail.</p>
+      <form class="news" data-news novalidate>
+        <label class="sr-only" for="news-mail" data-i18n="email">E-Mail-Adresse</label>
+        <input id="news-mail" type="email" placeholder="E-Mail-Adresse" data-i18n-ph="email" autocomplete="email">
+        <button type="submit" data-i18n="subscribe">Anmelden</button>
+        <p class="news__msg" data-news-msg aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+  <div class="footer__cols">
+    <div>
+      <p class="footer__h" data-i18n="contact">Kontakt</p>
+      <a href="mailto:besucherservice@leopoldmuseum.org">besucherservice@leopoldmuseum.org</a>
+      <p class="footer__dim">© 2026 Leopold Museum</p>
+      <nav class="footer__legal" aria-label="Rechtliches">
+        <a data-i18n-href="urlImprint" href="https://www.leopoldmuseum.org/de/impressum" target="_blank" rel="noopener" data-i18n="imprint">Impressum</a>
+        <a data-i18n-href="urlPrivacy" href="https://www.leopoldmuseum.org/de/datenschutz" target="_blank" rel="noopener" data-i18n="privacy">Datenschutz</a>
+        <a data-i18n-href="urlRules" href="https://www.leopoldmuseum.org/de/hausordnung" target="_blank" rel="noopener" data-i18n="houseRules">Hausordnung</a>
+        <a data-i18n-href="urlAccess" href="https://www.leopoldmuseum.org/de/barrierefreiheit" target="_blank" rel="noopener" data-i18n="access">Barrierefreiheit</a>
+      </nav>
+    </div>
+    <div>
+      <p class="footer__h">Links</p>
+      <a href="https://www.instagram.com/leopold_museum/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/LeopoldMuseum" target="_blank" rel="noopener">Facebook</a>
+    </div>
+    <div>
+      <p class="footer__h" data-i18n="phone">Telefon</p>
+      <a href="tel:+431525701555">+43 1 525 70 1555</a>
+      <p class="footer__dim" data-i18n="phoneNote">Besucherservice, werktags</p>
+    </div>
+    <div>
+      <p class="footer__h" data-i18n="address">Adresse</p>
+      <p data-i18n-html="addressText">Museumsplatz 1<br>1070 Wien</p>
+    </div>
+  </div>
+
+</footer>
+
+<!-- unten links: Laufband mit Öffnungsstatus, daneben der Ticket-Button -->
+<div class="dock">
+  <a class="ticker" data-ticket-pill href="#besuch" aria-label="Besuch planen" data-i18n-aria="planVisit">
+  <span class="ticker__track">
+    <span class="ticker__item" data-ticker>Heute geöffnet bis 18:00.</span><span class="ticker__item ticker__cta"><span data-i18n="planVisit">Besuch planen</span> →</span>
+    <span class="ticker__item" data-ticker aria-hidden="true">Heute geöffnet bis 18:00.</span><span class="ticker__item ticker__cta" aria-hidden="true"><span data-i18n="planVisit">Besuch planen</span> →</span>
+  </span>
+  </a>
+  <a class="dock__btn" href="#besuch"><span class="dock__label" data-i18n="tickets">Tickets</span><span class="dock__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></a>
+</div>
+
+<!-- ───────── Werkansicht ───────── -->
+<div class="sheet" data-sheet aria-hidden="true" role="dialog" aria-modal="true" aria-label="Werkansicht" data-i18n-aria="sheet">
+  <div class="sheet__backdrop" data-sheet-close></div>
+  <article class="sheet__panel">
+    <figure class="sheet__img" data-sheet-img></figure>
+    <div class="sheet__side" tabindex="-1">
+      <div class="sheet__bar">
+        <span class="sheet__pos" data-sheet-pos></span>
+        <div class="sheet__nav">
+          <button data-sheet-prev aria-label="Vorheriges Werk" data-i18n-aria="prevWork"><svg viewBox="0 0 24 24"><path d="M14.5 6 8.5 12l6 6"/></svg></button>
+          <button data-sheet-next aria-label="Nächstes Werk" data-i18n-aria="nextWork"><svg viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6"/></svg></button>
+          <button data-sheet-close aria-label="Schließen" data-i18n-aria="close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+        </div>
+      </div>
+      <div class="sheet__body" data-sheet-body></div>
+    </div>
+  </article>
+</div>
+
+<script src="assets/works.js?v=45"></script>
+<script src="assets/i18n.js?v=32"></script>
+<script src="assets/events.js?v=5"></script>
+<script src="assets/figure-grid/data.js?v=1"></script>
+<script src="assets/app.js?v=74"></script>
+<script src="assets/figure-grid.js?v=11"></script>
+<script src="assets/embed3d.js"></script>
+<script type="module">
+/* Besuch planen: das Gebäude als 3D-Modell (aus dem Repo leopold/museum), ohne Bild-Mapping.
+   Lädt erst in der Nähe und rendert nur, solange es sichtbar ist. */
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const stage = document.querySelector("[data-building]");
+if (stage) {
+  let started = false;
+  new IntersectionObserver((entries, obs) => {
+    if (entries.some(e => e.isIntersecting) && !started) { started = true; obs.disconnect(); init(); }
+  }, { rootMargin: "500px 0px" }).observe(stage);
+}
+
+function init() {
+  const box = stage.querySelector("[data-building-canvas]");
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
+  catch (e) { stage.classList.add("is-nogl"); return; }
+  const size = () => [box.clientWidth, box.clientHeight];
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(...size());
+  renderer.toneMapping = THREE.NeutralToneMapping;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  box.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.22;
+  // Hauptlicht von links oben, weiches Himmelslicht, leichtes Gegenlicht für die Kanten
+  const key = new THREE.DirectionalLight(0xffffff, 3.4);
+  key.castShadow = true;
+  key.shadow.mapSize.set(2048, 2048);
+  const rim = new THREE.DirectionalLight(0xfff3e6, 0.9);
+  scene.add(key, rim, new THREE.HemisphereLight(0xffffff, 0xd6d1c7, 0.35));
+
+  const [w0, h0] = size();
+  const camera = new THREE.PerspectiveCamera(28, w0 / h0, 0.01, 100);
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.enableZoom = false;
+  controls.enablePan = false;
+  controls.minPolarAngle = THREE.MathUtils.degToRad(55);
+  controls.maxPolarAngle = THREE.MathUtils.degToRad(88);
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  controls.autoRotate = !reduced;
+  controls.autoRotateSpeed = 0.5;
+  let resumeT;
+  controls.addEventListener("start", () => { controls.autoRotate = false; clearTimeout(resumeT); stage.classList.add("is-grabbed"); });
+  controls.addEventListener("end", () => { stage.classList.remove("is-grabbed"); if (!reduced) resumeT = setTimeout(() => (controls.autoRotate = true), 2500); });
+
+  let corners = null;
+  new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(window.EMBED["assets/building/museum.glb"], gltf => {
+    const model = gltf.scene;
+    const mat = new THREE.MeshStandardMaterial({ color: 0xe7e2d8, roughness: 0.85, metalness: 0, side: THREE.DoubleSide });
+    model.traverse(o => { if (o.isMesh) { o.material = mat; o.castShadow = o.receiveShadow = true; if (!o.geometry.attributes.normal) o.geometry.computeVertexNormals(); } });
+    const bb = new THREE.Box3().setFromObject(model);
+    const s = bb.getSize(new THREE.Vector3());
+    model.position.sub(bb.getCenter(new THREE.Vector3()));
+    scene.add(model);
+
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(s.length() * 4, s.length() * 4), new THREE.ShadowMaterial({ opacity: 0.26, transparent: true }));
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -s.y / 2 - 0.001;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    corners = [];
+    for (const x of [-1, 1]) for (const y of [-1, 1]) for (const z of [-1, 1]) corners.push(new THREE.Vector3(x * s.x / 2, y * s.y / 2, z * s.z / 2));
+
+    const r = s.length() / 2;
+    key.position.set(-5, 6, 3).normalize().multiplyScalar(r * 3);
+    rim.position.set(5, 3, -6).normalize().multiplyScalar(r * 3);
+    Object.assign(key.shadow.camera, { left: -r * 1.5, right: r * 1.5, top: r * 1.5, bottom: -r * 1.5, near: r * 0.2, far: r * 8 });
+    key.shadow.camera.updateProjectionMatrix();
+    key.shadow.bias = -0.0002; key.shadow.normalBias = r * 0.002;
+
+    const halfFov = THREE.MathUtils.degToRad(camera.fov / 2);
+    const dist = Math.max(s.y / 2 / 0.6, s.x / 2 / 0.75 / camera.aspect) / Math.tan(halfFov) + s.z / 2;
+    const az = THREE.MathUtils.degToRad(-38), el = THREE.MathUtils.degToRad(14);
+    camera.position.set(Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el)).multiplyScalar(dist);
+    camera.near = dist / 100; camera.far = dist * 10; camera.updateProjectionMatrix();
+    controls.update();
+    stage.classList.add("is-ready");
+  });
+
+  // optisch zentrieren: Mitte der Gebäude-Ecken im Bild sanft in die Bühnenmitte schieben
+  const v = new THREE.Vector3(), off = { x: 0, y: 0 };
+  function centre() {
+    if (!corners) return;
+    let minX = 1, maxX = -1, minY = 1, maxY = -1;
+    corners.forEach(c => {
+      v.copy(c).project(camera);
+      minX = Math.min(minX, v.x); maxX = Math.max(maxX, v.x); minY = Math.min(minY, v.y); maxY = Math.max(maxY, v.y);
+    });
+    const [w, h] = size();
+    off.x += ((minX + maxX) / 2) * (w / 2) * 0.2;
+    off.y -= ((minY + maxY) / 2) * (h / 2) * 0.2;
+    camera.setViewOffset(w, h, off.x, off.y, w, h);
+  }
+
+  addEventListener("resize", () => {
+    const [w, h] = size();
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+  let visible = true;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(stage);
+  renderer.setAnimationLoop(() => {
+    if (!visible) return;
+    controls.update();
+    centre();
+    renderer.render(scene, camera);
+  });
+}
+
+</script>
+<script src="assets/cursor.js?v=2"></script>
+<script src="assets/quote.js?v=14"></script>
+<script src="assets/menu-tilt.js?v=3"></script>
+<script type="module">
+/* Slider: Leopold Card als echtes 3D-Objekt (three.js) – Kartenkörper mit Materialstärke und runden Ecken,
+   glänzender Kunststoff mit Klarlack, Umgebungslicht für Reflexe, gestaltete Vorder- und Rückseite.
+   Dreht sich langsam, nur solange die Folie aktiv ist; der Schatten darunter wird mit der Drehung schmaler.
+   Ohne WebGL bleibt die CSS-Karte als Ersatz stehen. */
+import * as THREE from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const box = document.querySelector("[data-pass3d]");
+
+async function init() {
+  const wrap = box.closest(".pass");
+  const slide = box.closest(".card");
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
+  catch (e) { return; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.toneMapping = THREE.NeutralToneMapping;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  box.appendChild(renderer.domElement);
+
+  // Maße einer echten Scheckkarte (85,6 × 54 mm, Radius 3,18 mm), Stärke leicht betont
+  const W = 8.56, H = 5.4, D = 0.09, R = 0.318;
+  const scene = new THREE.Scene();
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.85;
+  const key = new THREE.DirectionalLight(0xffffff, 1.8);
+  key.position.set(-4, 6, 8);
+  const rim = new THREE.DirectionalLight(0xfff1df, 1.1);
+  rim.position.set(6, 2, -6);
+  scene.add(key, rim, new THREE.AmbientLight(0xffffff, 0.25));
+
+  const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
+  camera.position.set(0, 0.4, 24);
+
+  // Kartenkörper: abgerundetes Rechteck, extrudiert, weiche Kante
+  const shape = new THREE.Shape();
+  shape.moveTo(-W / 2 + R, -H / 2);
+  shape.lineTo(W / 2 - R, -H / 2); shape.quadraticCurveTo(W / 2, -H / 2, W / 2, -H / 2 + R);
+  shape.lineTo(W / 2, H / 2 - R); shape.quadraticCurveTo(W / 2, H / 2, W / 2 - R, H / 2);
+  shape.lineTo(-W / 2 + R, H / 2); shape.quadraticCurveTo(-W / 2, H / 2, -W / 2, H / 2 - R);
+  shape.lineTo(-W / 2, -H / 2 + R); shape.quadraticCurveTo(-W / 2, -H / 2, -W / 2 + R, -H / 2);
+  const bevel = 0.02;
+  const body = new THREE.ExtrudeGeometry(shape, { depth: D, bevelEnabled: true, bevelThickness: bevel, bevelSize: bevel, bevelSegments: 3, curveSegments: 12 });
+  body.translate(0, 0, -D / 2);
+  const plastic = new THREE.MeshPhysicalMaterial({ color: 0xf3f0ea, roughness: 0.42, clearcoat: 1, clearcoatRoughness: 0.18 });
+  const card = new THREE.Group();
+  card.add(new THREE.Mesh(body, plastic));
+
+  // Vorder- und Rückseite als bemalte Flächen knapp über dem Körper
+  const [front, back] = await Promise.all([drawFront(), drawBack()]);
+  const face = tex => new THREE.MeshPhysicalMaterial({
+    map: tex, transparent: true, alphaTest: 0.5, roughness: 0.32, clearcoat: 0.9, clearcoatRoughness: 0.12
+  });
+  const prep = c => { const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); return t; };
+  const z = D / 2 + bevel + 0.002;
+  const f = new THREE.Mesh(new THREE.PlaneGeometry(W + bevel * 2, H + bevel * 2), face(prep(front)));
+  f.position.z = z;
+  const b = new THREE.Mesh(new THREE.PlaneGeometry(W + bevel * 2, H + bevel * 2), face(prep(back)));
+  b.position.z = -z; b.rotation.y = Math.PI;
+  card.add(f, b);
+  scene.add(card);
+
+  const shadow = wrap.querySelector(".pass__shadow");
+  function size() {
+    const w = box.clientWidth, h = box.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    // Karte füllt etwa 72 % der Breite
+    const dist = (W * 1.02 / 0.72) / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.aspect);
+    camera.position.z = Math.max(dist, (H * 1.6) / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))));
+    camera.updateProjectionMatrix();
+  }
+  size();
+  addEventListener("resize", size);
+  wrap.classList.add("is-gl");
+
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let angle = -0.45, last = performance.now();
+  renderer.setAnimationLoop(now => {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    const active = slide ? slide.classList.contains("is-active") : true;
+    if (active && !reduced) angle += dt * (Math.PI * 2 / 13);           // eine Umdrehung in 13 s
+    card.rotation.y = angle;
+    card.rotation.x = 0.16 + Math.sin(now / 1900) * 0.04;
+    card.rotation.z = Math.sin(now / 2600) * 0.025;
+    card.position.y = Math.sin(now / 1500) * 0.08;
+    if (shadow) {
+      const k = Math.abs(Math.cos(angle));
+      shadow.style.transform = `translateX(-50%) scaleX(${(0.18 + 0.82 * k).toFixed(3)})`;
+      shadow.style.opacity = (0.55 + 0.45 * k).toFixed(3);
+    }
+    renderer.render(scene, camera);
+  });
+}
+
+/* ───────── Kartenmotive auf Canvas ───────── */
+
+const CW = 2048, CH = Math.round(2048 * 54 / 85.6), CR = Math.round(CW * 3.18 / 85.6);
+const load = src => new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; });
+const fontsReady = () => (document.fonts ? document.fonts.ready : Promise.resolve());
+function canvas() {
+  const c = document.createElement("canvas");
+  c.width = CW; c.height = CH;
+  const ctx = c.getContext("2d");
+  ctx.beginPath(); ctx.roundRect(0, 0, CW, CH, CR); ctx.clip();       // runde Ecken, außen durchsichtig
+  return [c, ctx];
+}
+
+async function drawFront() {
+  await fontsReady();
+  const [art, logo] = await Promise.all([load(window.EMBED["assets/img/pass-schiele.jpg"]), load(window.EMBED["assets/logo-white.svg"])]);
+  const [c, ctx] = canvas();
+  ctx.fillStyle = "#fbfaf7"; ctx.fillRect(0, 0, CW, CH);
+  // Schiele, Selbstbildnis mit gestreiftem Hemd (1910): Kopf links, läuft ins Weiß aus
+  const rw = CW * 0.62, rh = CH;
+  const sw = art.width * 0.84, sh = sw * rh / rw;
+  ctx.save();
+  ctx.filter = "brightness(1.12) contrast(1.06) saturate(1.08)";
+  ctx.drawImage(art, art.width * 0.02, art.height * 0.03, sw, sh, 0, 0, rw, rh);
+  ctx.restore();
+  const fade = ctx.createLinearGradient(CW * 0.42, 0, CW * 0.62, 0);
+  fade.addColorStop(0, "rgba(251,250,247,0)"); fade.addColorStop(1, "rgba(251,250,247,1)");
+  ctx.fillStyle = fade; ctx.fillRect(CW * 0.42, 0, CW * 0.2, CH);
+  ctx.fillStyle = "#fbfaf7"; ctx.fillRect(CW * 0.62, 0, CW * 0.38, CH);
+  // Logo-Feld oben rechts
+  ctx.fillStyle = "#7a5a35"; ctx.fillRect(CW * 0.6, 0, CW * 0.4, CH * 0.26);
+  const lw = CW * 0.3, lh = lw * 76 / 285;
+  ctx.drawImage(logo, CW * 0.8 - lw / 2, CH * 0.13 - lh / 2, lw, lh);
+  // Schriftzug
+  ctx.fillStyle = "#6d5030"; ctx.textAlign = "right"; ctx.textBaseline = "alphabetic";
+  ctx.font = `600 ${Math.round(CH * 0.088)}px Bureau, sans-serif`;
+  if ("letterSpacing" in ctx) ctx.letterSpacing = `${Math.round(CH * 0.006)}px`;
+  ctx.fillText("LEOPOLD CARD", CW * 0.94, CH * 0.63);
+  if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
+  ctx.fillStyle = "#7a6a58"; ctx.font = `400 ${Math.round(CH * 0.036)}px Bureau, sans-serif`;
+  ctx.fillText("Nur gültig mit Lichtbildausweis", CW * 0.94, CH * 0.71);
+  return c;
+}
+
+async function drawBack() {
+  await fontsReady();
+  const logo = await load(window.EMBED["assets/logo-white.svg"]);
+  const [c, ctx] = canvas();
+  ctx.textAlign = "left";
+  ctx.fillStyle = "#f3f0e9"; ctx.fillRect(0, 0, CW, CH);
+  // Magnetstreifen mit leichtem Glanz
+  const g = ctx.createLinearGradient(0, CH * 0.1, 0, CH * 0.29);
+  g.addColorStop(0, "#26231f"); g.addColorStop(0.5, "#14120f"); g.addColorStop(1, "#1f1c18");
+  ctx.fillStyle = g; ctx.fillRect(0, CH * 0.1, CW, CH * 0.19);
+  // Unterschriftsfeld
+  const sx = CW * 0.07, sy = CH * 0.39, sw = CW * 0.56, sh = CH * 0.13;
+  ctx.fillStyle = "#fff"; ctx.fillRect(sx, sy, sw, sh);
+  ctx.strokeStyle = "#e6dfd2"; ctx.lineWidth = 4;
+  for (let x = sx; x < sx + sw; x += 18) { ctx.beginPath(); ctx.moveTo(x, sy); ctx.lineTo(x + 26, sy + sh); ctx.stroke(); }
+  ctx.fillStyle = "#8d8476"; ctx.font = `400 ${Math.round(CH * 0.028)}px Bureau, sans-serif`;
+  ctx.fillText("Unterschrift", sx, sy + sh + CH * 0.045);
+  // Text
+  ctx.fillStyle = "#4a4239"; ctx.font = `400 ${Math.round(CH * 0.034)}px Bureau, sans-serif`;
+  ctx.fillText("Diese Karte ist persönlich und nicht übertragbar.", sx, CH * 0.69);
+  ctx.fillText("Leopold Museum · Museumsplatz 1 · 1070 Wien", sx, CH * 0.745);
+  ctx.fillStyle = "#6d5030"; ctx.font = `600 ${Math.round(CH * 0.042)}px Bureau, sans-serif`;
+  if ("letterSpacing" in ctx) ctx.letterSpacing = `${Math.round(CH * 0.008)}px`;
+  ctx.fillText("LC 2026  0418  2207", sx, CH * 0.87);
+  if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
+  // Logo-Feld unten rechts
+  ctx.fillStyle = "#7a5a35"; ctx.fillRect(CW * 0.69, CH * 0.72, CW * 0.24, CH * 0.18);
+  const lw = CW * 0.19, lh = lw * 76 / 285;
+  ctx.drawImage(logo, CW * 0.81 - lw / 2, CH * 0.81 - lh / 2, lw, lh);
+  return c;
+}
+
+// erst hier starten: die Hilfsfunktionen oben müssen schon angelegt sein
+if (box) init().catch(e => { window.__passErr = String(e && e.stack || e); });
+
+</script>
+<script src="assets/reveal.js?v=1"></script>
+</body>
+</html>

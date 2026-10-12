@@ -1,0 +1,173 @@
+/* Leopold Museum – Unterseite eines Programmpunkts. Baut auf style.css auf
+   und nutzt dieselben Muster wie die Startseite (Label links, Inhalt rechts). */
+
+.evpage main { opacity: 0; transform: translateY(12px); transition: opacity .8s var(--ease), transform .9s var(--ease); }
+.evpage.is-in main { opacity: 1; transform: none; }
+
+/* ───────── Kopf des Programmpunkts ───────── */
+.evp__hero { padding: clamp(28px, 4vw, 56px) var(--pad) 0; }
+.evp__back { display: inline-flex; align-items: center; gap: 6px; font-size: var(--t-small); color: var(--ink-2); transition: color .3s var(--ease); }
+.evp__back svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.5; transition: transform .5s var(--ease); }
+.evp__back:hover { color: var(--ink); }
+.evp__back:hover svg { transform: translateX(-3px); }
+.evp__kicker { display: flex; align-items: center; gap: 12px; margin-top: clamp(32px, 4vw, 56px); font-size: var(--t-small); color: var(--ink-2); }
+.evp__kicker .tag { margin-top: 0; }
+.evp__title {
+  margin-top: 18px;
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(44px, 6.4vw, 104px); line-height: .98; letter-spacing: -.02em;
+  max-width: 16ch;
+}
+.evp__when {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 20px;
+  margin-top: clamp(28px, 3vw, 44px); padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+.evp__date { font-size: var(--t-statement); line-height: 1.04; letter-spacing: -.035em; }
+.evp__time { display: block; color: var(--ink-3); }
+.evp__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.evp__actions .pill-btn { height: var(--bar-h); padding: 0 var(--bar-pad); font-size: var(--t-small); letter-spacing: .08em; }
+.pill-btn--line { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.pill-btn--line:hover { background: transparent; border-color: var(--ink); }
+
+/* ───────── Bild über die volle Breite ───────── */
+.evp__image {
+  margin: clamp(36px, 4vw, 56px) var(--pad) 0;
+  height: min(78svh, 820px);
+  border-radius: var(--r-img);
+  background: var(--soft) center / cover no-repeat;
+}
+
+/* ───────── Bereiche: Label links, Inhalt rechts (wie Startseite) ───────── */
+.evp__row {
+  margin: clamp(80px, 8vw, 120px) var(--pad) 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: 137px 1fr;
+}
+.evp__row[hidden] { display: none; }
+
+.evp__about { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px clamp(24px, 4vw, 64px); align-items: start; }
+.evp__desc { font-size: clamp(20px, 1.8vw, 26px); line-height: 1.3; letter-spacing: -.015em; max-width: 34ch; }
+.evp__facts { margin: 0; border-top: 1px solid var(--line); }
+.evp__facts div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: var(--t-small); }
+.evp__facts dt { color: var(--ink-3); }
+.evp__facts dd { margin: 0; }
+.evp__note { grid-column: 1; font-size: var(--t-small); color: var(--ink-3); }
+
+/* Karte zur Ausstellung */
+.evp__ex { display: grid; grid-template-columns: 180px 1fr auto; gap: 20px; align-items: end; max-width: 760px; }
+.evp__ex-img { width: 180px; aspect-ratio: 4 / 5; background: var(--soft) center / cover no-repeat; border-radius: var(--r-img); transition: transform 1s var(--ease); }
+.evp__ex:hover .evp__ex-img { transform: scale(1.02); }
+.evp__ex-text { display: flex; flex-direction: column; gap: 4px; font-size: var(--t-small); color: var(--ink-2); }
+.evp__ex-text b { font-weight: 400; font-size: clamp(20px, 1.8vw, 26px); line-height: 1.1; letter-spacing: -.02em; color: var(--ink); }
+.evp__ex-date { color: var(--ink-3); }
+.evp__ex-go { font-size: var(--t-small); white-space: nowrap; background: linear-gradient(currentColor, currentColor) 0 100% / 100% 1px no-repeat; padding-bottom: 1px; }
+
+/* Besuch planen, kurz: 3 Spalten */
+.plan--short { grid-template-columns: repeat(3, 1fr); }
+.plan--short b { font-weight: 500; color: var(--ink); }
+
+/* Kacheln wie im Kalender: Datum über der Box, Titel in Sabon zentriert */
+.evp__tiles { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--gap); }
+.evp__tile { display: block; }
+.evp__tile .ev__box {
+  height: 200px; padding: 16px 18px;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  border: 0;
+}
+.evp__tile .ev__box .ev__today { position: absolute; top: 12px; right: 12px; transform: none; z-index: 1; }
+.evp__tile .ev__title { font-family: var(--serif); font-weight: 400; font-size: clamp(20px, 1.6vw, 24px); line-height: 1.08; }
+.evp__tile .ev__info { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; opacity: .85; }
+.evp__tile .ev__box { transition: filter .4s var(--ease), transform .8s var(--ease); }
+.evp__tile:hover .ev__box { transform: translateY(-3px); }
+
+/* Aus der Sammlung */
+.evp__works { display: flex; flex-direction: column; gap: 28px; }
+.evp__lead { font-size: clamp(18px, 1.5vw, 22px); line-height: 1.35; letter-spacing: -.01em; max-width: 46ch; color: var(--ink-2); }
+.evp__worksgrid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 36px var(--gap); }
+.evp__work { display: flex; flex-direction: column; }
+.evp__work-img { aspect-ratio: 4 / 5; background: var(--soft); border-radius: var(--r-img); overflow: hidden; display: grid; place-items: center; padding: 10%; }
+.evp__work-img img { max-width: 100%; max-height: 100%; object-fit: contain; transition: transform 1.1s var(--ease); }
+.evp__work:hover .evp__work-img img { transform: scale(1.04); }
+.evp__work-title { margin-top: 10px; font-size: var(--t-small); text-transform: uppercase; letter-spacing: .01em; line-height: 1.2; }
+.evp__work-meta { margin-top: 4px; font-size: var(--t-small); color: var(--ink); line-height: 1.3; }
+.evp__work-meta span { color: var(--ink-3); }
+
+.evp__missing { padding: 80px 0; font-size: 20px; }
+.evp__missing a { text-decoration: underline; }
+
+/* Abstand zum Fuß */
+.evpage .footer { padding-top: clamp(110px, 10vw, 150px); }
+
+@media (max-width: 1100px) {
+  .evp__tiles { grid-template-columns: repeat(3, 1fr); }
+  .evp__worksgrid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 760px) {
+  .evp__row { grid-template-columns: 1fr; gap: 14px; }
+  .evp__about, .plan--short { grid-template-columns: 1fr; }
+  .evp__ex { grid-template-columns: 110px 1fr; }
+  .evp__ex-img { width: 110px; }
+  .evp__ex-go { grid-column: 2; }
+  .evp__tiles, .evp__worksgrid { grid-template-columns: repeat(2, 1fr); }
+  .evp__image { height: 56svh; }
+}
+
+/* lange Labels umbrechen statt in den Inhalt zu laufen */
+.evp__row .updates__label { padding-right: 16px; white-space: normal; overflow-wrap: anywhere; }
+
+/* ───────── An die Startseite angeglichen ───────── */
+/* Datum in Sabon, eng gesetzt (wie „Heute geöffnet“) */
+.evp__date { font-family: var(--serif); letter-spacing: -.04em; }
+.evp__time { font-family: var(--serif); }
+/* Ticket-Button wie „Tickets →“ unten links, Kalender als Textzeile mit Symbol */
+.evp__actions { align-items: center; gap: 22px; }
+.evp__cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  height: var(--bar-h); padding: 0 var(--bar-pad); border-radius: 999px;
+  background: var(--ink); color: #fff; font-size: var(--bar-font);
+  transition: background .3s var(--ease);
+}
+.evp__cta::after { content: "→"; display: inline-block; transition: transform .5s var(--ease); }
+.evp__cta:hover { background: #333; }
+.evp__cta:hover::after { transform: translateX(3px); }
+.evp__add { margin-top: 0; font-size: var(--t-body); }
+/* Abschnittsnamen sauber trennen statt mitten im Wort */
+.evp__row .updates__label { overflow-wrap: normal; word-break: normal; hyphens: auto; -webkit-hyphens: auto; }
+/* Ausstellung als Kachel wie auf der Startseite */
+.evp__exc { width: 240px; flex: none; display: flex; flex-direction: column; align-items: flex-start; }
+.evp__exc .u-card__box { width: 100%; height: auto; aspect-ratio: 3 / 5; }
+.evp__exc .u-card__box img { width: 100%; height: 100%; object-fit: cover; }
+/* Termin-Kacheln wie im Kalender: 240 px, wechselnde Formate, Zeilen oben bündig */
+.evp__tiles { display: grid; grid-template-columns: repeat(auto-fill, 240px); gap: 44px 10px; align-items: start; }
+.evp__tile .ev__box { height: auto; overflow: hidden; }
+@media (max-width: 760px) { .evp__tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .evp__exc { width: 60%; } }
+.evp__tile .ev__title { font-size: clamp(24px, 2vw, 32px); line-height: 1.02; letter-spacing: -.02em; }
+
+/* Kopf zentriert wie das Zitat auf der Startseite; Datum serifenlos */
+.evp__hero { text-align: center; }
+.evp__back { display: inline-flex; }
+.evp__hero > .evp__back { position: relative; left: 0; float: left; }
+.evp__kicker { justify-content: center; clear: both; }
+.evp__title { margin-left: auto; margin-right: auto; max-width: 14ch; font-size: clamp(48px, 7.4vw, 128px); line-height: 1; letter-spacing: -.04em; text-wrap: balance; }
+.evp__when { flex-direction: column; align-items: center; justify-content: center; gap: 22px; border-top: 0; padding-top: 0; margin-top: clamp(24px, 2.6vw, 40px); }
+.evp__date, .evp__time { font-family: var(--sans); letter-spacing: -.035em; }
+.evp__date { font-size: clamp(22px, 2.2vw, 32px); line-height: 1.15; }
+.evp__time { display: inline; color: var(--ink-3); }
+.evp__time::before { content: " · "; color: var(--ink-3); }
+.evp__actions { justify-content: center; }
+
+/* Titel mit Farbfläche wie das Zitat: Fläche liegt tiefer im Raum, multipliziert; beide drehen mit der Maus */
+.evp__tt { position: relative; display: inline-block; --rx: 0deg; --ry: 0deg; --plate: #F6FF54; }
+.evp__tw {
+  position: relative; z-index: 1; display: block;
+  transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform .5s ease-out;
+}
+.evp__plate {
+  position: absolute; z-index: 2; inset: .1em -.28em -.04em; pointer-events: none;
+  background: var(--plate); mix-blend-mode: multiply;
+  transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry)) translateZ(-.5em);
+  transition: transform .5s ease-out;
+}

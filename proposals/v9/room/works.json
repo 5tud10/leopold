@@ -1,0 +1,722 @@
+[
+ {
+  "src": "images/web-lm-06066-default.jpg",
+  "w": 629,
+  "h": 640,
+  "title": "Indisches Märchen",
+  "artist": "Rudolf Kalvach",
+  "date": "1910–12",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/7693/"
+ },
+ {
+  "src": "images/web-lm-00454-default.jpg",
+  "w": 640,
+  "h": 517,
+  "title": "Selbstbildnis mit Lampionfrüchten",
+  "artist": "Egon Schiele",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/528/"
+ },
+ {
+  "src": "images/web-lm-00453-default.jpg",
+  "w": 640,
+  "h": 518,
+  "title": "Bildnis Wally Neuzil",
+  "artist": "Egon Schiele",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/527/"
+ },
+ {
+  "src": "images/web-lm-00624-default.jpg",
+  "w": 640,
+  "h": 422,
+  "title": "Tre Croci – Dolomitenlandschaft",
+  "artist": "Oskar Kokoschka",
+  "date": "1913",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/623/"
+ },
+ {
+  "src": "images/web-lm-00716-default.jpg",
+  "w": 640,
+  "h": 399,
+  "title": "Bergmäher (I. Fassung)",
+  "artist": "Albin Egger-Lienz",
+  "date": "1907",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/715/"
+ },
+ {
+  "src": "images/web-lm-00455-default.jpg",
+  "w": 640,
+  "h": 558,
+  "title": "„Liebkosung“ (Kardinal und Nonne)",
+  "artist": "Egon Schiele",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/529/"
+ },
+ {
+  "src": "images/web-lm-00630-default.jpg",
+  "w": 640,
+  "h": 575,
+  "title": "Tod und Leben",
+  "artist": "Gustav Klimt",
+  "date": "1910/11, umgearbeitet 1912/13 und 1915/16",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/629/"
+ },
+ {
+  "src": "images/web-lm-04148-default.jpg",
+  "w": 639,
+  "h": 640,
+  "title": "Am Attersee",
+  "artist": "Gustav Klimt",
+  "date": "1900",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/4328/"
+ },
+ {
+  "src": "images/web-lm-00623-default.jpg",
+  "w": 480,
+  "h": 640,
+  "title": "Selbstbildnis, eine Hand ans Gesicht gelegt",
+  "artist": "Oskar Kokoschka",
+  "date": "1918/19",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/622/"
+ },
+ {
+  "src": "images/web-lm-02310-default.jpg",
+  "w": 425,
+  "h": 640,
+  "title": "„Moa”",
+  "artist": "Egon Schiele",
+  "date": "1911",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/2451/"
+ },
+ {
+  "src": "images/web-lm-00151-default.jpg",
+  "w": 640,
+  "h": 635,
+  "title": "Ringelblumen",
+  "artist": "Koloman Moser",
+  "date": "1909",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/225/"
+ },
+ {
+  "src": "images/web-lm-00406-default.jpg",
+  "w": 388,
+  "h": 640,
+  "title": "Sitzender Jüngling („Am Morgen“)",
+  "artist": "Anton Kolig",
+  "date": "1919",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/480/"
+ },
+ {
+  "src": "images/web-lm-00443-default.jpg",
+  "w": 528,
+  "h": 640,
+  "title": "Bildnis Tilla Durieux",
+  "artist": "Max Oppenheimer",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/517/"
+ },
+ {
+  "src": "images/web-lm-00449-default.jpg",
+  "w": 640,
+  "h": 640,
+  "title": "Herbstbaum in bewegter Luft („Winterbaum“)",
+  "artist": "Egon Schiele",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/523/"
+ },
+ {
+  "src": "images/web-lm-00450-default.jpg",
+  "w": 638,
+  "h": 640,
+  "title": "„Lyriker“",
+  "artist": "Egon Schiele",
+  "date": "1911",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/524/"
+ },
+ {
+  "src": "images/web-lm-00451-default.jpg",
+  "w": 630,
+  "h": 640,
+  "title": "„Selbstseher“ II („Tod und Mann“)",
+  "artist": "Egon Schiele",
+  "date": "1911",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/525/"
+ },
+ {
+  "src": "images/web-lm-00452-default.jpg",
+  "w": 640,
+  "h": 533,
+  "title": "„Die Häuser am Meer“ („Häuserreihe“)",
+  "artist": "Egon Schiele",
+  "date": "1914",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/526/"
+ },
+ {
+  "src": "images/web-lm-00456-default.jpg",
+  "w": 640,
+  "h": 501,
+  "title": "Der Häuserbogen II („Inselstadt“)",
+  "artist": "Egon Schiele",
+  "date": "1915",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/530/"
+ },
+ {
+  "src": "images/web-lm-00457-default.jpg",
+  "w": 640,
+  "h": 605,
+  "title": "Mutter mit zwei Kindern II",
+  "artist": "Egon Schiele",
+  "date": "1915",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/531/"
+ },
+ {
+  "src": "images/web-lm-00458-default.jpg",
+  "w": 400,
+  "h": 640,
+  "title": "Stillleben mit Büchern (Schreibtisch des Künstlers)",
+  "artist": "Egon Schiele",
+  "date": "1914–16",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/532/"
+ },
+ {
+  "src": "images/web-lm-00459-default.jpg",
+  "w": 507,
+  "h": 640,
+  "title": "Kleiner Baum im Spätherbst",
+  "artist": "Egon Schiele",
+  "date": "1911",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/533/"
+ },
+ {
+  "src": "images/web-lm-00460-default.jpg",
+  "w": 509,
+  "h": 640,
+  "title": "„Tote Stadt“ III („Stadt am blauen Fluss“ III)",
+  "artist": "Egon Schiele",
+  "date": "1911",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/534/"
+ },
+ {
+  "src": "images/web-lm-00461-default.jpg",
+  "w": 509,
+  "h": 640,
+  "title": "Trauernde",
+  "artist": "Egon Schiele",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/535/"
+ },
+ {
+  "src": "images/web-lm-00462-default.jpg",
+  "w": 505,
+  "h": 640,
+  "title": "Selbstbildnis mit gesenktem Kopf",
+  "artist": "Egon Schiele",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/536/"
+ },
+ {
+  "src": "images/web-lm-00463-default.jpg",
+  "w": 640,
+  "h": 598,
+  "title": "Drei stehende Frauen (Fragment)",
+  "artist": "Egon Schiele",
+  "date": "1918 (unvollendet)",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/537/"
+ },
+ {
+  "src": "images/web-lm-00464-default.jpg",
+  "w": 640,
+  "h": 503,
+  "title": "Hockendes Frauenpaar",
+  "artist": "Egon Schiele",
+  "date": "1918 (unvollendet)",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/538/"
+ },
+ {
+  "src": "images/web-lm-00465-default.jpg",
+  "w": 632,
+  "h": 640,
+  "title": "Sitzender Männerakt (Selbstdarstellung)",
+  "artist": "Egon Schiele",
+  "date": "1910",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/539/"
+ },
+ {
+  "src": "images/web-lm-00466-default.jpg",
+  "w": 639,
+  "h": 640,
+  "title": "„Eremiten“",
+  "artist": "Egon Schiele",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/540/"
+ },
+ {
+  "src": "images/web-lm-00467-default.jpg",
+  "w": 544,
+  "h": 640,
+  "title": "„Entschwebung“ („Die Blinden“ II)",
+  "artist": "Egon Schiele",
+  "date": "1915",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/541/"
+ },
+ {
+  "src": "images/web-lm-00468-default.jpg",
+  "w": 640,
+  "h": 499,
+  "title": "Hauswand am Fluss",
+  "artist": "Egon Schiele",
+  "date": "1915",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/542/"
+ },
+ {
+  "src": "images/web-lm-00469-default.jpg",
+  "w": 640,
+  "h": 493,
+  "title": "Haus mit Schindeldach („Altes Haus“ II)",
+  "artist": "Egon Schiele",
+  "date": "1915",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/543/"
+ },
+ {
+  "src": "images/web-lm-00482-default.jpg",
+  "w": 640,
+  "h": 633,
+  "title": "„Die Kleine Stadt“ III",
+  "artist": "Egon Schiele",
+  "date": "1913",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/1/"
+ },
+ {
+  "src": "images/web-lm-00081-default.jpg",
+  "w": 446,
+  "h": 640,
+  "title": "Frauenbildnis",
+  "artist": "Albert Paris Gütersloh",
+  "date": "1914",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/156/"
+ },
+ {
+  "src": "images/web-lm-00106-default.jpg",
+  "w": 640,
+  "h": 530,
+  "title": "Küstenlandschaft",
+  "artist": "Gustave Courbet",
+  "date": "1866",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/180/"
+ },
+ {
+  "src": "images/web-lm-00483-default.jpg",
+  "w": 640,
+  "h": 528,
+  "title": "„Blinde Mutter“",
+  "artist": "Egon Schiele",
+  "date": "1914",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/2/"
+ },
+ {
+  "src": "images/web-lm-00511-default.jpg",
+  "w": 640,
+  "h": 485,
+  "title": "Blumenmarkt an der Madeleine IV",
+  "artist": "Theodor von Hörmann",
+  "date": "um 1889",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/30/"
+ },
+ {
+  "src": "images/web-lm-00527-default.jpg",
+  "w": 593,
+  "h": 640,
+  "title": "Rabenlandschaft",
+  "artist": "Egon Schiele",
+  "date": "1911",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/46/"
+ },
+ {
+  "src": "images/web-lm-00112-default.jpg",
+  "w": 483,
+  "h": 640,
+  "title": "Dame mit Hut",
+  "artist": "Anton Faistauer",
+  "date": "1917",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/186/"
+ },
+ {
+  "src": "images/web-lm-00196-default.jpg",
+  "w": 410,
+  "h": 640,
+  "title": "„Jüngling mit Amor“",
+  "artist": "Anton Kolig",
+  "date": "1911",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/270/"
+ },
+ {
+  "src": "images/web-lm-00197-default.jpg",
+  "w": 559,
+  "h": 640,
+  "title": "Akte im Atelier",
+  "artist": "Ernst Ludwig Kirchner",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/271/"
+ },
+ {
+  "src": "images/web-lm-00232-default.jpg",
+  "w": 640,
+  "h": 516,
+  "title": "Stillleben mit Knoblauch",
+  "artist": "Carl Schuch",
+  "date": "1887",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/306/"
+ },
+ {
+  "src": "images/web-lm-00267-default.jpg",
+  "w": 640,
+  "h": 447,
+  "title": "Pappelallee – Landschaft mit Eisenbahn",
+  "artist": "Olga Wisinger-Florian",
+  "date": "1901",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/341/"
+ },
+ {
+  "src": "images/web-lm-00471-default.jpg",
+  "w": 450,
+  "h": 640,
+  "title": "Häuser vor Bergabhang",
+  "artist": "Egon Schiele",
+  "date": "1907",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/545/"
+ },
+ {
+  "src": "images/web-lm-00472-default.jpg",
+  "w": 453,
+  "h": 640,
+  "title": "Herbstlicher Auwald",
+  "artist": "Egon Schiele",
+  "date": "1907",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/546/"
+ },
+ {
+  "src": "images/web-lm-00473-default.jpg",
+  "w": 640,
+  "h": 383,
+  "title": "Kahle Bäume, Häuser und Bildstock (Klosterneuburg)",
+  "artist": "Egon Schiele",
+  "date": "1907",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/547/"
+ },
+ {
+  "src": "images/web-lm-00474-default.jpg",
+  "w": 640,
+  "h": 632,
+  "title": "Stilisierte Blumen vor dekorativem Hintergrund",
+  "artist": "Egon Schiele",
+  "date": "1908",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/548/"
+ },
+ {
+  "src": "images/web-lm-00475-default.jpg",
+  "w": 514,
+  "h": 640,
+  "title": "„Tote Mutter“ I",
+  "artist": "Egon Schiele",
+  "date": "1910",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/549/"
+ },
+ {
+  "src": "images/web-lm-00476-default.jpg",
+  "w": 532,
+  "h": 640,
+  "title": "Haus und Mauer vor hügeligem Gelände",
+  "artist": "Egon Schiele",
+  "date": "1911",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/550/"
+ },
+ {
+  "src": "images/web-lm-00477-default.jpg",
+  "w": 600,
+  "h": 640,
+  "title": "„Offenbarung“",
+  "artist": "Egon Schiele",
+  "date": "1911",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/551/"
+ },
+ {
+  "src": "images/web-lm-00478-default.jpg",
+  "w": 640,
+  "h": 422,
+  "title": "Chrysanthemen",
+  "artist": "Egon Schiele",
+  "date": "1910",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/552/"
+ },
+ {
+  "src": "images/web-lm-00479-default.jpg",
+  "w": 638,
+  "h": 640,
+  "title": "„Stadt Stein“ II",
+  "artist": "Egon Schiele",
+  "date": "1913",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/553/"
+ },
+ {
+  "src": "images/web-lm-00480-default.jpg",
+  "w": 636,
+  "h": 640,
+  "title": "„Kalvarienberg“",
+  "artist": "Egon Schiele",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/554/"
+ },
+ {
+  "src": "images/web-lm-00625-default.jpg",
+  "w": 640,
+  "h": 640,
+  "title": "„Versinkende Sonne“",
+  "artist": "Egon Schiele",
+  "date": "1913",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/624/"
+ },
+ {
+  "src": "images/web-lm-00626-default.jpg",
+  "w": 640,
+  "h": 360,
+  "title": "„Liegende Frau“",
+  "artist": "Egon Schiele",
+  "date": "1917",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/625/"
+ },
+ {
+  "src": "images/web-lm-00632-default.jpg",
+  "w": 597,
+  "h": 640,
+  "title": "Gruppe am Waldrand",
+  "artist": "Herbert Boeckl",
+  "date": "1920",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/631/"
+ },
+ {
+  "src": "images/web-lm-00637-default.jpg",
+  "w": 437,
+  "h": 640,
+  "title": "Selbstbildnis als Halbakt",
+  "artist": "Richard Gerstl",
+  "date": "1902/04",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/636/"
+ },
+ {
+  "src": "images/web-lm-00651-default.jpg",
+  "w": 505,
+  "h": 640,
+  "title": "Selbstbildnis als Akt",
+  "artist": "Richard Gerstl",
+  "date": "1908",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/650/"
+ },
+ {
+  "src": "images/web-lm-00652-default.jpg",
+  "w": 506,
+  "h": 640,
+  "title": "Mutter und Kind",
+  "artist": "Egon Schiele",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/651/"
+ },
+ {
+  "src": "images/web-lm-00653-default.jpg",
+  "w": 512,
+  "h": 640,
+  "title": "Selbstbildnis mit hochgezogener nackter Schulter",
+  "artist": "Egon Schiele",
+  "date": "1912",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/652/"
+ },
+ {
+  "src": "images/web-lm-00654-default.jpg",
+  "w": 172,
+  "h": 640,
+  "title": "Rückenansicht eines weiblichen Halbaktes mit Tuch (Fragment von *„Bekehrung“ II*)",
+  "artist": "Egon Schiele",
+  "date": "1913",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/653/"
+ },
+ {
+  "src": "images/web-lm-00655-default.jpg",
+  "w": 640,
+  "h": 524,
+  "title": "Krumau an der Moldau („Die Kleine Stadt“ IV)",
+  "artist": "Egon Schiele",
+  "date": "1914",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/654/"
+ },
+ {
+  "src": "images/web-lm-00687-default.jpg",
+  "w": 632,
+  "h": 640,
+  "title": "Blick auf die Rax",
+  "artist": "Koloman Moser",
+  "date": "1907",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/686/"
+ },
+ {
+  "src": "images/web-dl-00846-eedg-default.jpg",
+  "w": 640,
+  "h": 492,
+  "title": "Schubert am Klavier. Entwurf für das Musikzimmer von Nikolaus\r\nDumba",
+  "artist": "Gustav Klimt",
+  "date": "1896",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/33817/"
+ },
+ {
+  "src": "images/web-lm-02007-default.jpg",
+  "w": 640,
+  "h": 640,
+  "title": "Ein Morgen am Teiche",
+  "artist": "Gustav Klimt",
+  "date": "1899",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/2148/"
+ },
+ {
+  "src": "images/web-lm-02008-default.jpg",
+  "w": 639,
+  "h": 640,
+  "title": "Die große Pappel II (Aufsteigendes Gewitter)",
+  "artist": "Gustav Klimt",
+  "date": "1902/03",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/2149/"
+ },
+ {
+  "src": "images/web-lm-02018-default.jpg",
+  "w": 436,
+  "h": 640,
+  "title": "Sitzende Venus mit Pelzmantel",
+  "artist": "Hans Canon",
+  "date": "1880",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/2159/"
+ },
+ {
+  "src": "images/web-lm-02020-01-default.jpg",
+  "w": 431,
+  "h": 640,
+  "title": "Junge Frau in Landschaft. Studie zu *Die Netzflickerinnen*",
+  "artist": "Max Liebermann",
+  "date": "1886",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/2161/"
+ },
+ {
+  "src": "images/web-lm-06575-01-default.jpg",
+  "w": 640,
+  "h": 398,
+  "title": "Moderne Amoretten, Triptychon, Linker Teil",
+  "artist": "Hans Makart",
+  "date": "1868",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/40985/"
+ },
+ {
+  "src": "images/web-lm-02091-default.jpg",
+  "w": 533,
+  "h": 640,
+  "title": "Bildnis Alfred Kuhn",
+  "artist": "Lovis Corinth",
+  "date": "1923",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/2232/"
+ },
+ {
+  "src": "images/web-lm-02116-default.jpg",
+  "w": 440,
+  "h": 640,
+  "title": "Bildnis Isabella Reisser",
+  "artist": "Anton Romako",
+  "date": "1885",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/2257/"
+ },
+ {
+  "src": "images/web-lm-02325-default.jpg",
+  "w": 637,
+  "h": 640,
+  "title": "Selbstbildnis als Heiliger. Studie zu *Begegnung*",
+  "artist": "Egon Schiele",
+  "date": "1913",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/2466/"
+ },
+ {
+  "src": "images/web-dl-00847-eedg-default.jpg",
+  "w": 511,
+  "h": 640,
+  "title": "Obstgarten am Abend",
+  "artist": "Gustav Klimt",
+  "date": "1898",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/33818/"
+ },
+ {
+  "src": "images/web-lm-04126-default.jpg",
+  "w": 640,
+  "h": 472,
+  "title": "„Pietà“",
+  "artist": "Albin Egger-Lienz",
+  "date": "1926",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/4306/"
+ },
+ {
+  "src": "images/web-lm-04140-default.jpg",
+  "w": 640,
+  "h": 570,
+  "title": "Häuser auf dem Klosterneuburger Rathausplatz",
+  "artist": "Egon Schiele",
+  "date": "1908",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/4320/"
+ },
+ {
+  "src": "images/web-lm-04143-default.jpg",
+  "w": 509,
+  "h": 640,
+  "title": "Studienkopf einer Hannakin",
+  "artist": "Gustav Klimt",
+  "date": "um 1883",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/4323/"
+ },
+ {
+  "src": "images/web-lm-04144-default.jpg",
+  "w": 505,
+  "h": 640,
+  "title": "Der Blinde",
+  "artist": "Gustav Klimt",
+  "date": "um 1896",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/4324/"
+ },
+ {
+  "src": "images/web-lm-04145-default.jpg",
+  "w": 470,
+  "h": 640,
+  "title": "Bildnis eines alten Mannes im Profil (Graf Traun?)",
+  "artist": "Gustav Klimt",
+  "date": "um 1896",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/4325/"
+ },
+ {
+  "src": "images/web-lm-04146-default.jpg",
+  "w": 427,
+  "h": 640,
+  "title": "Sitzendes junges Mädchen",
+  "artist": "Gustav Klimt",
+  "date": "um 1894",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/4326/"
+ },
+ {
+  "src": "images/web-lm-04718-default.jpg",
+  "w": 547,
+  "h": 640,
+  "title": "Die Nudelesserin",
+  "artist": "Johann Baptist Reiter",
+  "date": "1849",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/4823/"
+ },
+ {
+  "src": "images/web-lm-05268-default.jpg",
+  "w": 640,
+  "h": 466,
+  "title": "Waldstraße bei Scharfling",
+  "artist": "Emil Jakob Schindler",
+  "date": "1890",
+  "url": "https://onlinecollection.leopoldmuseum.org/en/object/5343/"
+ }
+]

@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Programm · Leopold Museum</title>
+<meta name="description" content="Konzeptentwurf: Unterseite eines Programmpunkts im Kalender des Leopold Museum.">
+<link rel="stylesheet" href="assets/style.css?v=148">
+<link rel="stylesheet" href="assets/event.css?v=9">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+</head>
+<body class="evpage">
+
+<a class="skip" href="#main" data-i18n="skip">Zum Inhalt springen</a>
+
+<!-- Kopf und Menü wie auf der Startseite -->
+<header class="top" data-top>
+  <a class="top__logo" href="index.html"><img src="assets/logo.svg" alt="Leopold Museum" width="285" height="76"></a>
+  <div class="pill" data-pill>
+    <a class="pill__fig" href="index.html" aria-label="Nach oben" data-i18n-aria="toTop" tabindex="-1"><img src="assets/logo-figure.svg" alt="" width="65" height="76"></a>
+    <button class="menu-btn" data-menu-open aria-label="Menü öffnen" data-i18n-aria="menuOpen" aria-expanded="false"><i></i><i></i><i></i></button>
+  </div>
+</header>
+
+<!-- Menü -->
+<div class="menu" data-menu aria-hidden="true">
+  <div class="menu__backdrop" data-menu-close></div>
+  <div class="menu__panel">
+    <div class="menu__head">
+      <a class="menu__logo" href="index.html" data-menu-link><img src="assets/logo.svg" alt="Leopold Museum" width="285" height="76"></a>
+      <div class="menu__tools">
+        <div class="lang" role="group" aria-label="Sprache" data-i18n-aria="language">
+          <button class="lang__btn is-active" data-lang="de" aria-pressed="true" lang="de">DE</button>
+          <button class="lang__btn" data-lang="en" aria-pressed="false" lang="en">EN</button>
+        </div>
+        <button class="menu__close" data-menu-close aria-label="Menü schließen" data-i18n-aria="menuClose"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+    </div>
+    <nav class="menu__nav">
+      <a href="index.html#ausstellungen" data-menu-link><span data-i18n="navExhibitions">Ausstellungen</span><sup>3</sup></a>
+      <a href="index.html#besuch" data-menu-link><span data-i18n="navVisit">Besuch</span></a>
+      <a href="index.html#kalender" data-menu-link><span data-i18n="navCalendar">Kalender</span></a>
+      <a href="index.html#sammlung" data-menu-link><span data-i18n="navCollection">Sammlung</span><sup data-i18n="objectsCount">3.597</sup></a>
+      <a href="https://onlinecollection.leopoldmuseum.org/" target="_blank" rel="noopener"><span data-i18n="navOnline">Online Sammlung</span><sup>↗</sup></a>
+      <a class="menu__ticket" data-i18n-href="urlTickets" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/online-ticket" target="_blank" rel="noopener"><span data-i18n="buyTicket">Ticket kaufen</span><sup>↗</sup></a>
+    </nav>
+<div class="menu__bottom">
+  <div class="menu__foot">
+    <p data-status-line>Heute geöffnet, 10–18 Uhr</p>
+    <p data-i18n="addressLine">Museumsplatz 1, 1070 Wien</p>
+  </div>
+</div>
+  </div>
+</div>
+
+<main id="main" class="evp" data-ev-detail>
+
+  <!-- Kopf des Programmpunkts: großer Titel, Datum, Buttons -->
+  <section class="evp__hero">
+    <a class="evp__back" href="index.html#kalender"><svg viewBox="0 0 24 24"><path d="M20 12H5M11 6l-6 6 6 6"/></svg><span data-i18n="backToCalendar">Zurück zum Kalender</span></a>
+    <p class="evp__kicker"><span class="tag" data-ev-type></span><span data-ev-exname></span></p>
+    <h1 class="evp__title" data-ev-title></h1>
+    <div class="evp__when">
+      <p class="evp__date"><span data-ev-date></span><span class="evp__time" data-ev-time></span></p>
+      <div class="evp__actions">
+        <button class="ev__add evp__add" type="button" data-ev-ics><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 10h17M8 3v4M16 3v4M12 13v5M9.5 15.5h5"/></svg><span data-i18n="addToCal">In Kalender eintragen</span></button>
+        <a class="evp__cta" data-i18n-href="urlTickets" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/online-ticket" target="_blank" rel="noopener"><span data-i18n="buyTicket">Ticket kaufen</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bild über die volle Breite -->
+  <figure class="evp__image" data-ev-media></figure>
+
+  <!-- Bereiche wie auf der Startseite: Label links, Inhalt rechts -->
+  <section class="evp__row">
+    <h2 class="updates__label" data-i18n="aboutEvent">Über den Programmpunkt</h2>
+    <div class="evp__about">
+      <p class="evp__desc" data-ev-desc></p>
+      <dl class="evp__facts" data-ev-facts></dl>
+      <p class="evp__note" data-i18n="evNote">Details und eine mögliche Anmeldung finden Sie im Programm des Museums.</p>
+    </div>
+  </section>
+
+  <section class="evp__row">
+    <h2 class="updates__label" data-i18n="evExhibition">Ausstellung</h2>
+    <a class="u-card evp__exc" href="index.html#ausstellungen" data-ev-ex></a>
+  </section>
+
+  <section class="evp__row">
+    <h2 class="updates__label" data-i18n="planVisit">Besuch planen</h2>
+    <div class="plan plan--short">
+    <div class="plan__head">
+      <p class="plan__status"><i class="plan__dot" data-plan-dot></i><span data-status-big>Heute geöffnet bis 18 Uhr</span></p>
+      <a class="pill-btn plan__cta" data-i18n-href="urlTickets" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/online-ticket" target="_blank" rel="noopener"><span data-i18n="buyTicket">Ticket kaufen</span></a>
+    </div>
+      <div class="plan__item">
+        <h3 class="visit__h" data-i18n="hours">Öffnungszeiten</h3>
+        <p class="plan__big" data-i18n="hoursBig"></p>
+        <p data-i18n-html="hoursText">Täglich außer Dienstag<br>10 bis 18 Uhr<br>Feiertags geöffnet</p>
+      </div>
+      <div class="plan__item">
+        <h3 class="visit__h" data-i18n="admission">Eintritt</h3>
+        <p class="plan__big" data-i18n="admissionBig"></p>
+        <p data-i18n-html="admissionText">Regulär € 19<br>Ermäßigt € 16<br>Unter 19 Jahren € 2,50</p>
+        <a class="plan__link" data-i18n-href="urlTickets" href="https://www.leopoldmuseum.org/de/besuch/tickets-preise/online-ticket" target="_blank" rel="noopener"><span data-i18n="buyTicket">Ticket kaufen</span> ↗</a>
+      </div>
+      <div class="plan__item">
+        <h3 class="visit__h" data-i18n="gettingHere">Anreise</h3>
+        <p class="plan__big" data-i18n="gettingBig"></p>
+        <p data-i18n-html="gettingHereText">U2 Museumsquartier<br>U3 Volkstheater<br>Museumsplatz 1, 1070 Wien</p>
+      <a class="plan__link" href="https://www.google.com/maps/search/?api=1&amp;query=Leopold+Museum%2C+Museumsplatz+1%2C+1070+Wien" target="_blank" rel="noopener"><span data-i18n="openMaps">Auf Google Maps öffnen</span> ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="evp__row" data-ev-sameday-row>
+    <h2 class="updates__label" data-i18n="sameDay">Am selben Tag</h2>
+    <div class="evp__tiles" data-ev-sameday></div>
+  </section>
+
+  <section class="evp__row" data-ev-more-row>
+    <h2 class="updates__label" data-i18n="moreDates">Weitere Termine</h2>
+    <div class="evp__tiles" data-ev-more></div>
+  </section>
+
+  <section class="evp__row" data-ev-works-row>
+    <h2 class="updates__label" data-i18n="fromCollection">Aus der Sammlung</h2>
+    <div class="evp__works">
+      <p class="evp__lead" data-ev-works-lead></p>
+      <div class="evp__worksgrid" data-ev-works></div>
+    </div>
+  </section>
+</main>
+
+<!-- ───────── Footer ───────── -->
+<footer class="footer">
+  <div class="footer__stage" data-figure>
+    <!-- 3D-Figur aus dem Logo, zum Drehen (assets/figure.js) -->
+    <div class="figure__canvas" data-figure-canvas aria-label="Figur aus dem Logo, mit der Maus drehbar" role="img" data-i18n-aria="figureLabel"></div>
+    <div class="figure__ui">
+      <button class="figure__arrow" data-figure-prev aria-label="Vorheriges Werk" data-i18n-aria="prevWork"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <p class="figure__caption" data-figure-caption aria-live="polite"></p>
+      <button class="figure__arrow" data-figure-next aria-label="Nächstes Werk" data-i18n-aria="nextWork"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <p class="figure__hint" data-i18n="figureHint">Ziehen zum Drehen</p>
+
+    <div class="footer__mid">
+      <p class="footer__mark"><img src="assets/logo.svg" alt="Leopold Museum" width="285" height="76" loading="lazy"></p>
+      <form class="news" data-news novalidate>
+        <label class="sr-only" for="news-mail" data-i18n="email">E-Mail-Adresse</label>
+        <input id="news-mail" type="email" placeholder="E-Mail-Adresse" data-i18n-ph="email" autocomplete="email">
+        <button type="submit" data-i18n="subscribe">Anmelden</button>
+        <p class="news__msg" data-news-msg aria-live="polite"></p>
+      </form>
+    </div>
+
+    <div class="footer__cols">
+      <div>
+        <p class="footer__h" data-i18n="contact">Kontakt</p>
+        <a href="mailto:besucherservice@leopoldmuseum.org">besucherservice@leopoldmuseum.org</a>
+        <p class="footer__dim">© 2026 Leopold Museum</p>
+        <nav class="footer__legal" aria-label="Rechtliches">
+          <a data-i18n-href="urlImprint" href="https://www.leopoldmuseum.org/de/impressum" target="_blank" rel="noopener" data-i18n="imprint">Impressum</a>
+          <a data-i18n-href="urlPrivacy" href="https://www.leopoldmuseum.org/de/datenschutz" target="_blank" rel="noopener" data-i18n="privacy">Datenschutz</a>
+          <a data-i18n-href="urlRules" href="https://www.leopoldmuseum.org/de/hausordnung" target="_blank" rel="noopener" data-i18n="houseRules">Hausordnung</a>
+          <a data-i18n-href="urlAccess" href="https://www.leopoldmuseum.org/de/barrierefreiheit" target="_blank" rel="noopener" data-i18n="access">Barrierefreiheit</a>
+        </nav>
+      </div>
+      <div>
+        <p class="footer__h">Links</p>
+        <a href="https://www.instagram.com/leopold_museum/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/LeopoldMuseum" target="_blank" rel="noopener">Facebook</a>
+      </div>
+      <div>
+        <p class="footer__h" data-i18n="phone">Telefon</p>
+        <a href="tel:+431525701555">+43 1 525 70 1555</a>
+        <p class="footer__dim" data-i18n="phoneNote">Besucherservice, werktags</p>
+      </div>
+      <div>
+        <p class="footer__h" data-i18n="address">Adresse</p>
+        <p data-i18n-html="addressText">Museumsplatz 1<br>1070 Wien</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- unten links: Laufband und Tickets wie auf der Startseite -->
+<div class="dock">
+  <a class="ticker" data-ticket-pill href="index.html#besuch" aria-label="Besuch planen" data-i18n-aria="planVisit">
+  <span class="ticker__track">
+    <span class="ticker__item" data-ticker>Heute geöffnet bis 18:00.</span><span class="ticker__item ticker__cta"><span data-i18n="planVisit">Besuch planen</span> →</span>
+    <span class="ticker__item" data-ticker aria-hidden="true">Heute geöffnet bis 18:00.</span><span class="ticker__item ticker__cta" aria-hidden="true"><span data-i18n="planVisit">Besuch planen</span> →</span>
+  </span>
+  </a>
+  <a class="dock__btn" href="index.html#besuch"><span class="dock__label" data-i18n="tickets">Tickets</span><span class="dock__arrow" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span></a>
+</div>
+
+<script src="assets/i18n.js?v=32"></script>
+<script src="assets/events.js?v=5"></script>
+<script src="assets/event.js?v=17"></script>
+<script src="assets/embed3d.js"></script>
+<script type="module">
+/* Footer: Figur aus dem Logo als 3D-Skulptur (aus dem Repo leopold/figure), angepasst für den Footer.
+   Unterschiede zum Original: kein Zoom und kein Verschieben (sonst blockiert sie das Seitenscrollen),
+   langsame Eigendrehung, lädt erst in Footer-Nähe und rendert nur, solange sie sichtbar ist. */
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const stage = document.querySelector("[data-figure]");
+const BASE = "assets/figure/";
+const WORKS = [
+  { src: "web-lm-00454", de: ["Selbstbildnis mit Lampionfrüchten", "1912"], en: ["Self-Portrait with Chinese Lantern Plant", "1912"], artist: "Egon Schiele" },
+  { src: "web-lm-00453", de: ["Bildnis Wally Neuzil", "1912"], en: ["Portrait of Wally Neuzil", "1912"], artist: "Egon Schiele" },
+  { src: "web-lm-00630", de: ["Tod und Leben", "1910/11"], en: ["Death and Life", "1910/11"], artist: "Gustav Klimt" },
+  { src: "web-lm-00466", de: ["„Eremiten“", "1912"], en: ["Hermits", "1912"], artist: "Egon Schiele" },
+  { src: "web-lm-00456", de: ["Der Häuserbogen II („Inselstadt“)", "1915"], en: ["Crescent of Houses II (Island Town)", "1915"], artist: "Egon Schiele" },
+  { src: "web-lm-04148", de: ["Am Attersee", "1900"], en: ["On Lake Attersee", "1900"], artist: "Gustav Klimt" },
+  { src: "web-lm-02008", de: ["Die große Pappel II", "1902/03"], en: ["The Large Poplar II", "1902/03"], artist: "Gustav Klimt" }
+];
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const caption = stage.querySelector("[data-figure-caption]");
+
+let started = false;
+new IntersectionObserver((entries, obs) => {
+  if (entries.some(e => e.isIntersecting) && !started) { started = true; obs.disconnect(); init(); }
+}, { rootMargin: "600px 0px" }).observe(stage);
+
+async function init() {
+  const canvasBox = stage.querySelector("[data-figure-canvas]");
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  } catch (e) {
+    stage.classList.add("is-nogl");                       // ohne WebGL bleibt der ruhige Hintergrund
+    return;
+  }
+  const size = () => [canvasBox.clientWidth, canvasBox.clientHeight];
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(...size());
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  canvasBox.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  scene.environmentIntensity = 0.6;
+  const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-2, 3, 4); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xffffff, 1.2); rim.position.set(3, 1, -3); scene.add(rim);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xdddddd, 0.6));
+
+  const [w0, h0] = size();
+  const camera = new THREE.PerspectiveCamera(30, w0 / h0, 0.01, 100);
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.08;
+  controls.enableZoom = false;                            // Mausrad scrollt die Seite, nicht die Figur
+  controls.enablePan = false;
+  controls.autoRotate = !reduced;
+  controls.autoRotateSpeed = 0.6;
+  let resumeT;
+  controls.addEventListener("start", () => { controls.autoRotate = false; clearTimeout(resumeT); stage.classList.add("is-grabbed"); });
+  controls.addEventListener("end", () => { stage.classList.remove("is-grabbed"); if (!reduced) resumeT = setTimeout(() => (controls.autoRotate = true), 2500); });
+
+  // Triplanare Projektion wie im Original: das Werk wird entlang x, y, z auf die Figur gelegt
+  const tri = { triMap: { value: null }, triScale: { value: 1 }, triAspect: { value: 1 } };
+  const material = new THREE.MeshStandardMaterial({ roughness: 0.78, metalness: 0 });
+  material.onBeforeCompile = shader => {
+    Object.assign(shader.uniforms, tri);
+    shader.vertexShader = shader.vertexShader
+      .replace("#include <common>", "#include <common>\nvarying vec3 vTriPos;\nvarying vec3 vTriNormal;")
+      .replace("#include <begin_vertex>", `#include <begin_vertex>
+        vTriPos = (modelMatrix * vec4(transformed, 1.0)).xyz;
+        vTriNormal = normalize(mat3(modelMatrix) * objectNormal);`);
+    shader.fragmentShader = shader.fragmentShader
+      .replace("#include <common>", `#include <common>
+        uniform sampler2D triMap; uniform float triScale; uniform float triAspect;
+        varying vec3 vTriPos; varying vec3 vTriNormal;
+        vec4 triSample(vec2 p) { return texture2D(triMap, p * triScale * vec2(1.0 / triAspect, 1.0) + 0.5); }`)
+      .replace("#include <map_fragment>", `
+        vec3 tw = pow(abs(normalize(vTriNormal)), vec3(4.0));
+        tw /= tw.x + tw.y + tw.z;
+        diffuseColor *= triSample(vTriPos.zy) * tw.x + triSample(vTriPos.xz) * tw.y + triSample(vTriPos.xy) * tw.z;`);
+  };
+
+  const textures = new Map();
+  const loadTexture = src => {
+    if (!textures.has(src)) textures.set(src, new THREE.TextureLoader().loadAsync(window.EMBED[`${BASE}textures/${src}-default.jpg`]).then(t => {
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.wrapS = t.wrapT = THREE.MirroredRepeatWrapping;
+      t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      return t;
+    }));
+    return textures.get(src);
+  };
+
+  let current = 0;
+  const lang = () => (document.documentElement.lang === "en" ? "en" : "de");
+  function writeCaption() {
+    const w = WORKS[current];
+    const [title, date] = w[lang()];
+    caption.innerHTML = `<b>${title}</b> <span>${w.artist}, ${date}</span>`;
+  }
+  async function show(i) {
+    current = (i + WORKS.length) % WORKS.length;
+    const w = WORKS[current];
+    caption.classList.add("is-swap");
+    const t = await loadTexture(w.src);
+    if (WORKS[current] !== w) return;                     // ein späterer Klick hat gewonnen
+    tri.triMap.value = t;
+    tri.triAspect.value = t.image.width / t.image.height;
+    writeCaption();
+    caption.classList.remove("is-swap");
+    loadTexture(WORKS[(current + 1) % WORKS.length].src);
+  }
+  stage.querySelector("[data-figure-prev]").addEventListener("click", () => show(current - 1));
+  stage.querySelector("[data-figure-next]").addEventListener("click", () => show(current + 1));
+  // Sprache wechselt: Bildunterschrift nachziehen
+  new MutationObserver(writeCaption).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+  await show(0);
+
+  new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load(window.EMBED[`${BASE}figure.glb`], gltf => {
+    const model = gltf.scene;
+    model.traverse(o => { if (o.isMesh) { o.material = material; o.geometry.computeVertexNormals(); } });
+    const box = new THREE.Box3().setFromObject(model);
+    const s = box.getSize(new THREE.Vector3()), c = box.getCenter(new THREE.Vector3());
+    model.position.sub(c);
+    scene.add(model);
+    tri.triScale.value = 1 / s.y;
+    // Figur füllt etwa 62 % der Höhe, damit oben und unten Luft für Logo und Spalten bleibt
+    const halfFov = THREE.MathUtils.degToRad(camera.fov / 2);
+    const dist = Math.max(s.y / 2 / 0.62, s.x / 2 / 0.62 / camera.aspect) / Math.tan(halfFov) + s.z / 2;
+    camera.position.set(0, 0, dist);
+    camera.near = dist / 100; camera.far = dist * 10; camera.updateProjectionMatrix();
+    controls.update();
+    stage.classList.add("is-ready");
+  });
+
+  addEventListener("resize", () => {
+    const [w, h] = size();
+    camera.aspect = w / h; camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+
+  // nur rendern, solange der Footer sichtbar ist
+  let visible = true;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(stage);
+  renderer.setAnimationLoop(() => { if (!visible) return; controls.update(); renderer.render(scene, camera); });
+}
+
+</script>
+<script src="assets/cursor.js?v=2"></script>
+<script src="assets/menu-tilt.js?v=3"></script>
+<script src="assets/reveal.js?v=1"></script>
+</body>
+</html>
